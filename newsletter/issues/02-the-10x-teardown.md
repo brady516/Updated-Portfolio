@@ -81,6 +81,19 @@ in writing, while you're calm.
 **The point:** the teardown doesn't prove the stock is bad. It converts a *story*
 into a *bet with known odds and a known worst case*. That's the whole job.
 
+## Wall Street Word Salad of the Week *(paid)*
+
+**This week's salad:** *"It's a high-conviction, asymmetric, multi-bagger setup
+with a long runway and optionality to the upside."*
+
+**Translation:** "I like it and I think it goes up a lot."
+
+**What it's hiding:** every word doing work here is unfalsifiable. "High
+conviction" measures *his* feelings, not the odds. "Asymmetric" and "optionality
+to the upside" quietly drop the *downside* — the very thing the required-assumptions
+table above forces onto the page. "Long runway" = no timeline you can hold him to.
+Strip the seasoning and you're left with an opinion wearing a lab coat.
+
 ## What I'd Watch
 
 Take the most exciting position in your own portfolio and build its

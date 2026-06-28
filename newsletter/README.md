@@ -27,14 +27,20 @@ Writing weekly is only sustainable with a fixed structure. Every issue:
    it left out. *The recurring differentiator; free hook.*
 3. **The Number** — one chart/data point that actually matters this week.
 4. **What I'd Watch** — practitioner's lens, framed as observation, **not advice**.
-5. **Disclaimer** — the standard educational/not-advice footer (see any issue).
+5. **Wall Street Word Salad of the Week** *(paid only)* — take one piece of real
+   Wall Street / corporate jargon (an analyst phrase, an earnings-call quote, a
+   buzzword) and translate it into plain English, then name what it's hiding.
+   Jargon is noise; decoding it is the signal. Format: *This week's salad* → the
+   quote · *Translation* → plain English · *What it's hiding* → the spin/omission.
+6. **Disclaimer** — the standard educational/not-advice footer (see any issue).
 
 ## Free vs. paid split (the conversion engine)
 
 - **Free, every week (above the fold):** intro + *Signal vs. Noise* + *The
   Number*. Shareable, proves quality, grows the list.
 - **Paid (below the fold):** *The Read* deep analysis, model walk-throughs (tied
-  to the [store](../store.html)), subscriber Q&A, full archive, store discounts.
+  to the [store](../store.html)), the **Wall Street Word Salad of the Week**,
+  subscriber Q&A, full archive, store discounts.
 - **One fully-paid flagship per month** — a longer research report.
 
 ## Pricing

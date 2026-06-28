@@ -72,7 +72,9 @@ start to see the noise as noise. That's the first edge.
 - A weekly issue in this exact format.
 - A recurring **Signal vs. Noise** teardown — free, every week.
 - For paid subscribers: the deep analysis, model walk-throughs, subscriber Q&A,
-  and the monthly flagship research report.
+  the monthly flagship research report, and the **Wall Street Word Salad of the
+  Week** — one piece of real jargon decoded into plain English (with what it's
+  hiding). Because the language *is* the noise.
 
 If that's the kind of finance you've been looking for and couldn't find — welcome.
 Verify me, then decide.

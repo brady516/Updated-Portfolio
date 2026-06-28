@@ -85,6 +85,21 @@ Using the [DCF model](../../store.html), here's the disciplined process:
 - Value businesses whose worth is mostly optionality or pre-cash-flow.
 - Replace judgment. It's a structured way to *organize* judgment, not a substitute.
 
+## Wall Street Word Salad of the Week *(paid)*
+
+**This week's salad:** *"Our price target reflects a sum-of-the-parts valuation
+that captures the embedded optionality of the platform at a justified premium
+multiple."*
+
+**Translation:** "We added up the pieces and then picked a big multiple to get the
+number we wanted."
+
+**What it's hiding:** "justified premium multiple" is the entire ballgame, stated
+as if it were a fact instead of the single most sensitive assumption in the model
+(see the terminal-value problem above). "Embedded optionality" is the analyst's way
+of valuing things that don't produce cash yet — fine, but say so. A real number
+shows its WACC and terminal growth; salad hides them behind adjectives.
+
 ## What I'd Watch
 
 Pick one company you think you understand. Run a **reverse DCF**: what growth does

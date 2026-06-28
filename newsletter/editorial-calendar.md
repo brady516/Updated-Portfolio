@@ -34,6 +34,12 @@ fold, paid deep section · **Flagship** = longer fully-paid monthly report.
 - Tax drag and asset location
 - "Stock-picking vs. indexing" — the honest scorecard
 
+## Recurring paid segment
+
+Every **paid** issue (split + flagship) includes the **Wall Street Word Salad of
+the Week** — one real piece of Wall Street/corporate jargon translated to plain
+English, with what it's hiding. Paid-only; it's a standing perk, not a calendar slot.
+
 ## Cadence map
 
 - **Monthly flagship** lands on issues 4, 8, 12 (then every 4th).
