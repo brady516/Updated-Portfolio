@@ -18,9 +18,10 @@ before you've shown the goods.
 - [ ] Set up **payments** in Substack (connect Stripe) but keep everything free
       for now. Pre-configure the tiers: **$49/mo**, **$550/yr**, and a
       **founding-member $399/yr** offer (you'll switch this on in Phase 2).
-- [ ] Build a **lead magnet** — a free opt-in that proves value:
-      e.g. *"How to read any track record (and spot the lie)"* PDF, or a
-      cut-down DCF model from the [store](../store.html). Offer it on the signup.
+- [ ] **Lead magnet — built ✓:** the **Valuation Lab**, a free Claude skill that
+      runs a DCF + DDM on any stock (`../lead-magnet/`). Zip the skill folder,
+      host it, and deliver the download link in the free-list welcome email. See
+      `../lead-magnet/README.md` for the gating + install steps.
 - [ ] **Wire the site:** `insights.html` is already set with the name, price, and
       teaser cards — paste your real Substack URLs into the `__SUBSTACK_URL__` /
       `__SUBSTACK_PAID_URL__` placeholders and the embed box.
