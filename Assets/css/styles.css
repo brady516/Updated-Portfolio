@@ -12,18 +12,18 @@
   --ink-soft: #5c4a3a;
   --muted: #8a7559;
 
-  /* the water + the sunset */
-  --brand: #0e9a96;       /* Key West turquoise */
-  --brand-dark: #0a716e;
-  --coral: #ef6f53;       /* sunset coral */
-  --coral-dark: #d8543a;
-  --gold: #e6a43c;        /* bossa-nova gold */
+  /* Endless Summer — electric blue + hot pink */
+  --brand: #1366d6;       /* electric blue */
+  --brand-dark: #0d4ea6;
+  --coral: #ff2d95;       /* hot pink */
+  --coral-dark: #e0167f;
+  --gold: #ffd23f;        /* poster sun yellow */
   --palm: #5f8a5a;        /* palm green */
-  --danger: #c0492f;
+  --danger: #d23a4a;      /* warm red — "noise" */
 
-  /* dusk water for dark sections */
-  --night: #173a40;
-  --night-2: #224b4f;
+  /* indigo night sky for dark sections */
+  --night: #141a3a;
+  --night-2: #1f2a5a;
 
   --radius: 16px;
   --shadow: 0 1px 2px rgba(43, 32, 24, .06), 0 12px 30px rgba(43, 32, 24, .10);
@@ -42,8 +42,8 @@ body {
   font-family: var(--font);
   color: var(--ink);
   background:
-    radial-gradient(1200px 600px at 110% -10%, rgba(230,164,60,.18), transparent 60%),
-    radial-gradient(900px 500px at -10% 0%, rgba(14,154,150,.12), transparent 55%),
+    radial-gradient(1200px 600px at 110% -10%, rgba(255,45,149,.13), transparent 60%),
+    radial-gradient(900px 500px at -10% 0%, rgba(19,102,214,.13), transparent 55%),
     var(--bg);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -109,23 +109,30 @@ h3 { font-size: 1.25rem; margin: 0 0 6px; }
 .hero {
   position: relative;
   color: #fff6ea;
-  padding: 72px 0 78px;
+  padding: 72px 0 130px;
   background:
-    linear-gradient(165deg,
-      #ffb24a 0%,
-      var(--coral) 32%,
-      #b5566a 58%,
-      var(--night) 100%);
+    linear-gradient(180deg,
+      #1ea7ff 0%,
+      #6a5bff 36%,
+      #c12bb0 66%,
+      #ff4fa0 100%);
   overflow: hidden;
 }
-.hero::after { /* the sun on the horizon */
+.hero::after { /* the Endless Summer sun, low on the horizon */
   content: "";
-  position: absolute; right: 8%; top: 14%;
-  width: 130px; height: 130px; border-radius: 50%;
-  background: radial-gradient(circle, #fff3cf 0%, #ffd27a 55%, rgba(255,210,122,0) 72%);
-  filter: blur(2px); opacity: .85;
+  position: absolute; left: 50%; bottom: 56px; transform: translateX(-50%);
+  width: 230px; height: 230px; border-radius: 50%; z-index: 0;
+  background: radial-gradient(circle, #fff7e0 0%, #ffe487 44%, var(--gold) 60%, rgba(255,210,63,0) 73%);
+  opacity: .95;
 }
-.hero .container { position: relative; z-index: 1; }
+/* flat surf-poster silhouette anchored to the horizon (index hero) */
+.hero-silhouette {
+  position: absolute; left: 0; right: 0; bottom: -1px; z-index: 1;
+  width: 100%; height: clamp(80px, 13vw, 150px);
+  display: block; color: var(--night);
+  pointer-events: none;
+}
+.hero .container { position: relative; z-index: 2; }
 .hero h1 {
   margin: 0 0 12px; color: #fffaf1;
   font-size: clamp(2rem, 5vw, 3.1rem);
@@ -154,7 +161,7 @@ h3 { font-size: 1.25rem; margin: 0 0 6px; }
 .btn-ghost { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.55); }
 .btn-ghost:hover { background: rgba(255,255,255,.22); }
 .btn-outline { background: var(--surface); color: var(--brand-dark); border-color: var(--brand); }
-.btn-outline:hover { background: #e6f7f5; }
+.btn-outline:hover { background: #e7effb; }
 .btn-block { display: block; text-align: center; width: 100%; }
 
 /* ---------- Proof / credibility ---------- */
@@ -170,8 +177,8 @@ h3 { font-size: 1.25rem; margin: 0 0 6px; }
 
 .badges { display: flex; flex-wrap: wrap; gap: 9px; margin: 16px 0; }
 .badge {
-  display: inline-block; background: #e6f7f5; color: var(--brand-dark);
-  border: 1px solid #a9e3dd; border-radius: 999px;
+  display: inline-block; background: #e7effb; color: var(--brand-dark);
+  border: 1px solid #b9d2f5; border-radius: 999px;
   padding: 6px 14px; font-size: .82rem; font-weight: 700;
 }
 .verify-link { font-weight: 700; color: var(--coral-dark); }
@@ -206,8 +213,8 @@ h3 { font-size: 1.25rem; margin: 0 0 6px; }
 .svn { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-soft); }
 .svn > div { padding: 16px 18px; border-bottom: 1px solid var(--border); }
 .svn .head { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; background: var(--surface-soft); }
-.svn .noise { color: var(--danger); background: #fbeae3; }
-.svn .signal { color: var(--brand-dark); background: #e6f7f5; }
+.svn .noise { color: var(--danger); background: #fbe7ea; }
+.svn .signal { color: var(--brand-dark); background: #e7effb; }
 
 /* ---------- Embed wrapper ---------- */
 .embed-frame {
