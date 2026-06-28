@@ -1,4 +1,4 @@
-# The Signal — newsletter strategy
+# North de Noise — newsletter strategy
 
 > *Institutional-grade research. No minimums. No noise.*
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The Signal — Valuation Lab calculator.
+"""North de Noise — Valuation Lab calculator.
 
 Deterministic DCF / DDM / reverse-DCF math, stdlib only. Claude (driving the
 skill) collects + confirms inputs, then calls this so the numbers are auditable
@@ -181,7 +181,7 @@ def run_ddm(d):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="The Signal — Valuation Lab calculator")
+    ap = argparse.ArgumentParser(description="North de Noise — Valuation Lab calculator")
     ap.add_argument("--model", choices=["dcf", "ddm", "all"], required=True)
     ap.add_argument("--json", help="JSON string of inputs; if omitted, read from stdin")
     args = ap.parse_args()

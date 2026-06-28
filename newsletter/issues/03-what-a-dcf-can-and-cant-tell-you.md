@@ -97,7 +97,7 @@ recommendation. Model outputs depend entirely on the assumptions you enter.)*
 
 ---
 
-*The Signal is for educational and informational purposes only and is not
+*North de Noise is for educational and informational purposes only and is not
 individualized investment, legal, or tax advice, nor a recommendation to buy or
 sell any security. Brady Gallagher is not currently a registered representative or
 investment adviser. Past performance does not indicate or guarantee future

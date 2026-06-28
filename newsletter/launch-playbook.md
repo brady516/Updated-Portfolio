@@ -1,4 +1,4 @@
-# The Signal — launch playbook
+# North de Noise — launch playbook
 
 A week-by-week ramp from zero to paying subscribers. The whole strategy: **prove
 quality for free first, then put the deep work behind a paywall.** Don't charge
@@ -10,7 +10,8 @@ before you've shown the goods.
 
 **Goal: be ready to publish, and have a reason for people to subscribe.**
 
-- [ ] Create the publication on **Substack** named **"The Signal"**, tagline
+- [ ] Create the publication on **Substack** named **"North de Noise"** (handle
+      `northdenoise`), tagline
       *"Institutional-grade research. No minimums. No noise."*
 - [ ] Write the **About page**: who you are, the verifiable record (link FINRA
       BrokerCheck / CRD 6510444), the standard you hold yourself to, what readers

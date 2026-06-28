@@ -1,4 +1,4 @@
-# The Signal — editorial calendar (first 12 weeks)
+# North de Noise — editorial calendar (first 12 weeks)
 
 Weekly. Each issue uses the standard format: **The Read · Signal vs. Noise · The
 Number · What I'd Watch**. "Access" shows the free/paid split for that issue.

@@ -7,7 +7,7 @@ date: TBD
 
 # Signal, not noise
 
-*Welcome to **The Signal** — institutional-grade research, no minimums, no noise.*
+*Welcome to **North de Noise** — institutional-grade research, no minimums, no noise.*
 
 Here's the bet this newsletter is making: **99% of finance content is noise**, and
 you already know it. It's built to be watched, not to be right. It optimizes for
@@ -79,7 +79,7 @@ Verify me, then decide.
 
 ---
 
-*The Signal is for educational and informational purposes only and is not
+*North de Noise is for educational and informational purposes only and is not
 individualized investment, legal, or tax advice, nor a recommendation to buy or
 sell any security. Brady Gallagher is not currently a registered representative or
 investment adviser. Past performance does not indicate or guarantee future
