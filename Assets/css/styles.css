@@ -37,17 +37,58 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
-body {
-  margin: 0;
-  font-family: var(--font);
-  color: var(--ink);
+/* fallback wash behind the shader (shown if WebGL/JS is unavailable) */
+html {
   background:
     radial-gradient(1200px 600px at 110% -10%, rgba(255,45,149,.13), transparent 60%),
     radial-gradient(900px 500px at -10% 0%, rgba(19,102,214,.13), transparent 55%),
     var(--bg);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: transparent;       /* let the shader canvas show through */
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
 }
+
+/* ---------- Audio-reactive shader background (site-wide) ---------- */
+#bg-shader {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;            /* behind all content, above html fallback bg */
+  display: block;
+  pointer-events: none;   /* clicks pass through to the page */
+}
+
+/* floating audio player (bottom-left) */
+.bg-audio {
+  position: fixed;
+  left: 18px; bottom: 18px;
+  z-index: 50;
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  background: rgba(20, 26, 58, .55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-radius: 999px;
+  color: #fff; font-family: var(--font); font-size: .85rem;
+  box-shadow: var(--shadow-soft);
+}
+.bg-audio__btn {
+  border: none; cursor: pointer;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--coral); color: #fff; font-size: .8rem; line-height: 1;
+  display: grid; place-items: center;
+}
+.bg-audio__btn:hover { background: var(--coral-dark); }
+.bg-audio__label { letter-spacing: .12em; text-transform: uppercase; font-weight: 700; font-size: .7rem; opacity: .85; }
+.bg-audio__vol { width: 80px; accent-color: var(--coral); }
+@media (max-width: 480px) { .bg-audio__label { display: none; } }
 
 img { max-width: 100%; height: auto; }
 
@@ -58,6 +99,20 @@ a:hover { text-decoration: underline; }
 .container { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
 main { padding: 44px 0 72px; }
 section { margin: 0 0 48px; }
+
+/* float body content on a translucent panel so text stays readable over the
+   animated shader, while the viewport gutters show it full-strength */
+main.container {
+  background: rgba(255, 250, 241, .82);
+  backdrop-filter: blur(6px);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  margin-top: 26px;
+  margin-bottom: 26px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+@media (max-width: 600px) { main.container { padding-left: 18px; padding-right: 18px; } }
 
 /* ---------- Typography ---------- */
 h1, h2, h3, h4, h5 {
@@ -110,12 +165,13 @@ h3 { font-size: 1.25rem; margin: 0 0 6px; }
   position: relative;
   color: #fff6ea;
   padding: 72px 0 130px;
+  /* translucent palette wash — the live shader animates behind it */
   background:
     linear-gradient(180deg,
-      #1ea7ff 0%,
-      #6a5bff 36%,
-      #c12bb0 66%,
-      #ff4fa0 100%);
+      rgba(20, 26, 58, .48) 0%,
+      rgba(106, 91, 255, .18) 40%,
+      rgba(193, 43, 176, .22) 70%,
+      rgba(255, 79, 160, .30) 100%);
   overflow: hidden;
 }
 .hero::after { /* the Endless Summer sun, low on the horizon */
