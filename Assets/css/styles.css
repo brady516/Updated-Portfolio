@@ -1,0 +1,262 @@
+/* Brady Gallagher — portfolio + monetization theme
+   Vibe: Key West sun-and-water × Brazilian-jazz warmth × West-Coast surf chill.
+   Warm sand, turquoise water, sunset coral, bossa-nova gold. No build step. */
+
+:root {
+  /* warm coastal neutrals */
+  --bg: #fbf2e2;          /* sun-bleached sand */
+  --surface: #fffaf1;     /* warm white */
+  --surface-soft: #f6ead6;
+  --border: #ecd9bd;
+  --ink: #2b2018;         /* warm espresso */
+  --ink-soft: #5c4a3a;
+  --muted: #8a7559;
+
+  /* the water + the sunset */
+  --brand: #0e9a96;       /* Key West turquoise */
+  --brand-dark: #0a716e;
+  --coral: #ef6f53;       /* sunset coral */
+  --coral-dark: #d8543a;
+  --gold: #e6a43c;        /* bossa-nova gold */
+  --palm: #5f8a5a;        /* palm green */
+  --danger: #c0492f;
+
+  /* dusk water for dark sections */
+  --night: #173a40;
+  --night-2: #224b4f;
+
+  --radius: 16px;
+  --shadow: 0 1px 2px rgba(43, 32, 24, .06), 0 12px 30px rgba(43, 32, 24, .10);
+  --shadow-soft: 0 6px 18px rgba(43, 32, 24, .08);
+  --maxw: 960px;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font: "Karla", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 110% -10%, rgba(230,164,60,.18), transparent 60%),
+    radial-gradient(900px 500px at -10% 0%, rgba(14,154,150,.12), transparent 55%),
+    var(--bg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; }
+
+a { color: var(--brand-dark); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Layout ---------- */
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+main { padding: 44px 0 72px; }
+section { margin: 0 0 48px; }
+
+/* ---------- Typography ---------- */
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  color: var(--ink);
+}
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin: 0 0 10px; }
+h3 { font-size: 1.25rem; margin: 0 0 6px; }
+.section-lead { color: var(--ink-soft); max-width: 62ch; margin: 0 0 26px; font-size: 1.05rem; }
+.eyebrow {
+  font-family: var(--font);
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-size: .76rem;
+  font-weight: 700;
+  color: var(--coral-dark);
+  margin: 0 0 8px;
+}
+
+/* ---------- Nav ---------- */
+.site-nav {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(255, 250, 241, .85);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.site-nav .container {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; min-height: 64px; flex-wrap: wrap;
+}
+.site-nav .brand {
+  font-family: var(--font-display);
+  font-weight: 700; font-size: 1.1rem;
+  color: var(--ink); letter-spacing: -.01em;
+}
+.site-nav .brand:hover { text-decoration: none; color: var(--brand-dark); }
+.site-nav nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.site-nav nav a {
+  color: var(--ink-soft); font-weight: 700; font-size: .94rem;
+  padding: 8px 13px; border-radius: 999px;
+}
+.site-nav nav a:hover { background: var(--surface-soft); text-decoration: none; }
+.site-nav nav a.active { color: #fff; background: var(--brand); }
+
+/* ---------- Hero (the sunset over the water) ---------- */
+.hero {
+  position: relative;
+  color: #fff6ea;
+  padding: 72px 0 78px;
+  background:
+    linear-gradient(165deg,
+      #ffb24a 0%,
+      var(--coral) 32%,
+      #b5566a 58%,
+      var(--night) 100%);
+  overflow: hidden;
+}
+.hero::after { /* the sun on the horizon */
+  content: "";
+  position: absolute; right: 8%; top: 14%;
+  width: 130px; height: 130px; border-radius: 50%;
+  background: radial-gradient(circle, #fff3cf 0%, #ffd27a 55%, rgba(255,210,122,0) 72%);
+  filter: blur(2px); opacity: .85;
+}
+.hero .container { position: relative; z-index: 1; }
+.hero h1 {
+  margin: 0 0 12px; color: #fffaf1;
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-weight: 600; letter-spacing: -.02em;
+  text-shadow: 0 2px 18px rgba(23, 58, 64, .25);
+}
+.hero .tagline {
+  font-family: var(--font);
+  font-size: clamp(1.05rem, 2.3vw, 1.4rem);
+  color: #fdeedd; max-width: 46ch; margin: 0 0 28px;
+}
+.hero .tagline strong { color: #b9f3ec; font-weight: 700; }
+.hero .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-block; padding: 13px 22px; border-radius: 999px;
+  font-family: var(--font); font-weight: 700; font-size: .98rem;
+  border: 2px solid transparent; cursor: pointer;
+  transition: transform .05s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+}
+.btn:hover { text-decoration: none; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--coral); color: #fff; box-shadow: 0 8px 18px rgba(216,84,58,.28); }
+.btn-primary:hover { background: var(--coral-dark); }
+.btn-ghost { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.55); }
+.btn-ghost:hover { background: rgba(255,255,255,.22); }
+.btn-outline { background: var(--surface); color: var(--brand-dark); border-color: var(--brand); }
+.btn-outline:hover { background: #e6f7f5; }
+.btn-block { display: block; text-align: center; width: 100%; }
+
+/* ---------- Proof / credibility ---------- */
+.proof { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 18px; margin: 28px 0 0; }
+.stat {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow-soft);
+  border-top: 4px solid var(--gold);
+}
+.stat .num { font-family: var(--font-display); font-size: 1.55rem; font-weight: 700; color: var(--brand-dark); }
+.stat .label { color: var(--muted); font-size: .9rem; }
+.stat .num small { font-size: .68rem; font-weight: 700; color: var(--muted); display: block; letter-spacing: .02em; }
+
+.badges { display: flex; flex-wrap: wrap; gap: 9px; margin: 16px 0; }
+.badge {
+  display: inline-block; background: #e6f7f5; color: var(--brand-dark);
+  border: 1px solid #a9e3dd; border-radius: 999px;
+  padding: 6px 14px; font-size: .82rem; font-weight: 700;
+}
+.verify-link { font-weight: 700; color: var(--coral-dark); }
+
+/* ---------- Cards / product grid ---------- */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 22px; }
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-soft);
+  display: flex; flex-direction: column;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.card h3 { margin-top: 0; }
+.card .for { color: var(--coral-dark); font-size: .85rem; font-weight: 700; margin: 0 0 12px; text-transform: uppercase; letter-spacing: .06em; }
+.card p { color: var(--ink-soft); }
+.card .price { font-family: var(--font-display); font-size: 1.45rem; font-weight: 700; color: var(--ink); margin: 14px 0; }
+.card .price small { font-size: .82rem; color: var(--muted); font-weight: 500; }
+.card .spacer { flex: 1; }
+
+/* ---------- Tier comparison ---------- */
+.tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 22px; }
+.tier { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow-soft); }
+.tier.featured { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(239,111,83,.18), var(--shadow); }
+.tier h3 { color: var(--brand-dark); }
+.tier .price { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; margin: 6px 0 14px; }
+.tier .price small { font-size: .85rem; color: var(--muted); font-weight: 500; }
+.tier ul { padding-left: 18px; color: var(--ink-soft); }
+.tier li { margin: 7px 0; }
+
+/* ---------- Signal vs Noise table ---------- */
+.svn { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-soft); }
+.svn > div { padding: 16px 18px; border-bottom: 1px solid var(--border); }
+.svn .head { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; background: var(--surface-soft); }
+.svn .noise { color: var(--danger); background: #fbeae3; }
+.svn .signal { color: var(--brand-dark); background: #e6f7f5; }
+
+/* ---------- Embed wrapper ---------- */
+.embed-frame {
+  border: 2px dashed var(--border); border-radius: var(--radius);
+  padding: 22px; background: var(--surface); text-align: center; color: var(--muted);
+}
+.embed-frame code { background: var(--surface-soft); padding: 2px 7px; border-radius: 6px; color: var(--coral-dark); font-size: .85em; }
+
+/* ---------- Curriculum ---------- */
+.curriculum { counter-reset: mod; list-style: none; padding: 0; }
+.curriculum li {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px 18px 62px;
+  margin: 0 0 14px; position: relative; box-shadow: var(--shadow-soft);
+}
+.curriculum li::before {
+  counter-increment: mod; content: counter(mod);
+  position: absolute; left: 18px; top: 16px;
+  width: 30px; height: 30px;
+  background: var(--gold); color: #4a2f00;
+  border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 700; font-size: .95rem;
+}
+
+/* ---------- Résumé content ---------- */
+.resume h5 { margin: 20px 0 0; font-size: 1.1rem; }
+.resume .meta { color: var(--muted); font-size: .9rem; margin: 2px 0 8px; }
+.resume hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+.resume h4 { font-size: 1.3rem; margin-top: 28px; color: var(--brand-dark); }
+
+/* ---------- Footer / disclaimer ---------- */
+.site-footer {
+  background: linear-gradient(180deg, var(--night-2), var(--night));
+  color: #cfe4e2; padding: 40px 0; font-size: .9rem; margin-top: 24px;
+}
+.site-footer h4 { color: #fdeedd; margin: 0 0 10px; font-size: 1rem; }
+.site-footer .disclaimer { max-width: 78ch; }
+.site-footer a { color: #ffc97a; }
+.site-footer .copyright { margin-top: 18px; color: #8fb1ae; }
+
+/* ---------- Generic content (about/hobbies) ---------- */
+.content ul { color: var(--ink-soft); }
+.content p { color: var(--ink-soft); }
+.content li { margin: 5px 0; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 560px) {
+  .svn { grid-template-columns: 1fr; }
+  .site-nav nav a { padding: 6px 10px; font-size: .9rem; }
+  .hero { padding: 52px 0 56px; }
+  .hero::after { width: 90px; height: 90px; right: 6%; top: 8%; }
+}
