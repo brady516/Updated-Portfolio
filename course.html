@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course — Python for Finance &amp; Algo Trading | Brady Gallagher, MBA</title>
+    <meta name="description" content="A cohort course on Python for finance and algorithmic trading, built on the automated system Brady Gallagher runs himself.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./Assets/css/styles.css">
+</head>
+<body>
+
+    <header class="site-nav">
+        <div class="container">
+            <a class="brand" href="./index.html">North de Noise</a>
+            <nav>
+                <a href="./index.html">Home</a>
+                <a href="./insights.html">Insights</a>
+                <a href="./store.html">Store</a>
+                <a class="active" href="./course.html">Course</a>
+                <a href="./about.html">About</a>
+                <a href="./contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section>
+            <p class="eyebrow">The Course</p>
+            <h2>Python for Finance &amp; Algorithmic Trading</h2>
+            <p class="section-lead">A cohort course built on the real thing: ASTI ("Skynet"), the automated mean-reversion screener/trader I built on Python and the Interactive Brokers (IBKR) API. You'll learn to build, backtest, and reason about systematic strategies — and, just as importantly, where they break. (They break. That's most of the curriculum.)</p>
+            <div class="cta-row">
+                <a class="btn btn-primary" href="__STRIPE_LINK_COURSE__" target="_blank" rel="noopener">Enroll now</a>
+                <a class="btn btn-outline" href="#intro-call">Book a free intro call</a>
+            </div>
+        </section>
+
+        <section>
+            <h3>Who it's for</h3>
+            <p class="section-lead">Finance-literate people who can read code (or will learn), and developers who want the finance side done right. Come in comfortable with the fact that <strong>most strategies fail</strong> — including good-looking ones, including some of yours. This is a course about disciplined process, not a lottery ticket with a syntax highlighter.</p>
+        </section>
+
+        <section>
+            <h3>What we build, week by week</h3>
+            <ol class="curriculum">
+                <li><strong>Foundations &amp; environment.</strong> Python for finance toolkit, data sources, clean project setup, and the mindset of systematic investing.</li>
+                <li><strong>Market data &amp; the IBKR API.</strong> Pulling, cleaning, and storing data; connecting to a broker API safely (paper trading first).</li>
+                <li><strong>Signals &amp; strategy logic.</strong> Mean reversion, momentum, and why the same idea can be both depending on who's selling it — building the logic behind ASTI.</li>
+                <li><strong>Backtesting honestly.</strong> Look-ahead bias, survivorship bias, transaction costs, slippage — every trick that turns a losing strategy into a gorgeous backtest, and how to stop lying to yourself with them.</li>
+                <li><strong>Risk &amp; position sizing.</strong> Drawdown, volatility targeting, VaR/CVaR intuition, and sizing so one bad week is a bad week, not an obituary.</li>
+                <li><strong>Automation &amp; going live (carefully).</strong> Scheduling, monitoring, failure modes, and the deeply unglamorous discipline that separates "running a system" from "feeding an ATM."</li>
+            </ol>
+        </section>
+
+        <section>
+            <div class="tiers">
+                <div class="tier featured">
+                    <h3>Cohort enrollment</h3>
+                    <p class="price" style="color:var(--ink);">$__COURSE_PRICE__</p>
+                    <ul>
+                        <li>6 live cohort sessions</li>
+                        <li>All course materials &amp; starter code</li>
+                        <li>Backtesting framework template</li>
+                        <li>Q&amp;A and feedback on your build</li>
+                        <li>Bonus: discount on store models</li>
+                    </ul>
+                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_COURSE__" target="_blank" rel="noopener">Enroll now</a>
+                </div>
+                <div class="tier" id="intro-call">
+                    <h3>Not sure yet?</h3>
+                    <p>Book a free 15-minute intro call. Tell me your goal and background, and I'll tell you honestly whether this cohort is a fit — including "it isn't, here's where to go instead." I'd rather lose the sale than sell you the wrong thing.</p>
+                    <div class="embed-frame" style="margin-top:12px;">
+                        Calendly booking embeds here.
+                        <br><small>Setup note for Brady: paste your Calendly inline-embed snippet here and point <code>__CALENDLY_URL__</code> at your intro-call event.</small>
+                    </div>
+                    <a class="btn btn-outline btn-block" href="__CALENDLY_URL__" target="_blank" rel="noopener" style="margin-top:12px;">Book the intro call</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <h4>Disclaimer</h4>
+            <p class="disclaimer">
+                This course is <strong>educational</strong> and is <strong>not individualized investment advice</strong> or a recommendation to trade any security or strategy. Algorithmic and options trading involve substantial risk, including the rapid loss of capital, and are not suitable for everyone. Most strategies underperform or fail; backtested or historical results do not indicate or guarantee future performance. You are responsible for your own trading decisions. Brady Gallagher is not currently a registered representative or investment adviser.
+            </p>
+            <p class="copyright">© 2026 Brady Gallagher &amp; Co. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script defer src="./Assets/js/shader-bg.js"></script>
+</body>
+</html>

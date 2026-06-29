@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store — Models &amp; templates by Brady Gallagher, MBA</title>
+    <meta name="description" content="The actual finance models and templates Brady Gallagher builds: DCF, Monte Carlo, dividend-growth, options screeners, and a business-plan kit.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./Assets/css/styles.css">
+</head>
+<body>
+
+    <header class="site-nav">
+        <div class="container">
+            <a class="brand" href="./index.html">North de Noise</a>
+            <nav>
+                <a href="./index.html">Home</a>
+                <a href="./insights.html">Insights</a>
+                <a class="active" href="./store.html">Store</a>
+                <a href="./course.html">Course</a>
+                <a href="./about.html">About</a>
+                <a href="./contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section>
+            <p class="eyebrow">The Store</p>
+            <h2>The models I actually build — yours to keep</h2>
+            <p class="section-lead">Not a course about spreadsheets. The actual spreadsheets — institutional-grade models I've used in advisory practice, documented well enough that you can open one, change an assumption, and watch the "fair value" politely fall apart. That's the lesson. One-time purchase, instant download.</p>
+        </section>
+
+        <section>
+            <div class="grid">
+
+                <div class="card">
+                    <h3>DCF Valuation Model</h3>
+                    <p class="for">For: founders, analysts, investors</p>
+                    <p>Adjustable WACC, two terminal-value methods (Gordon &amp; exit-multiple), and a sensitivity table that shows your "fair value" for the moody opinion it is. The same framework I used valuing companies in advisory work — now without the advisory invoice.</p>
+                    <div class="spacer"></div>
+                    <div class="price">$49 <small>one-time</small></div>
+                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_DCF__" target="_blank" rel="noopener">Buy the DCF model</a>
+                </div>
+
+                <div class="card">
+                    <h3>Monte Carlo Portfolio &amp; Retirement Model</h3>
+                    <p class="for">For: planners, DIY investors</p>
+                    <p>Run thousands of return simulations to stress-test a portfolio or retirement plan across market regimes. You get a probability of success — not the single rosy line every retirement calculator draws straight through the middle of "it depends."</p>
+                    <div class="spacer"></div>
+                    <div class="price">$59 <small>one-time</small></div>
+                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_MONTECARLO__" target="_blank" rel="noopener">Buy the Monte Carlo model</a>
+                </div>
+
+                <div class="card">
+                    <h3>Dividend-Growth Model</h3>
+                    <p class="for">For: income investors</p>
+                    <p>Project income from dividend-growth stocks with payout-ratio guardrails (so you can spot the "safe 8% yield" before it cuts), reinvestment toggles, and a multi-stage DDM valuation tab.</p>
+                    <div class="spacer"></div>
+                    <div class="price">$39 <small>one-time</small></div>
+                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_DIVGROWTH__" target="_blank" rel="noopener">Buy the dividend model</a>
+                </div>
+
+                <div class="card">
+                    <h3>Covered-Call &amp; Options Screener</h3>
+                    <p class="for">For: options-aware investors</p>
+                    <p>Screen for covered-call and cash-secured-put setups with annualized-yield and break-even math built in — so "free monthly income" shows its actual risk before you sell the call. Educational tooling, not a signal service. (Nobody's texting you alerts.)</p>
+                    <div class="spacer"></div>
+                    <div class="price">$69 <small>one-time</small></div>
+                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_OPTIONS__" target="_blank" rel="noopener">Buy the options screener</a>
+                </div>
+
+                <div class="card">
+                    <h3>Business-Plan &amp; Go-to-Market Kit</h3>
+                    <p class="for">For: founders, operators</p>
+                    <p>The template set I use advising start-ups: financial-projection workbook, business-plan outline, and a go-to-market one-pager with KPI/OKR scaffolding — the grown-up version of the "we'll be profitable by year two" slide.</p>
+                    <div class="spacer"></div>
+                    <div class="price">$89 <small>one-time</small></div>
+                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_BIZPLAN__" target="_blank" rel="noopener">Buy the business-plan kit</a>
+                </div>
+
+                <div class="card" style="border-style:dashed; background:transparent; box-shadow:none;">
+                    <h3>Need something custom?</h3>
+                    <p class="for">For: bespoke modeling</p>
+                    <p>Want a model tailored to your company or thesis? Book a call and we'll scope it — assumptions and all.</p>
+                    <div class="spacer"></div>
+                    <a class="btn btn-outline btn-block" href="./contact.html">Book a call →</a>
+                </div>
+
+            </div>
+        </section>
+
+        <section>
+            <div class="embed-frame">
+                <strong>How delivery works:</strong> after checkout, Stripe redirects you to a secure download page and emails your receipt with the file link. Questions? <a href="./contact.html">Reach out</a>.
+                <br><br>
+                <small>Setup note for Brady: replace each <code>__STRIPE_LINK_*__</code> with the matching Stripe Payment Link, and set each link's post-payment redirect to <code>thank-you.html</code> (or attach the file to Stripe's receipt email).</small>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <h4>Disclaimer</h4>
+            <p class="disclaimer">
+                These templates are <strong>educational tools</strong>, not individualized investment, legal, or tax advice, and not a recommendation to buy or sell any security. Outputs depend entirely on the assumptions you enter. Investing carries risk, including loss of principal. Past performance does not indicate or guarantee future results. Consult a competent, licensed professional aware of your specific situation. All sales are for digital goods; see checkout for terms.
+            </p>
+            <p class="copyright">© 2026 Brady Gallagher &amp; Co. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script defer src="./Assets/js/shader-bg.js"></script>
+</body>
+</html>
