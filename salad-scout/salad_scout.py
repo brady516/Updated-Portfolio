@@ -125,7 +125,7 @@ def load_lexicon(path):
     return sorted(lex.items(), key=lambda kv: -len(kv[0]))
 
 
-_BULLET_GLYPHS = "✓✔☑•·▪◦●○➤»«■□▶↓↑→"
+_BULLET_GLYPHS = "✓✔☑•·▪◦●○➤»«■□▶↓↑→|"
 
 
 def is_clean_prose(s):
