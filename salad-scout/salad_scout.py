@@ -327,9 +327,19 @@ def cmd_edgar(args, lexicon):
         cite = f"{f['company']} — {f['form']} {f['date']} — {f['url']}"
         for r in rank_text(text, lexicon, args.per_doc):
             r["source"] = cite
+            r["company"] = f["company"]
             all_rows.append(r)
         time.sleep(0.3)  # be polite to SEC
     all_rows.sort(key=lambda r: r["score"], reverse=True)
+    if args.per_company > 0:  # don't let one chatty filer hog the list
+        capped, counts = [], {}
+        for r in all_rows:
+            c = r.get("company", "")
+            if counts.get(c, 0) >= args.per_company:
+                continue
+            counts[c] = counts.get(c, 0) + 1
+            capped.append(r)
+        all_rows = capped
     all_rows = all_rows[:args.top]
 
     if args.out:
@@ -366,6 +376,8 @@ def main():
     ep.add_argument("--entity", help='filter to one filer (EFTS entityName), e.g. "Ford Motor Co"')
     ep.add_argument("--max-docs", type=int, default=8, dest="max_docs")
     ep.add_argument("--per-doc", type=int, default=5, dest="per_doc")
+    ep.add_argument("--per-company", type=int, default=2, dest="per_company",
+                    help="max candidates from one filer in the final list (0 = unlimited)")
     ep.add_argument("--ua", help='required: "Your Name your@email"')
     ep.add_argument("--out", help="write a dated file to this dir (cron-friendly)")
 
