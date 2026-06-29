@@ -125,6 +125,28 @@ def load_lexicon(path):
     return sorted(lex.items(), key=lambda kv: -len(kv[0]))
 
 
+_BULLET_GLYPHS = "✓✔☑•·▪◦●○➤»«■□▶↓↑→"
+
+
+def is_clean_prose(s):
+    """Reject slide-deck / table dumps; keep real quotable sentences."""
+    total = len(s)
+    if not total:
+        return False
+    if any(g in s for g in _BULLET_GLYPHS):
+        return False
+    if sum(ch.isalpha() for ch in s) / total < 0.70:   # number/symbol soup
+        return False
+    if sum(ch.isdigit() for ch in s) / total > 0.10:    # tables
+        return False
+    words = re.findall(r"[A-Za-z][A-Za-z'\-]+", s)
+    if words:
+        caps = sum(1 for w in words if len(w) > 2 and w.isupper())
+        if caps / len(words) > 0.35:                    # ALL-CAPS headers
+            return False
+    return True
+
+
 _SENT_SPLIT = re.compile(r"(?<=[.!?])\s+(?=[A-Z0-9\"'])")
 
 
@@ -159,6 +181,8 @@ def rank_text(text, lexicon, top, min_words=6, max_words=120):
     for sent in split_sentences(text):
         words = len(re.findall(r"\b\w+\b", sent))
         if words < min_words or words > max_words:
+            continue
+        if not is_clean_prose(sent):
             continue
         key = sent.lower()[:120]
         if key in seen:
