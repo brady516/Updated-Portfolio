@@ -22,6 +22,20 @@ support nearly 7%. I want you to make your return. My counter, and it's final, i
 The rep said he'd sold cars for twenty years and had never watched someone take
 the four-square apart that cleanly. I'll take it.
 
+Here's the part that keeps me honest, though: I didn't invent that move. Years
+earlier, back when I was a food-and-beverage exec, a financial "advisor" at
+Northwestern Mutual walked me through the four-square like he was handing me the
+nuclear codes. I thought I'd been let in on something. (Now I know what that
+relationship mostly was — commission and product — but that's a different issue.)
+
+**I thought the four-square was an edge. It was the minimum to play.**
+
+That gap — between what felt like an edge and what was actually just table stakes —
+is the whole reason this newsletter exists. Most of what gets sold to regular
+people as an *edge* (the clever tactic, the "sophisticated" product, the secret
+the pros supposedly hoard) is the minimum to play, marked up and gift-wrapped. The
+real edge was never a trick. It's refusing to be the person the trick is built for.
+
 Quick aside on why this trick even exists: it's an American specialty, and not by
 accident. In most of this country a car isn't a purchase, it's a permission slip —
 to get to work, to school, to exist. The four-square is built on exactly that
