@@ -62,8 +62,9 @@ diversification. Mechanically, it's two problems stacked:
 
 1. **Overlap → closet indexing.** Those funds hold the same large caps. Own 22 of
    them and your blended portfolio basically *is* the index — except you're paying
-   ~0.75% for it instead of the ~0.03% an index fund charges for the same exposure.
-   You've bought the market and tipped 25x the going rate to do it.
+   ~0.75% for it instead of the ~0.03–0.07% an index fund charges for the same
+   exposure — a guaranteed ~0.68%/yr you hand over before anyone's earned anything.
+   You've bought the market and tipped ~10x the going rate to do it.
 2. **The fee is structural, not earned.** Whatever the blended expense ratio is, it
    comes out first, every year, in all weather. You can't out-pick a market you've
    basically become — minus a toll.
