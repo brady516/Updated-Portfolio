@@ -24,9 +24,10 @@ fold, paid deep section · **Flagship** = longer fully-paid monthly report.
 ## Status
 
 **All 12 issues are drafted** in `issues/` — a full ~90-day weekly ramp, ready to
-schedule. Plus a **bonus free issue #13** ("They're not selling you a car — they're
-selling you a payment") — a first-person four-square teardown; great shareable
-launch/personality piece. Drop in dates, run [Salad Scout](../salad-scout/) for fresh Word Salad
+schedule. Plus two **bonus first-person issues**: **#13** ("They're not selling you a car —
+they're selling you a payment," the four-square teardown — Week 1) and **#14** ("The
+Manager Gets Paid First," the expense-ratio/closet-indexing exposé). Both are
+origin-story pieces that prove the thesis with real scars. Drop in dates, run [Salad Scout](../salad-scout/) for fresh Word Salad
 quotes, and publish. Issues 1–4 are formatted free for the launch ramp; the split
 paywall + founding offer begin at week 5 (see `launch-playbook.md`).
 
