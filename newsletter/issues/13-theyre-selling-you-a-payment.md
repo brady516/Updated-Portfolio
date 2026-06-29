@@ -13,14 +13,20 @@ trade-in, price, down payment, and monthly payment, all in play at once. It look
 like a worksheet. It's a magic trick. The whole design is to keep four numbers
 moving so you never stop on the only two that matter: the **price** and the **APR**.
 
-So I took out my HP financial calculator and did the rude thing: I solved for the
-rate they'd actually buried in the payment. It came out to **6.8%**. I slid it back
-and said — politely — "My credit doesn't support nearly 7%. I want you to make your
-return. My counter, and it's final, is **2.5%**." That moved the payment from
-**$398** to **$254** a month.
+So I took out my **HP 10bII** — a calculator I knew cold from an MBA in investments —
+and did the rude thing: I solved for the rate they'd actually buried in the payment.
+It came out to **6.8%**. I slid it back and said — politely — "My credit doesn't
+support nearly 7%. I want you to make your return. My counter, and it's final, is
+**2.5%**." That moved the payment from **$398** to **$254** a month.
 
 The rep said he'd sold cars for twenty years and had never watched someone take
 the four-square apart that cleanly. I'll take it.
+
+Quick aside on why this trick even exists: it's an American specialty, and not by
+accident. In most of this country a car isn't a purchase, it's a permission slip —
+to get to work, to school, to exist. The four-square is built on exactly that
+leverage. When the buyer *needs* the thing to function in society, "what payment
+works for you?" isn't a question. It's a frisk.
 
 ## Signal vs. Noise — "what monthly payment were you hoping for?" *(free)*
 

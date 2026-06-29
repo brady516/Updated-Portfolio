@@ -35,8 +35,10 @@ before you've shown the goods.
 
 **Goal: publish consistently, prove the standard, grow the list. No paywall yet.**
 
-- [ ] **Week 1:** publish `01-signal-not-noise.md` (the manifesto). Announce
-      everywhere you have a presence.
+- [ ] **Week 1:** lead with `13-theyre-selling-you-a-payment.md` (the four-square
+      teardown) — show, don't tell; it demonstrates the brand in action and is the
+      most shareable piece. Pin `01-signal-not-noise.md` (the manifesto) as the
+      "Start here" post / About. Announce everywhere you have a presence.
 - [ ] **Week 2:** publish `02-the-10x-teardown.md` (flagship *Signal vs. Noise*).
       This is your most shareable issue — make it the one you push hardest.
 - [ ] **Week 3:** publish a fresh issue from the calendar (e.g. #3 *position
