@@ -41,6 +41,13 @@ hiding* lines are reusable as-is; only the quote needs replacing.
 | 11 | nobody-knows hedging | "higher-for-longer… nimble to pivot… data-dependent" | **FOMC statements/minutes & Fed speeches (public domain).** Terms: `data-dependent, appropriate, carefully assess` |
 | 12 | process theater | "disciplined, repeatable process… robust framework" | Almost any asset-manager "our approach" page; fund commentary. Terms: `disciplined process, robust framework` |
 
+## Run it all at once
+
+`salad-scout/source-the-bank.sh` has a pre-tuned command for every theme above
+(set your UA at the top, then `bash source-the-bank.sh`). Themes that aren't on
+EDGAR — #11 (Fed) and transcript-based ones — have `url`/`score` commands noted at
+the bottom of that script.
+
 ## The 10-minute workflow per issue
 
 1. Run Salad Scout (or open the source above) and grab a sentence that out-salads

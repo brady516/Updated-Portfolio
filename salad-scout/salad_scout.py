@@ -186,12 +186,18 @@ def fetch(url, ua, timeout=30):
     return raw.decode("utf-8", errors="replace")
 
 
-def edgar_search(terms, forms, days, max_docs, ua):
-    """Query EDGAR full-text search; return [{company, form, date, url}]."""
+def edgar_search(terms, forms, days, max_docs, ua, entity=None):
+    """Query EDGAR full-text search; return [{company, form, date, url}].
+
+    entity: optional company-name filter (EFTS entityName) to target a specific
+    filer — e.g. "Ford Motor Co" — when you want a named, attributable quote.
+    """
     start = (date.today() - timedelta(days=days)).isoformat()
     end = date.today().isoformat()
     q = " OR ".join(f'"{t.strip()}"' for t in terms)
     params = {"q": q, "forms": forms, "startdt": start, "enddt": end}
+    if entity:
+        params["entityName"] = entity
     url = "https://efts.sec.gov/LATEST/search-index?" + urllib.parse.urlencode(params)
     data = json.loads(fetch(url, ua))
     out = []
@@ -273,7 +279,8 @@ def cmd_edgar(args, lexicon):
     terms = (args.terms.split(",") if args.terms
              else ["optionality", "headwinds", "secular", "synergies", "inflection"])
     try:
-        filings = edgar_search(terms, args.forms, args.days, args.max_docs, args.ua)
+        filings = edgar_search(terms, args.forms, args.days, args.max_docs, args.ua,
+                               entity=args.entity)
     except Exception as e:
         sys.exit(f"edgar search failed: {e}")
     all_rows = []
@@ -325,6 +332,7 @@ def main():
     ep.add_argument("--forms", default="10-K,10-Q,8-K")
     ep.add_argument("--days", type=int, default=14)
     ep.add_argument("--terms", help="comma list of search phrases (default: a salad starter pack)")
+    ep.add_argument("--entity", help='filter to one filer (EFTS entityName), e.g. "Ford Motor Co"')
     ep.add_argument("--max-docs", type=int, default=8, dest="max_docs")
     ep.add_argument("--per-doc", type=int, default=5, dest="per_doc")
     ep.add_argument("--ua", help='required: "Your Name your@email"')

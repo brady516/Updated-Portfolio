@@ -42,6 +42,13 @@ SEC requires a declared User-Agent — pass `--ua "Your Name your@email"` for th
 Global flags (work on any command): `--top N`, `--format text|json|csv`,
 `--lexicon FILE`.
 
+**Target one company** (for a named, attributable quote): add `--entity` to the
+`edgar` command, e.g. `--entity "Ford Motor Co"` (EFTS entityName filter).
+
+**Source the whole newsletter bank at once:** `bash source-the-bank.sh` runs a
+tuned search for each Word Salad theme (set your UA at the top first). See
+`../newsletter/word-salad-bank.md` for the theme→source map.
+
 ## Output
 
 Ranked candidates with a **salad score**, the matched **buzzwords**, the
