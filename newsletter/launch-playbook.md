@@ -26,7 +26,8 @@ before you've shown the goods.
 - [ ] **Wire the site:** `insights.html` is already set with the name, price, and
       teaser cards — paste your real Substack URLs into the `__SUBSTACK_URL__` /
       `__SUBSTACK_PAID_URL__` placeholders and the embed box.
-- [ ] Line up the first **4 issues in draft** (three are in `issues/`).
+- [ ] Issues are drafted — **all 12 are in `issues/`** (a full ~90-day ramp). Add
+      dates and a fresh Word Salad quote per issue, then schedule.
 
 ---
 

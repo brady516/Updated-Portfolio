@@ -21,6 +21,13 @@ fold, paid deep section · **Flagship** = longer fully-paid monthly report.
 | 11 | **Rates, duration, and your portfolio** | What moving rates actually do to bonds, equities, and risk | "Rates don't matter if you're long-term" | **Split** |
 | 12 | **Building a process you can keep** | An IPS for normal people — rules that survive a bad week | "Just hold and don't look" | **Flagship** |
 
+## Status
+
+**All 12 issues are drafted** in `issues/` — a full ~90-day weekly ramp, ready to
+schedule. Drop in dates, run [Salad Scout](../salad-scout/) for fresh Word Salad
+quotes, and publish. Issues 1–4 are formatted free for the launch ramp; the split
+paywall + founding offer begin at week 5 (see `launch-playbook.md`).
+
 ## Backlog (future fodder)
 
 - Monte Carlo vs. the single-line retirement projection (ties to the store model)
