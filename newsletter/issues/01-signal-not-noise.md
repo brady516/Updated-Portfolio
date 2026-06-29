@@ -10,14 +10,18 @@ date: TBD
 *Welcome to **North de Noise** — institutional-grade research, no minimums, no noise.*
 
 Here's the bet this newsletter is making: **99% of finance content is noise**, and
-you already know it. It's built to be watched, not to be right. It optimizes for
-outrage, FOMO, and the algorithm — not for whether you're better off a year from
-now.
+you already know it. It's built to be watched, not to be right — engineered for
+outrage, FOMO, and the algorithm, with all the nutritional value of a thumbnail.
+Whether you're actually better off a year from now is not, it turns out, the
+business model.
 
-I'm going to do the opposite. I'm a licensed practitioner — you can verify me on
-[FINRA BrokerCheck (CRD 6510444)](https://brokercheck.finra.org/individual/summary/6510444) —
-and I'm going to hold myself to the standard a registered firm would, even though
-I'm writing independently. That standard is the entire product.
+I'm going to do the opposite, and be a little rude about the difference. I'm a
+licensed analyst — you can verify me on
+[FINRA BrokerCheck (CRD 6510444)](https://brokercheck.finra.org/individual/summary/6510444),
+which is more than the median guru can say — and I hold myself to the standard a
+registered firm would, even writing independently. The jokes are free. The
+standard underneath them is the entire product. Strategic irreverence, grounded
+in virtue.
 
 ---
 
@@ -27,9 +31,9 @@ Four rules. If a piece of finance content (including mine) breaks them, treat it
 as noise:
 
 1. **Fair and balanced.** Every return number comes with the risk that produced
-   it, and gets labeled as *past* performance. Past performance does not indicate
-   or guarantee future results — and any source that forgets to say so is selling
-   you something.
+   it, labeled as *past* performance. Past performance does not indicate or
+   guarantee future results — the one sentence everyone quotes and nobody believes.
+   Believe it. Any source that "forgets" to say it is selling you something.
 2. **Substantiated, not promissory.** No guarantees. No "this will." Claims tie
    back to things you can check.
 3. **Educational, not individualized advice.** I don't know your situation, so

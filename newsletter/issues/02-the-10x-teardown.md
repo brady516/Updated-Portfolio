@@ -7,10 +7,11 @@ date: TBD
 
 # The "10x stock" teardown
 
-You've seen the video. Confident guy, dramatic thumbnail, a single ticker that's
-going to **10x**. Today we take one apart — not to dunk, but to show you the
-questions that turn a pitch into an analysis. Same questions work on *any* bull
-case, including your own.
+You've seen the video. Confident guy, dramatic thumbnail, an arrow drawn at a
+diagonal, a single ticker that's going to **10x**. Today we take one apart — not
+to dunk (okay, a little to dunk), but because the questions that turn a pitch into
+an analysis are the whole game. They work on *any* bull case, including the one
+you're a little too excited about.
 
 *(Generic example. No specific company, security, or creator is named or
 recommended — this is a method, not a tip.)*

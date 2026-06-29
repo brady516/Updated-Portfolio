@@ -11,10 +11,10 @@ date: TBD
 
 A discounted cash flow model is the most respected and most abused tool in
 finance. Respected because it's the honest definition of value: a thing is worth
-the cash it will produce, discounted for time and risk. Abused because it will
-output *any* number you want if you torture the assumptions. This issue is a field
-guide to using it without fooling yourself — and a walk-through of the model from
-the [store](../../store.html).
+the cash it will produce, discounted for time and risk. Abused because — and I say
+this with love — torture the assumptions long enough and a DCF will confess to
+anything. This issue is a field guide to using it without fooling yourself, plus a
+walk-through of the model from the [store](../../store.html).
 
 *(Educational. Generic figures used for illustration — not a recommendation on any
 security.)*

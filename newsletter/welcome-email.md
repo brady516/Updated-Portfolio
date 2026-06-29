@@ -13,6 +13,7 @@ magnet you promised on the site.
 - **Your Valuation Lab is inside (welcome to North de Noise)**
 - **The receipts, the tool, and what's next**
 - **You're in — here's your stock-valuation skill**
+- **A CRD number, not a Lamborghini — and a free tool inside**
 
 **Preheader:** A free AI valuation tool from a licensed analyst — plus what to expect.
 
@@ -22,11 +23,14 @@ magnet you promised on the site.
 
 Welcome to **North de Noise** — institutional-grade research, no minimums, no noise.
 
-Quick promise up front: I won't waste your inbox. 99% of finance content is built
-to be watched, not to be right. This is the opposite — and you don't have to take
-that on faith. I'm a FINRA-licensed practitioner; you can
+Quick promise up front: I won't waste your inbox, which already has enough rocket
+emojis in it. 99% of finance content is built to be watched, not to be right. This
+is built to be right — and, where the material allows, a little rude about the
+alternative. You don't have to take that on faith, either. I'm a FINRA-licensed
+analyst; you can
 [verify me on BrokerCheck (CRD 6510444)](https://brokercheck.finra.org/individual/summary/6510444)
-in about ten seconds. That's the whole point of this place.
+in about ten seconds. Strategic irreverence, grounded in virtue — that's the whole
+point of this place.
 
 ### 🎁 First, your free tool: the Valuation Lab
 
@@ -68,8 +72,8 @@ favorite: the **Wall Street Word Salad of the Week**, where I take one real piec
 corporate jargon and translate it into plain English (with what it's hiding).
 
 It's **$49/mo or $550/yr** — priced like the research service it is, not a $5
-newsletter. Right now there's a limited **founding-member** rate at **$399/yr**
-while seats last.
+newsletter with a rocket in the subject line. Right now there's a limited
+**founding-member** rate at **$399/yr** while seats last.
 
 **[Become a founding member →](https://read.northdenoise.com/subscribe)**
 
