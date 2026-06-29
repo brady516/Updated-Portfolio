@@ -50,12 +50,13 @@ accordingly (next week's issue).
 
 ## The Read — rebuilding the case with the math it left out *(paid)*
 
-Let's do the honest version on our generic "NextGiant Corp."
+Let's do the honest version on our generic "NextGiant Corp." (Any resemblance to a
+stock currently in a YouTube thumbnail is entirely deserved.)
 
-**Step 1 — Reverse the valuation.** Instead of guessing a price target, ask what
-the *current* price already implies. Back into the revenue, margin, and multiple
-the market is pricing. Often the "early" stock has already priced years of
-flawless execution.
+**Step 1 — Reverse the valuation.** Instead of guessing a price target — finance's
+favorite party trick — ask what the *current* price already implies. Back into the
+revenue, margin, and multiple the market is pricing. The "early" stock has usually
+priced in years of flawless execution and a standing ovation.
 
 **Step 2 — Build the required-assumptions table.**
 

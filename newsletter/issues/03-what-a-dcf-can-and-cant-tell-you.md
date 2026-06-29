@@ -50,8 +50,9 @@ value* — the part after year 10 that you're guessing hardest about. Most of yo
    ever-rising lines. Real businesses are lumpy and cyclical. Build a base case
    you'd defend to a skeptic, not the one that justifies the price.
 2. **Discount rate (WACC).** What return the cash must clear to be worth waiting
-   for. *The lie:* a precise-looking number built on a guessed equity risk
-   premium and a beta that changes with your data window. Treat it as a *range*.
+   for. *The lie:* a number reported to two decimal places that's built on a
+   guessed equity risk premium and a beta that changes every time you move the
+   data window. Precision cosplaying as accuracy. Treat it as a *range*.
 3. **Terminal value.** Everything after the forecast. *The lie:* a terminal
    growth rate north of long-run GDP — which quietly assumes the company
    eventually becomes the economy. Keep it ≤ long-run nominal GDP.
