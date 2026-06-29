@@ -47,6 +47,11 @@ Every **paid** issue (split + flagship) includes the **Wall Street Word Salad of
 the Week** — one real piece of Wall Street/corporate jargon translated to plain
 English, with what it's hiding. Paid-only; it's a standing perk, not a calendar slot.
 
+The drafts ship with **illustrative, unattributed** archetype quotes. Before
+publishing, swap each for a **real, verbatim, cited** quote — never invent one and
+attach a company. See `word-salad-bank.md` for the sourcing workflow and where to
+mine each theme.
+
 ## Cadence map
 
 - **Monthly flagship** lands on issues 4, 8, 12 (then every 4th).
