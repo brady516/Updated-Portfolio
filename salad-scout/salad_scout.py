@@ -34,6 +34,7 @@ import os
 import re
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import date, timedelta
@@ -181,43 +182,73 @@ def fetch(url, ua, timeout=30):
         "Accept-Encoding": "identity",
         "Accept": "*/*",
     })
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        raw = resp.read()
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            raw = resp.read()
+    except urllib.error.HTTPError as e:
+        body = ""
+        try:
+            body = e.read().decode("utf-8", errors="replace")[:300]
+        except Exception:
+            pass
+        raise RuntimeError(f"HTTP {e.code} {e.reason} from {url}"
+                           + (f"\n  body: {body}" if body else "")) from None
     return raw.decode("utf-8", errors="replace")
+
+
+def _efts(q, forms, start, end, ua, entity):
+    """One EDGAR full-text-search request for a single query phrase."""
+    params = {"q": q, "forms": forms, "dateRange": "custom",
+              "startdt": start, "enddt": end}
+    if entity:
+        params["entityName"] = entity
+    url = "https://efts.sec.gov/LATEST/search-index?" + urllib.parse.urlencode(params)
+    return json.loads(fetch(url, ua))
 
 
 def edgar_search(terms, forms, days, max_docs, ua, entity=None):
     """Query EDGAR full-text search; return [{company, form, date, url}].
 
-    entity: optional company-name filter (EFTS entityName) to target a specific
-    filer — e.g. "Ford Motor Co" — when you want a named, attributable quote.
+    One request per phrase (EFTS rejects OR-joined multi-phrase queries with a 500),
+    aggregated and de-duped. entity: optional EFTS entityName filter to target a
+    specific filer — e.g. "Ford Motor Co" — for a named, attributable quote.
     """
     start = (date.today() - timedelta(days=days)).isoformat()
     end = date.today().isoformat()
-    q = " OR ".join(f'"{t.strip()}"' for t in terms)
-    params = {"q": q, "forms": forms, "startdt": start, "enddt": end}
-    if entity:
-        params["entityName"] = entity
-    url = "https://efts.sec.gov/LATEST/search-index?" + urllib.parse.urlencode(params)
-    data = json.loads(fetch(url, ua))
-    out = []
-    for h in data.get("hits", {}).get("hits", [])[:max_docs]:
-        src = h.get("_source", {})
-        names = src.get("display_names") or ["(unknown filer)"]
-        ciks = src.get("ciks") or []
-        _id = h.get("_id", "")  # "accession:document"
-        doc_url = None
-        if ":" in _id and ciks:
-            accession, doc = _id.split(":", 1)
-            acc_nodash = accession.replace("-", "")
-            cik = ciks[0].lstrip("0")
-            doc_url = f"https://www.sec.gov/Archives/edgar/data/{cik}/{acc_nodash}/{doc}"
-        out.append({
-            "company": names[0],
-            "form": src.get("root_form") or src.get("file_type") or forms,
-            "date": src.get("file_date", end),
-            "url": doc_url,
-        })
+    seen, out, errors = set(), [], []
+    for term in terms:
+        term = term.strip()
+        if not term:
+            continue
+        try:
+            data = _efts(f'"{term}"', forms, start, end, ua, entity)
+        except Exception as e:
+            errors.append(f"{term}: {e}")
+            continue
+        for h in data.get("hits", {}).get("hits", []):
+            _id = h.get("_id", "")
+            if _id in seen:
+                continue
+            seen.add(_id)
+            src = h.get("_source", {})
+            names = src.get("display_names") or ["(unknown filer)"]
+            ciks = src.get("ciks") or []
+            doc_url = None
+            if ":" in _id and ciks:
+                accession, doc = _id.split(":", 1)
+                doc_url = (f"https://www.sec.gov/Archives/edgar/data/"
+                           f"{ciks[0].lstrip('0')}/{accession.replace('-', '')}/{doc}")
+            out.append({
+                "company": names[0],
+                "form": src.get("root_form") or src.get("file_type") or forms,
+                "date": src.get("file_date", end),
+                "url": doc_url,
+            })
+            if len(out) >= max_docs:
+                return out
+        time.sleep(0.25)  # SEC rate limit: stay well under 10 req/s
+    if not out and errors:
+        raise RuntimeError("all EDGAR queries failed:\n  " + "\n  ".join(errors))
     return out
 
 
