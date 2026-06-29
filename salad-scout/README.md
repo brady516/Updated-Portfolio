@@ -49,6 +49,21 @@ Global flags (work on any command): `--top N`, `--format text|json|csv`,
 tuned search for each Word Salad theme (set your UA at the top first). See
 `../newsletter/word-salad-bank.md` for the theme→source map.
 
+## Drafting the translation (no AI)
+
+`translate.py` is the deterministic companion: Scout finds the quote, this decodes
+it. Rule-based on purpose — a dictionary can't invent a motive, only decode words
+that are on the page.
+
+```bash
+python3 translate.py --quote "the optionality embedded in our sites to sell power..."
+cat quote.txt | python3 translate.py --stdin
+```
+
+It returns DECODED jargon → plain English, a rough literal DRAFT to react to, and
+the language TELLS it can prove. You add the wit and approve before publishing —
+never add a claim that isn't in the quote.
+
 ## Output
 
 Ranked candidates with a **salad score**, the matched **buzzwords**, the

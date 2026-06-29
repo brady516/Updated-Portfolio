@@ -54,5 +54,6 @@ the bottom of that script.
    my archetype.
 2. Paste it **verbatim** into the issue's "This week's salad," with attribution:
    *— Company, form/call, date* (and a link).
-3. Keep (or tweak) the existing Translation + What it's hiding.
+3. Draft the translation honestly: `python translate.py --quote "..."` (decodes the
+   jargon + surfaces provable tells, no AI, no invented motives), then polish in voice.
 4. Sanity check: is it a fair, short quote used for commentary? Yes → ship it.

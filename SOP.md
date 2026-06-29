@@ -46,7 +46,13 @@ Target: one issue/week. Budget ~60–90 min with everything drafted.
    python -X utf8 salad_scout.py edgar --forms 8-K --days 30 --max-docs 15 --per-company 1 --top 12 --ua "Brady Gallagher blgallag.bg@gmail.com"
    ```
    or `bash source-the-bank.sh` for all themes at once. Pick the best line.
-3. **Drop the quote in verbatim** with attribution (company, form, date, link). Replace the issue's illustrative placeholder. Write the *Translation* + *What it's hiding*.
+3. **Draft the translation.** Run the decoder for an honest first pass:
+   ```
+   python translate.py --quote "the exact sentence you picked"
+   ```
+   It gives you DECODED jargon, a rough literal swap, and the provable TELLS. Then
+   **polish in your voice** and drop the quote in verbatim with attribution
+   (company, form, date, link), replacing the issue's illustrative placeholder.
 4. **Run the integrity checklist** (§5). Non-negotiable.
 5. **Final read** in voice (`newsletter/voice-and-brand.md`): smirk + true + compliance-safe.
 6. **Schedule in Substack.** Free above the fold; paywall the deep section (from week 5 on).
