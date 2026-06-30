@@ -43,19 +43,26 @@ call for what isn't said, #24 Sequence-of-returns risk (flagship), #25 Insurance
 investment? — the whole-life pitch decoded, #26 Asset bubbles: the story vs. the math,
 #27 Concentration: when conviction is worth it.
 
-Flagships now land on #4, #8, #12, #19, #24 (≈ monthly).
+And ten more (**#28–#37**), extending the runway to **~37 issues / ~9 months**:
+#28 The 4% rule, honestly (flagship); #29 Annuities decoded; #30 Emergency fund math;
+#31 Factor investing without the marketing; #32 Reading an analyst price target;
+#33 Home as an investment? the math people skip; #34 The exit nobody teaches (flagship);
+#35 Set-and-forget vs. tinkering; #36 Inflation: the silent tax (flagship);
+#37 DCA vs. lump sum: the honest answer.
+
+Flagships now land on #4, #8, #12, #19, #24, #28, #34, #36 (≈ monthly).
 
 ## Backlog (future fodder)
 
 - The cost of fees over 30 years, compounded honestly (companion to #14)
-- "Set-and-forget" vs. tinkering: when to leave it alone
-- Annuities decoded: when the guarantee is worth the cost (and when it isn't)
-- The 4% rule — origin, limits, and the flexible alternatives
-- Behavioral finance of selling: nobody teaches the exit
-- Factor investing without the marketing (value/quality/momentum, honestly)
-- Reading an analyst price target for what it really is
-- Home as an investment? the math people skip
-- Emergency fund math: how much is enough, where to keep it
+- Good debt vs. bad debt; pay off the mortgage or invest?
+- The psychology of "enough" — when more money stops helping
+- Estate basics: beneficiaries, the stuff nobody wants to do
+- Currency / FX risk for the everyday investor
+- IPOs and lockups: who really gets paid
+- Share buybacks: returning capital or propping the chart?
+- Target-date funds: the good default, decoded
+- Bonds 101: what you actually own when you "own bonds"
 
 ## Recurring paid segment
 
