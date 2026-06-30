@@ -1,0 +1,42 @@
+# GitHub Pages — IP-safe redundancy for North de Noise.
+# Publishes ONLY the `site/` folder, so the newsletter drafts, SOP, and tooling
+# at the repo root are never served. Cloudflare Pages is primary (apex domain);
+# this is a warm standby at the github.io URL.
+#
+# Requires: repo Settings -> Pages -> Source = "GitHub Actions".
+# Private repo + Pages requires GitHub Pro/Team. Public repo works on Free.
+name: Deploy site/ to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# one deploy at a time; don't cancel an in-progress production deploy
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload only the site/ folder
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
