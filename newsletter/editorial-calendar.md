@@ -33,22 +33,29 @@ real scars. Drop in dates, run [Salad Scout](../salad-scout/) for fresh Word Sal
 quotes, and publish. Issues 1–4 are formatted free for the launch ramp; the split
 paywall + founding offer begin at week 5 (see `launch-playbook.md`).
 
-Plus six more drafted (**#16–#21**), extending the runway to **~21 issues / ~5 months**:
-#16 Liquidity (the risk nobody prices), #17 Options Greeks without the jargon,
-#18 Tax drag (the other silent fee), #19 Stock-picking vs. indexing — the honest
-scorecard (flagship), #20 Crypto: the protocol thesis vs. the casino, #21 How to
-actually rebalance.
+Plus six more drafted (**#16–#21**): #16 Liquidity, #17 Options Greeks without the
+jargon, #18 Tax drag, #19 Stock-picking vs. indexing (flagship), #20 Crypto: protocol
+vs. casino, #21 How to actually rebalance.
+
+And six more (**#22–#27**), extending the runway to **~27 issues / ~6 months**:
+#22 Monte Carlo vs. the one rosy line (ties to store model), #23 Reading an earnings
+call for what isn't said, #24 Sequence-of-returns risk (flagship), #25 Insurance as an
+investment? — the whole-life pitch decoded, #26 Asset bubbles: the story vs. the math,
+#27 Concentration: when conviction is worth it.
+
+Flagships now land on #4, #8, #12, #19, #24 (≈ monthly).
 
 ## Backlog (future fodder)
 
-- Monte Carlo vs. the single-line retirement projection (ties to the store model)
-- Concentration vs. diversification: when conviction is worth it
-- Reading an earnings call for what's *not* said
 - The cost of fees over 30 years, compounded honestly (companion to #14)
-- Asset bubbles: spotting the story vs. the math
-- Sequence-of-returns risk in retirement
 - "Set-and-forget" vs. tinkering: when to leave it alone
-- Insurance as an investment? (the whole-life pitch, decoded)
+- Annuities decoded: when the guarantee is worth the cost (and when it isn't)
+- The 4% rule — origin, limits, and the flexible alternatives
+- Behavioral finance of selling: nobody teaches the exit
+- Factor investing without the marketing (value/quality/momentum, honestly)
+- Reading an analyst price target for what it really is
+- Home as an investment? the math people skip
+- Emergency fund math: how much is enough, where to keep it
 
 ## Recurring paid segment
 
