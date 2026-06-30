@@ -7,10 +7,25 @@ storefront a bad trade.
 
 ## Domains (locked)
 
-- **`northdenoise.com`** (apex) → the static site, hosted on **GitHub Pages**.
+- **`northdenoise.com`** (apex) → the static site, hosted on **Cloudflare Pages**
+  (deploys from a **private** GitHub repo — free; GitHub Pages would require Pro).
 - **`read.northdenoise.com`** → the **North de Noise** newsletter (Substack custom
   domain).
 - Site "subscribe" CTAs point at `https://read.northdenoise.com`.
+
+## Repo layout & what gets served (important)
+
+A static host serves whatever's in its output directory. To keep the business IP
+off the public internet, only the website lives in the deploy folder:
+
+- **`site/`** — the *only* thing published (all `.html` + `Assets/`). Cloudflare's
+  **build output directory** is set to `site`.
+- **Root (never served):** `newsletter/` (paid drafts), `salad-scout/`,
+  `lead-magnet/`, `SOP.md`, `HOSTING.md`, `README.md`.
+
+This is the layer that actually protects the paid drafts — making the *repo* private
+hides the source on GitHub, but a host still serves whatever it's pointed at, so the
+sensitive folders must stay *outside* `site/`.
 
 ## The split
 
@@ -38,22 +53,21 @@ different media, with **1** copy offsite:
 
 Test a restore periodically — an untested backup is a hope, not a backup.
 
-## Deploying the site (GitHub Pages + northdenoise.com)
+## Deploying the site (Cloudflare Pages + private repo)
 
-Plain static site, no build step. The repo includes a `CNAME` file
-(`northdenoise.com`) so GitHub Pages serves the custom apex domain.
+Plain static site, no build step. Cloudflare Pages deploys it from the GitHub repo —
+private repo supported on the free plan.
 
-1. **Repo → Settings → Pages:** Source = deploy from branch, pick the default
-   branch, folder `/ (root)`. Custom domain should auto-fill from `CNAME`.
-2. **DNS at your registrar — apex `northdenoise.com`:** add GitHub Pages' four
-   **A** records:
-   - `185.199.108.153`
-   - `185.199.109.153`
-   - `185.199.110.153`
-   - `185.199.111.153`
-   (optionally the matching AAAA records for IPv6).
-3. **`www` (optional):** add a **CNAME** record `www` → `<your-github-username>.github.io`.
-4. Back in Pages, tick **Enforce HTTPS** once the certificate provisions.
+1. **GitHub:** make the repo **private** (Settings → Danger Zone → Change visibility).
+2. **Cloudflare:** Workers & Pages → **Create → Pages → Connect to Git** → authorize
+   GitHub → select `Updated-Portfolio`.
+3. **Build settings:** Framework preset = **None**, Build command = **(blank)**,
+   **Build output directory = `site`** → Save & Deploy.
+4. **Custom domain:** Pages project → **Custom domains** → add `northdenoise.com`
+   (+ `www`). DNS is on Cloudflare, so the records and HTTPS cert are wired
+   automatically.
+5. **Retire GitHub Pages:** repo Settings → Pages → Source = **None** (avoid
+   double-hosting / a domain conflict). The old `CNAME` file has been removed.
 
 ## Newsletter domain (read.northdenoise.com via Substack)
 
