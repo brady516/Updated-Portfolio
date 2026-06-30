@@ -15,7 +15,7 @@ newsletter loop, integrity checklist, tooling, deploy).
 
 | Area | Where |
 |---|---|
-| Website (static, GitHub Pages) | `index.html`, `insights.html`, `store.html`, `course.html`, `about.html`, `contact.html`, `Assets/` |
+| Website (static, Cloudflare Pages — deploys `site/` only) | `site/index.html`, `site/insights.html`, `site/store.html`, `site/course.html`, `site/about.html`, `site/contact.html`, `site/Assets/` |
 | Hosting / DNS / deploy | [`HOSTING.md`](HOSTING.md) |
 | Brand voice + rules | [`newsletter/voice-and-brand.md`](newsletter/voice-and-brand.md) |
 | Newsletter (strategy, calendar, 12 drafted issues, welcome email) | [`newsletter/`](newsletter/) |

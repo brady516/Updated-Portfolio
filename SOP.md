@@ -9,7 +9,7 @@ How to run the whole machine end to end. Internal doc; clarity over cleverness.
 
 | Piece | Home | Notes |
 |---|---|---|
-| Public site | **GitHub Pages → northdenoise.com** | Static; deploys from the default branch on push. `CNAME` is in the repo. |
+| Public site | **Cloudflare Pages → northdenoise.com** | Static; deploys the `site/` folder from a **private** GitHub repo on push. Only `site/` is published. |
 | Newsletter | **Substack → read.northdenoise.com** | Free + paid ($49/mo · $550/yr · founding $399/yr). |
 | Payments | **Stripe** | Payment Links for store + course. Never self-host payments. |
 | Store delivery | Stripe receipt / `thank-you.html` redirect | Or a delivery service (SendOwl/Lemon Squeezy) for expiring links. |
@@ -99,9 +99,10 @@ If any box is unchecked, it doesn't ship. (Reference: `newsletter/voice-and-bran
 
 ## 7. Updating the site
 
-1. Edit the HTML/CSS locally (or in the repo).
-2. Commit and push to the deploy branch.
-3. GitHub Pages rebuilds in ~1–2 min; hard-refresh to confirm.
+1. Edit the website files in **`site/`** (HTML/CSS/JS). Keep all web files inside
+   `site/` — anything outside it is never published.
+2. Commit and push.
+3. Cloudflare Pages auto-builds in ~1–2 min; hard-refresh to confirm.
 4. Keep disclaimers straight and copy in voice (`newsletter/voice-and-brand.md`).
 
 ---
