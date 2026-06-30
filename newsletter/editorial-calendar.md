@@ -33,18 +33,22 @@ real scars. Drop in dates, run [Salad Scout](../salad-scout/) for fresh Word Sal
 quotes, and publish. Issues 1–4 are formatted free for the launch ramp; the split
 paywall + founding offer begin at week 5 (see `launch-playbook.md`).
 
+Plus six more drafted (**#16–#21**), extending the runway to **~21 issues / ~5 months**:
+#16 Liquidity (the risk nobody prices), #17 Options Greeks without the jargon,
+#18 Tax drag (the other silent fee), #19 Stock-picking vs. indexing — the honest
+scorecard (flagship), #20 Crypto: the protocol thesis vs. the casino, #21 How to
+actually rebalance.
+
 ## Backlog (future fodder)
 
 - Monte Carlo vs. the single-line retirement projection (ties to the store model)
 - Concentration vs. diversification: when conviction is worth it
-- The cost of fees over 30 years, compounded honestly
-- Liquidity: the risk nobody prices until it's too late
-- Options Greeks without the jargon
-- How to actually rebalance (and how often)
 - Reading an earnings call for what's *not* said
-- Crypto: separating the protocol thesis from the casino
-- Tax drag and asset location
-- "Stock-picking vs. indexing" — the honest scorecard
+- The cost of fees over 30 years, compounded honestly (companion to #14)
+- Asset bubbles: spotting the story vs. the math
+- Sequence-of-returns risk in retirement
+- "Set-and-forget" vs. tinkering: when to leave it alone
+- Insurance as an investment? (the whole-life pitch, decoded)
 
 ## Recurring paid segment
 
