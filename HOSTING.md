@@ -66,8 +66,31 @@ private repo supported on the free plan.
 4. **Custom domain:** Pages project → **Custom domains** → add `northdenoise.com`
    (+ `www`). DNS is on Cloudflare, so the records and HTTPS cert are wired
    automatically.
-5. **Retire GitHub Pages:** repo Settings → Pages → Source = **None** (avoid
-   double-hosting / a domain conflict). The old `CNAME` file has been removed.
+## Redundancy: GitHub Pages as an IP-safe warm standby
+
+Cloudflare is primary (serves `northdenoise.com`). GitHub Pages is the backup, and
+it must publish **only** `site/` so the drafts/SOP/tooling at the root never leak.
+That's what `.github/workflows/pages.yml` does — it uploads just `site/` as the
+Pages artifact (GitHub's "deploy from a branch" can't target a subfolder, so the
+Actions workflow is required).
+
+To turn it on:
+1. **Repo → Settings → Pages → Source = "GitHub Actions."** (This also stops the
+   old failing "deploy from a branch" build and its emails.)
+2. Push to `main` → the workflow deploys `site/` to the **`*.github.io`** URL (the
+   apex stays with Cloudflare — don't point the custom domain at both).
+3. **Private repo + Pages requires GitHub Pro/Team** (~$4/mo). On the free plan,
+   Pages only runs on a *public* repo — so private + GitHub-Pages-standby = Pro.
+4. Optional: on Pro you can set the Pages site visibility to **private** (only repo
+   members can view the standby).
+
+**Free alternative (no Pro):** the private repo *is* your redundancy — it's the
+source of truth, and you can redeploy to any host (Cloudflare, Netlify, etc.) from
+it in minutes. For a static site that's arguably sufficient; the warm standby just
+saves you the few minutes of re-pointing if Cloudflare ever has a bad day.
+
+> If you are **not** doing the GitHub standby, instead just disable Pages: Settings
+> → Pages → **Unpublish site** (stops the failing builds).
 
 ## Newsletter domain (read.northdenoise.com via Substack)
 
