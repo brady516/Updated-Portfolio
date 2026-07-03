@@ -1,0 +1,25 @@
+{
+  // Cloudflare Worker config for the North de Noise site.
+  // The Worker serves the static files in ./site (nothing else in the repo is
+  // published). This file is what `npx wrangler deploy` reads on every build.
+  //
+  // "name" must match the existing Worker exactly, or a duplicate Worker is
+  // created instead of updating this one.
+  "name": "updated-portfolio",
+  "compatibility_date": "2026-07-01",
+
+  // Serve the site/ folder as static assets. Only these files are deployed.
+  "assets": {
+    "directory": "./site"
+  },
+
+  // Bind the custom domains to this Worker. Cloudflare provisions the DNS
+  // records and the SSL certificate automatically on deploy. This replaces the
+  // dashboard "Add Custom Domain" button, which is hidden for wrangler-deploy
+  // Workers. Both hostnames must be in a zone on this Cloudflare account
+  // (northdenoise.com is — its nameservers point to Cloudflare).
+  "routes": [
+    { "pattern": "northdenoise.com", "custom_domain": true },
+    { "pattern": "www.northdenoise.com", "custom_domain": true }
+  ]
+}
