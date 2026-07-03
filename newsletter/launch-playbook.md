@@ -28,6 +28,11 @@ before you've shown the goods.
       `__SUBSTACK_PAID_URL__` placeholders and the embed box.
 - [ ] Issues are drafted — **all 12 are in `issues/`** (a full ~90-day ramp). Add
       dates and a fresh Word Salad quote per issue, then schedule.
+- [ ] **Pre-sell / waitlist page (before issue #1):** stand up a simple landing page
+      (Substack's built-in landing page works) that captures emails with the
+      **Valuation Lab** as the hook plus a **3-question segmentation quiz** ("what's
+      your biggest finance frustration?"). Two wins: it builds the launch list, and
+      the answers tell you which issues to lead with. (See *Growth engine* below.)
 
 ---
 
@@ -67,6 +72,11 @@ before you've shown the goods.
       advisor-fee / terminal-cost comparison (premium pricing needs justification).
 - [ ] Keep the free funnel alive — never stop publishing genuinely useful free
       content, or list growth stalls.
+- [ ] **Turn on paid amplification (optional, once something converts organically):**
+      install a conversion pixel on the free-list signup, set a **small daily test
+      budget you're comfortable losing**, and run credibility-led ads (real CRD, zero
+      promises) that grow the **free** list — let free→paid do the monetizing. Optimize
+      on *cost-per-free-subscriber*, double down on what works. (See *Growth engine*.)
 
 ---
 
@@ -79,6 +89,51 @@ before you've shown the goods.
       paid subscribers on what they want more of.
 - [ ] Cross-sell the [store](../store.html) models and the
       [course](../course.html) to engaged readers (subscriber discount).
+
+## Growth engine — steal the mechanics, refuse the hype
+
+Adapted from the AI "vibe marketing" playbooks. The *execution loop* is genuinely
+strong; the "printing millionaires" promise and the invented "12,000 on the waitlist"
+social proof are exactly the noise North de Noise exists to mock. So we take the loop
+and refuse the lie — and the refusal is a feature, because credibility is a thing the
+grifters can't fake and we can prove.
+
+**The loop, adapted honestly:**
+
+1. **Validate demand with data, not vibes.** Before over-investing, look at what finance
+   questions actually resonate — search trends, comment sections, what people keep
+   asking and nobody answers straight. The underserved "hot category": smart people who
+   want signal and can't find it. Confirm the angle before scaling it.
+2. **Pre-sell before you fully launch.** A waitlist/landing page (Substack's works)
+   capturing emails with the Valuation Lab hook + a short **segmentation quiz.** You get
+   a launch list *and* first-party intel on which pains to lead with. (Deliver the lead
+   magnet on signup — Phase 0.)
+3. **Organic first — the teardown *is* the viral unit.** Your honest equivalent of the
+   "before/after" format is the **Signal vs. Noise teardown** and **Word Salad.**
+   Repurpose every issue's segment to LinkedIn/X with a link back. This is the primary,
+   near-free channel early, and it compounds credibility.
+4. **Then amplify with paid — carefully, and only what already converts.** Conversion
+   pixel on the free-list signup → small daily test budget → let the platform find
+   lookalikes of your *best* subscribers → optimize on cost-per-free-subscriber. AI can
+   draft ad variants; every one must clear the firewall below.
+5. **Make it self-improving.** Weekly, pull the best-performing content/ads, double down,
+   kill the losers, iterate. The compounding is real (Issue #46) — the same effect the
+   video sells, minus the fabrication.
+
+**The integrity firewall (non-negotiable — this is the moat):**
+
+| Take (the mechanics) | Refuse (the hype) |
+|---|---|
+| Data-validated demand; pre-sell landing page + quiz | Fabricated waitlist counts / fake reviews / invented social proof |
+| Conversion pixel, lookalike targeting, test budgets | "Get rich" / "printing millionaires" / income or return promises |
+| AI-assisted ad *drafts*, measured and iterated | AI-*written claims* nobody verified (the human owns every claim — see #15) |
+| Real scarcity (the capped founding-member offer) | Manufactured urgency / fake countdowns |
+| **Verifiable credentials (CRD 6510444) as the hook** | Anonymous authority, rented-Lamborghini theatrics |
+
+Note the presenter herself refused the fake social proof — that's the line, and it's
+ours too. For a *finance* audience the firewall isn't just ethics: income/return
+promises are also a regulatory landmine. The ad angle no competitor can copy is the one
+thing they don't have — *a real name and a record you can check.*
 
 ## Benchmarks to sanity-check yourself
 
