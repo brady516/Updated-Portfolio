@@ -50,19 +50,26 @@ And ten more (**#28–#37**), extending the runway to **~37 issues / ~9 months**
 #35 Set-and-forget vs. tinkering; #36 Inflation: the silent tax (flagship);
 #37 DCA vs. lump sum: the honest answer.
 
-Flagships now land on #4, #8, #12, #19, #24, #28, #34, #36 (≈ monthly).
+And ten more (**#38–#47**), extending the runway to **~47 issues / ~11 months**:
+#38 Good debt/bad debt — pay off the mortgage or invest?; #39 Bonds 101: what you
+actually own; #40 Target-date funds decoded; #41 Share buybacks: capital return or
+propping the chart?; #42 IPOs and lockups: who really gets paid; #43 The psychology of
+"enough" (flagship); #44 Estate basics; #45 Currency/FX risk; #46 Compounding: the force
+everyone quotes and nobody feels (flagship); #47 Margin & leverage: right and still broke.
+
+Flagships now land on #4, #8, #12, #19, #24, #28, #34, #36, #43, #46 (≈ monthly).
 
 ## Backlog (future fodder)
 
 - The cost of fees over 30 years, compounded honestly (companion to #14)
-- Good debt vs. bad debt; pay off the mortgage or invest?
-- The psychology of "enough" — when more money stops helping
-- Estate basics: beneficiaries, the stuff nobody wants to do
-- Currency / FX risk for the everyday investor
-- IPOs and lockups: who really gets paid
-- Share buybacks: returning capital or propping the chart?
-- Target-date funds: the good default, decoded
-- Bonds 101: what you actually own when you "own bonds"
+- The psychology of risk tolerance (what you say vs. what you do in a crash)
+- Reading a balance sheet without an accounting degree
+- REITs: real estate without the landlord headaches
+- ESG / thematic funds: conviction or marketing?
+- Health Savings Accounts: the stealth retirement account
+- Social Security timing: the claim-age math
+- Robo-advisors vs. DIY vs. human advisor — the honest comparison
+- "Get-rich-quick" autopsy series: a recurring teardown of a specific scheme type
 
 ## Recurring paid segment
 
