@@ -135,6 +135,54 @@ ours too. For a *finance* audience the firewall isn't just ethics: income/return
 promises are also a regulatory landmine. The ad angle no competitor can copy is the one
 thing they don't have — *a real name and a record you can check.*
 
+## Sell before you build — the validate-first loop (Origami/Finn, adapted)
+
+The store waitlist we shipped *is* this playbook: prove demand before spending a
+month building the wrong model. The transferable mechanics — and the two places a
+finance brand must draw a harder line than a generic SaaS founder.
+
+**Take (the mechanics):**
+
+- **Validate demand before building.** A no-charge waitlist / letter-of-intent
+  beats intuition every time. Build the models in the order the list votes for —
+  the `?model=` tags on the store form *are* that vote. Don't build model #2 until
+  the list asks for model #2.
+- **Deliver manually first, then productize.** Finn shipped lead spreadsheets by
+  hand before the software existed, and the manual work became the product spec.
+  Brady's equivalent already exists: the **custom-advisory** card. Hand-build the
+  DCF / Monte-Carlo model as a bespoke engagement for the first few buyers, learn
+  what they actually change and need, *then* turn the repeated request into the
+  productized template. The manual version writes the spec for the product.
+- **Booked demand is leverage.** A committed waitlist and signed LOIs are what you
+  point at to justify the build, bring in help, or price with confidence — even
+  before a dollar is realized.
+- **B2B pays; consumers nickel-and-dime.** See the strategic note below.
+
+**Refuse (the finance-specific landmines Finn can use and we can't):**
+
+- **No "risk-free / pay-only-if-it-works" on investment outcomes.** For a SaaS
+  lead-gen tool a performance guarantee is a great offer. For anything touching
+  investing it is a **guarantee / performance promise** — the exact Rule 2210
+  landmine the brand refuses. A satisfaction guarantee on a *deliverable* ("don't
+  pay until the model's in your hands and it runs") is fine; a guarantee on
+  *returns* is never.
+- **Never take money for a product you imply is finished.** Validating at a stated
+  future price with *no charge* — what the store does now — is clean. Pre-selling
+  is only honest if you then actually deliver (manually is fine; vaporware is not).
+  The brand's whole premise is anti-vaporware; don't trip on it chasing momentum.
+
+## The B2B lever (the biggest under-used idea in this plan)
+
+Finn's hardest-won lesson: broke consumers killed his college tool at a $1.99
+paywall; businesses paid $500–$5,000/mo for the same *type* of work. North de
+Noise currently points mostly at retail investors ($49/mo). The higher-margin,
+more-defensible revenue is **B2B**: RIAs and financial advisors who'd pay for
+white-label models, planners who want the Monte-Carlo engine, research desks and
+fintechs that want the analysis. The **Business-Plan/GTM kit ($2,500)** and the
+**custom-advisory** card are already B2B-priced — lean into that lane. One advisor
+contract can be worth 100 retail subscribers, and businesses don't churn over a
+dollar. Worth a dedicated waitlist track and some direct outreach.
+
 ## Benchmarks to sanity-check yourself
 
 - Free→paid conversion of **2–5%** is healthy for a premium newsletter.
