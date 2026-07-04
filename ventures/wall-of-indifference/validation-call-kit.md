@@ -35,11 +35,26 @@ honest, unfiltered pain.
 
 ## The call (aim 5–8 minutes)
 
-**1. Opener — disarm, credential, reason (no pitch):**
-> "Hey [name], Brady Gallagher — [how you know them / mutual context]. I'm *not*
-> selling you anything today, promise. I'm building something for RIAs who work
-> with founders and business owners, and I only want time with people who actually
-> live this problem. You've got 5 minutes to tell me I'm wrong?"
+**1. Opener — lead with the scar, as a tested hypothesis (no pitch):**
+> "[Name], Brady Gallagher — not selling you anything, promise. Quick reason I
+> called: I sat in your seat. Built a book **zero to $22 million in 18 months** on
+> 401(k) rollovers — savers — and the tools worked great. Then I went after founder
+> money, and **that's where it fell apart.** The same retirement Monte Carlo that
+> won me every saver just… bounced off entrepreneurs. I've got a hypothesis about
+> why — but I'd rather know: **did you hit that same wall, or was that just me?**"
+
+Then **stop talking.** Let them answer. The "was that just me?" pulls the truth out.
+
+*Why this opener:* the **failure is the hook, not the $22MM.** Success is a
+one-sentence ticket of admission — dwell on it and you sound like a stranger
+bragging, which raises the wall. The *scar* ("it fell apart on me too") makes you a
+peer who lived their problem, and framing it as a **hypothesis you're testing**
+turns the whole call into peer discovery instead of a pitch. Keep it to ~25 seconds;
+the story is bait to trigger *their* story.
+
+*Integrity:* tell it exactly as it happened — "fell apart" = the saver playbook and
+tools didn't translate to builders. The true version is already the strongest one;
+don't dramatize it.
 
 **2. Make them feel the Wall (discovery — let them say it):**
 > "When you sit across from an entrepreneur or a pre-exit founder and pull up the
