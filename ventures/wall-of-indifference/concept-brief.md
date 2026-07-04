@@ -89,9 +89,11 @@ runs it; the founder is the one who finally leans in.
 
 ## 5. Why us (the moat a wealthtech can't copy)
 
-- **Author is the ICP-adjacent proof:** a builder who sat in the retail seat for a
-  decade, won't outsource his wealth, and has a **verifiable record** (FINRA
-  BrokerCheck, CRD 6510444; Series 7/63/66; MBA in investments).
+- **Author is the ICP-adjacent proof:** a builder who sat in the seat — a **3(21)
+  fiduciary** who grew a 401(k) book $0→$22M in 18 months (the purest saver seat),
+  then hit the founder wall himself — won't outsource his wealth, and has a
+  **verifiable record** (FINRA BrokerCheck, CRD 6510444; Series 7/63/66; MBA in
+  investments). He is the peer the ICP trusts because he lived their exact failure.
 - **Brand spine = North de Noise:** the **Scourge** critique (the anti-hype trust
   layer), the **Word-Salad / Wall-of-Indifference** plain-speech honesty (name the
   enemy the ICP feels), and the **validate-first scale mechanics.** A faceless SaaS

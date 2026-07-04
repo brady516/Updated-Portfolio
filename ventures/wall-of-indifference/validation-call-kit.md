@@ -37,9 +37,10 @@ honest, unfiltered pain.
 
 **1. Opener — lead with the scar, as a tested hypothesis (no pitch):**
 > "[Name], Brady Gallagher — not selling you anything, promise. Quick reason I
-> called: I sat in your seat. Built a book **zero to $22 million in 18 months** on
-> 401(k) rollovers — savers — and the tools worked great. Then I went after founder
-> money, and **that's where it fell apart.** The same retirement Monte Carlo that
+> called: I sat in your seat. Grew a book **zero to $22 million in 18 months** as a
+> **3(21) fiduciary** on 401(k) plan assets — savers, the purest saver seat there
+> is, and the tools worked great. Then I went after founder money, and **that's
+> where it fell apart.** The same retirement Monte Carlo that
 > won me every saver just… bounced off entrepreneurs. I've got a hypothesis about
 > why — but I'd rather know: **did you hit that same wall, or was that just me?**"
 
