@@ -98,12 +98,35 @@ mouth.
 
 ---
 
-## The sunset rule (non-negotiable)
+## The sunset rule → the exit (built to sell)
 
-A bridge has two ends. **The day RIA (or newsletter) recurring revenue covers your
-monthly nut, you kill this or hand it to a VA with the checklist.** If you don't set
-that trigger now, a $299 side-gig quietly becomes your job and eats the hours meant
-for the real, defensible bet. Write the number down: *when MRR ≥ $____, sunset.*
+A bridge has two ends — and this one's end is a **sale**, not a shutdown. The whole
+build is designed as a transferable machine (playbook + automation + channel), so
+every decision below is an exit-multiple decision:
+
+**What it sells for (SDE multiples — profit + owner add-backs):**
+
+| Structure at sale | Multiple |
+|---|---|
+| Owner-run, one-time fees only | 1.5–2.0x |
+| VA-run, SOPs + automation, brand ≠ Brady | 2.5–3.0x |
+| Same + recurring "Email Care" MRR layer | 3.0–4.0x |
+
+**Design-for-exit rules, from day one:**
+- **Clean books:** separate bank account + separate Stripe from dollar one.
+  Commingled finances are the #1 small-deal multiple killer — buyers must be able
+  to verify SDE.
+- **The clock:** buyers need **12 months trailing P&L minimum** (24 firms the
+  price). The track record starts when revenue does.
+- **Add the MRR layer early:** a $15–25/mo "Email Care" plan (domain renewal,
+  record monitoring, break-fix, priority support). A 30–40% attach rate is what
+  moves the asset from the 2x bucket to the 3.5x bucket.
+- **Get delivery off Brady fast** (VA + runbook) and keep the brand LookLegit —
+  a buyer can't acquire a founder's phone number.
+- **Best buyer is a strategic:** a local MSP / web agency / hosting reseller who
+  bolts the list + machine onto their upsell stack (your $299 customer is their
+  $3k website customer). Shop strategics before marketplaces (Acquire.com,
+  Flippa, Empire Flippers).
 
 ---
 
