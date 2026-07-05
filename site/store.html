@@ -9,6 +9,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./Assets/css/styles.css">
+    <style>
+        .waitlist-form { display:flex; flex-direction:column; gap:1.1rem; max-width:640px; margin-top:1.4rem; }
+        .wl-field { display:flex; flex-direction:column; gap:.4rem; font-weight:700; }
+        .wl-field input { font:inherit; padding:.7rem .8rem; border:1px solid rgba(20,26,58,.25); border-radius:8px; background:#fff; color:#141a3a; }
+        .wl-field input:focus { outline:2px solid var(--coral, #ff2d95); outline-offset:1px; }
+        .wl-models { border:1px solid rgba(20,26,58,.2); border-radius:10px; padding:1rem 1.1rem; margin:0; }
+        .wl-models legend { font-weight:700; padding:0 .4rem; }
+        .wl-models label { display:flex; align-items:center; gap:.6rem; font-weight:500; padding:.32rem 0; cursor:pointer; }
+        .wl-models input { width:1.15rem; height:1.15rem; accent-color:var(--coral, #ff2d95); flex:0 0 auto; }
+        .wl-fine { font-size:.85rem; opacity:.75; margin:.1rem 0 0; text-align:center; }
+    </style>
 </head>
 <body>
 
@@ -30,7 +41,8 @@
         <section>
             <p class="eyebrow">The Store</p>
             <h2>The models I actually build — yours to keep</h2>
-            <p class="section-lead">Not a course about spreadsheets. The actual spreadsheets — institutional-grade models I've used in advisory practice, documented well enough that you can open one, change an assumption, and watch the "fair value" politely fall apart. That's the lesson. One-time purchase, instant download.</p>
+            <p class="section-lead">Not a course about spreadsheets. The actual spreadsheets — institutional-grade models I've used in advisory practice, documented well enough that you can open one, change an assumption, and watch the "fair value" politely fall apart. That's the lesson. A single advisory engagement to build one of these runs into four figures.</p>
+            <p class="section-lead"><strong>These are in active development.</strong> Rather than sell you a promise, I'm building the ones people actually want first — so join the waitlist for the models you'd use. No charge now, no card. Waitlist members get <strong>first access and a founding price</strong> the day a model ships, and their votes decide the build order.</p>
         </section>
 
         <section>
@@ -41,8 +53,8 @@
                     <p class="for">For: founders, analysts, investors</p>
                     <p>Adjustable WACC, two terminal-value methods (Gordon &amp; exit-multiple), and a sensitivity table that shows your "fair value" for the moody opinion it is. The same framework I used valuing companies in advisory work — now without the advisory invoice.</p>
                     <div class="spacer"></div>
-                    <div class="price">$49 <small>one-time</small></div>
-                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_DCF__" target="_blank" rel="noopener">Buy the DCF model</a>
+                    <div class="price">$399 <small>at launch</small></div>
+                    <a class="btn btn-primary btn-block" href="#waitlist" data-model="dcf">Join the waitlist →</a>
                 </div>
 
                 <div class="card">
@@ -50,8 +62,8 @@
                     <p class="for">For: planners, DIY investors</p>
                     <p>Run thousands of return simulations to stress-test a portfolio or retirement plan across market regimes. You get a probability of success — not the single rosy line every retirement calculator draws straight through the middle of "it depends."</p>
                     <div class="spacer"></div>
-                    <div class="price">$59 <small>one-time</small></div>
-                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_MONTECARLO__" target="_blank" rel="noopener">Buy the Monte Carlo model</a>
+                    <div class="price">$499 <small>at launch</small></div>
+                    <a class="btn btn-primary btn-block" href="#waitlist" data-model="montecarlo">Join the waitlist →</a>
                 </div>
 
                 <div class="card">
@@ -59,8 +71,8 @@
                     <p class="for">For: income investors</p>
                     <p>Project income from dividend-growth stocks with payout-ratio guardrails (so you can spot the "safe 8% yield" before it cuts), reinvestment toggles, and a multi-stage DDM valuation tab.</p>
                     <div class="spacer"></div>
-                    <div class="price">$39 <small>one-time</small></div>
-                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_DIVGROWTH__" target="_blank" rel="noopener">Buy the dividend model</a>
+                    <div class="price">$249 <small>at launch</small></div>
+                    <a class="btn btn-primary btn-block" href="#waitlist" data-model="dividend">Join the waitlist →</a>
                 </div>
 
                 <div class="card">
@@ -68,17 +80,18 @@
                     <p class="for">For: options-aware investors</p>
                     <p>Screen for covered-call and cash-secured-put setups with annualized-yield and break-even math built in — so "free monthly income" shows its actual risk before you sell the call. Educational tooling, not a signal service. (Nobody's texting you alerts.)</p>
                     <div class="spacer"></div>
-                    <div class="price">$69 <small>one-time</small></div>
-                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_OPTIONS__" target="_blank" rel="noopener">Buy the options screener</a>
+                    <div class="price">$349 <small>at launch</small></div>
+                    <a class="btn btn-primary btn-block" href="#waitlist" data-model="options">Join the waitlist →</a>
                 </div>
 
                 <div class="card">
                     <h3>Business-Plan &amp; Go-to-Market Kit</h3>
                     <p class="for">For: founders, operators</p>
                     <p>The template set I use advising start-ups: financial-projection workbook, business-plan outline, and a go-to-market one-pager with KPI/OKR scaffolding — the grown-up version of the "we'll be profitable by year two" slide.</p>
+                    <p class="for"><strong>Includes a live onboarding session:</strong> a 45-minute call where I walk you through the models and tailor the assumptions to your business — so you leave knowing how to drive them, not just owning them.</p>
                     <div class="spacer"></div>
-                    <div class="price">$89 <small>one-time</small></div>
-                    <a class="btn btn-primary btn-block" href="__STRIPE_LINK_BIZPLAN__" target="_blank" rel="noopener">Buy the business-plan kit</a>
+                    <div class="price">$2,500 <small>at launch</small></div>
+                    <a class="btn btn-primary btn-block" href="#waitlist" data-model="bizplan">Join the waitlist →</a>
                 </div>
 
                 <div class="card" style="border-style:dashed; background:transparent; box-shadow:none;">
@@ -92,11 +105,40 @@
             </div>
         </section>
 
-        <section>
+        <section id="waitlist">
             <div class="embed-frame">
-                <strong>How delivery works:</strong> after checkout, Stripe redirects you to a secure download page and emails your receipt with the file link. Questions? <a href="./contact.html">Reach out</a>.
-                <br><br>
-                <small>Setup note for Brady: replace each <code>__STRIPE_LINK_*__</code> with the matching Stripe Payment Link, and set each link's post-payment redirect to <code>thank-you.html</code> (or attach the file to Stripe's receipt email).</small>
+                <h3 style="margin-top:0;">Join the waitlist — help me build the right ones first</h3>
+                <p><strong>How it works:</strong> pick the models you'd actually use. It's free and there's no card. You'll only hear from me when one you asked for is ready — with a <strong>founding-member price</strong> and first access before it goes public. The prices shown are the planned launch prices, so you know exactly what you're reserving. Questions? <a href="./contact.html">Reach out</a>.</p>
+
+                <form class="waitlist-form" action="https://formspree.io/f/__FORMSPREE_ID__" method="POST">
+                    <label class="wl-field">
+                        <span>Your email</span>
+                        <input type="email" name="email" required placeholder="you@example.com" autocomplete="email">
+                    </label>
+
+                    <fieldset class="wl-models">
+                        <legend>Which would you use? (pick any)</legend>
+                        <label><input type="checkbox" name="models" value="DCF Valuation Model — $399" data-key="dcf"> DCF Valuation — $399</label>
+                        <label><input type="checkbox" name="models" value="Monte Carlo Portfolio &amp; Retirement — $499" data-key="montecarlo"> Monte Carlo — $499</label>
+                        <label><input type="checkbox" name="models" value="Dividend-Growth Model — $249" data-key="dividend"> Dividend-Growth — $249</label>
+                        <label><input type="checkbox" name="models" value="Covered-Call &amp; Options Screener — $349" data-key="options"> Options Screener — $349</label>
+                        <label><input type="checkbox" name="models" value="Business-Plan &amp; GTM Kit — $2,500" data-key="bizplan"> Business-Plan &amp; GTM Kit — $2,500</label>
+                    </fieldset>
+
+                    <label class="wl-field">
+                        <span>Anything you'd want it to do? (optional)</span>
+                        <input type="text" name="message" placeholder="e.g. multi-stage growth, PDF export, tax lots…">
+                    </label>
+
+                    <!-- spam honeypot: bots fill this, humans never see it -->
+                    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px;">
+                    <input type="hidden" name="_subject" value="New North de Noise model waitlist signup">
+
+                    <button type="submit" class="btn btn-primary btn-block">Reserve my spot →</button>
+                    <p class="wl-fine">No charge, no spam — one email when your model ships.</p>
+                </form>
+
+                <p><small>Setup note for Brady: replace <code>__FORMSPREE_ID__</code> with your Formspree form ID (same setup as Novissimo). Each card button scrolls here and pre-checks its model; submissions land in your Formspree inbox tagged by model, so you get clean demand-by-item data. Turn on Formspree's reCAPTCHA if spam appears. When a model ships, restore that card's button to a Stripe Payment Link and flip its price small-text from "at launch" to "one-time." Kit onboarding call → add Calendly <code>__CALENDLY_ONBOARDING__</code> to <code>thank-you.html</code>.</small></p>
             </div>
         </section>
     </main>
@@ -112,5 +154,14 @@
     </footer>
 
     <script defer src="./Assets/js/shader-bg.js"></script>
+    <script>
+        // Card "Join the waitlist" buttons scroll to the form and pre-check their model.
+        document.querySelectorAll('a[data-model]').forEach(function (a) {
+            a.addEventListener('click', function () {
+                var box = document.querySelector('.wl-models input[data-key="' + a.getAttribute('data-model') + '"]');
+                if (box) box.checked = true;
+            });
+        });
+    </script>
 </body>
 </html>
