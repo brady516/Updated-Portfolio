@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Off Gmail — Professional Email for Tradespeople, Set Up For You in 48 Hours</title>
+<meta name="description" content="you@yourcompany.com instead of yourname1987@gmail.com. Done-for-you professional email setup for contractors, electricians, welders, and trades. $299 flat. 48 hours. Guaranteed.">
+<style>
+    :root{
+        --navy:#0f1b2d; --navy2:#16273f; --orange:#ff6b1a; --orange-d:#e55a0c;
+        --paper:#f6f4ef; --ink:#1a2333; --line:rgba(15,27,45,.14); --ok:#1e8a4c;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.55;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+    h1,h2,h3{line-height:1.15;letter-spacing:-.01em}
+    section{padding:56px 0}
+
+    /* top bar */
+    .bar{background:var(--navy);color:#fff;padding:14px 0}
+    .bar .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .logo{font-weight:800;font-size:1.05rem;letter-spacing:.02em}
+    .logo span{color:var(--orange)}
+    .bar a.call{color:#fff;text-decoration:none;font-weight:700;font-size:.95rem;background:var(--orange);padding:8px 14px;border-radius:8px;white-space:nowrap}
+
+    /* hero */
+    .hero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;padding:64px 0 72px;text-align:left}
+    .hero .kicker{display:inline-block;background:rgba(255,107,26,.15);color:var(--orange);border:1px solid rgba(255,107,26,.45);padding:5px 12px;border-radius:999px;font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:18px}
+    .hero h1{font-size:clamp(1.9rem,5.5vw,3.1rem);font-weight:800;margin-bottom:16px}
+    .hero h1 em{font-style:normal;color:var(--orange)}
+    .hero p.sub{font-size:clamp(1.05rem,2.6vw,1.25rem);color:#cdd6e4;max-width:620px;margin-bottom:28px}
+    .addr{font-family:ui-monospace,Menlo,Consolas,monospace;display:block;margin:22px 0 26px;font-size:clamp(.95rem,3vw,1.2rem)}
+    .addr .bad{color:#9aa7ba;text-decoration:line-through;text-decoration-color:#e2503c;text-decoration-thickness:2px}
+    .addr .arrow{color:var(--orange);margin:0 10px;font-weight:800}
+    .addr .good{color:#fff;background:rgba(30,138,76,.25);border:1px solid rgba(70,190,120,.5);padding:4px 10px;border-radius:8px}
+    .btn{display:inline-block;background:var(--orange);color:#fff;font-weight:800;font-size:1.1rem;padding:16px 30px;border-radius:10px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(255,107,26,.35)}
+    .btn:hover{background:var(--orange-d)}
+    .hero .under{margin-top:14px;font-size:.9rem;color:#9fb0c6}
+
+    /* pain */
+    .pain h2, .how h2, .price h2, .faq h2, .who h2{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:800;margin-bottom:18px}
+    .pain p{max-width:640px;margin-bottom:14px;font-size:1.05rem}
+    .pain .callout{background:#fff;border-left:5px solid var(--orange);padding:18px 20px;border-radius:0 10px 10px 0;margin-top:22px;font-weight:600;max-width:640px;box-shadow:0 1px 6px rgba(15,27,45,.07)}
+
+    /* how */
+    .how{background:#fff}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}
+    .step{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px}
+    .step .num{display:inline-flex;width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-weight:800;align-items:center;justify-content:center;margin-bottom:12px}
+    .step h3{font-size:1.05rem;margin-bottom:8px}
+    .step p{font-size:.95rem;color:#3d4a5f}
+    .how .note{margin-top:20px;font-size:.95rem;color:#3d4a5f}
+
+    /* price */
+    .price .box{background:var(--navy);color:#fff;border-radius:16px;padding:36px 28px;max-width:560px;margin-top:8px}
+    .price .amount{font-size:3rem;font-weight:800}
+    .price .amount small{font-size:1rem;font-weight:600;color:#9fb0c6}
+    .price ul{list-style:none;margin:20px 0}
+    .price li{padding:7px 0 7px 30px;position:relative}
+    .price li::before{content:"✓";position:absolute;left:0;color:var(--orange);font-weight:800}
+    .price .anchor{margin-top:6px;color:#cdd6e4;font-size:.98rem}
+    .price .anchor strong{color:#fff}
+    .guarantee{display:flex;gap:14px;align-items:flex-start;background:#fff;border:2px solid var(--ok);border-radius:12px;padding:18px 20px;margin-top:24px;max-width:560px}
+    .guarantee .shield{font-size:1.6rem}
+    .guarantee strong{color:var(--ok)}
+    .crew{margin-top:24px;max-width:560px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+
+    /* who */
+    .who{background:#fff}
+    .who .trades{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+    .who .t{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-weight:600;font-size:.95rem}
+
+    /* form */
+    .order{background:linear-gradient(180deg,var(--navy2),var(--navy));color:#fff}
+    .order h2{font-size:clamp(1.5rem,4vw,2.1rem);font-weight:800;margin-bottom:10px}
+    .order p.lead{color:#cdd6e4;margin-bottom:26px;max-width:560px}
+    form{max-width:560px;display:flex;flex-direction:column;gap:14px}
+    label{font-weight:700;font-size:.92rem;display:flex;flex-direction:column;gap:6px}
+    input,select{font:inherit;padding:13px 14px;border-radius:9px;border:1px solid rgba(255,255,255,.25);background:#fff;color:var(--ink);width:100%}
+    input:focus,select:focus{outline:3px solid var(--orange)}
+    .order .fine{font-size:.85rem;color:#9fb0c6;margin-top:6px}
+
+    /* faq */
+    .faq details{background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:10px;max-width:720px}
+    .faq summary{padding:16px 18px;font-weight:700;cursor:pointer}
+    .faq details p{padding:0 18px 16px;color:#3d4a5f}
+
+    footer{background:var(--navy);color:#8fa0b8;padding:28px 0;font-size:.85rem}
+    footer a{color:#cdd6e4}
+
+    @media(max-width:700px){
+        .steps{grid-template-columns:1fr}
+        section{padding:44px 0}
+        .bar a.call{font-size:.85rem;padding:7px 11px}
+    }
+</style>
+</head>
+<body>
+
+<div class="bar">
+    <div class="wrap">
+        <div class="logo">LOOK<span>LEGIT</span> EMAIL</div>
+        <a class="call" href="#order">Get set up — $299</a>
+    </div>
+</div>
+
+<div class="hero">
+    <div class="wrap">
+        <span class="kicker">For contractors &amp; trades — zero tech skills needed</span>
+        <h1>Your email is <em>losing you bids</em> before you ever pick up the phone.</h1>
+        <p class="sub">When a $15,000 job comes down to you and the other guy, the customer notices
+        which quote came from a real company address — and which one came from a Gmail.</p>
+        <span class="addr">
+            <span class="bad">mikesdrywall1987@gmail.com</span>
+            <span class="arrow">→</span>
+            <span class="good">mike@mikesdrywall.com</span>
+        </span>
+        <a class="btn" href="#order">Get my professional email →</a>
+        <p class="under">$299 flat · set up <strong>for you</strong> in 48 hours · guaranteed working or you don't pay</p>
+    </div>
+</div>
+
+<section class="pain">
+    <div class="wrap">
+        <h2>The customer never tells you why you lost the job.</h2>
+        <p>They just went with the outfit that "seemed more professional." You do better work. You showed
+        up on time. But your quote landed in their inbox next to a competitor whose email matches the
+        name on his truck — and yours says <strong>hotmail</strong>.</p>
+        <p>Fair? No. Real? Ask yourself which plumber <em>you'd</em> wire a deposit to.</p>
+        <div class="callout">
+            A professional email address is the cheapest credibility money can buy — and almost nobody
+            in the trades has one. That's your edge over every competitor still on Gmail.
+        </div>
+    </div>
+</section>
+
+<section class="how">
+    <div class="wrap">
+        <h2>You do nothing technical. That's the entire point.</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="num">1</div>
+                <h3>Fill out the form</h3>
+                <p>Business name, phone, and the email you use today. Two minutes, from your phone.</p>
+            </div>
+            <div class="step">
+                <div class="num">2</div>
+                <h3>I set everything up</h3>
+                <p>Your web address, your new email, and the behind-the-scenes records that keep your
+                messages out of spam folders. Don't have a domain? I'll get you one.</p>
+            </div>
+            <div class="step">
+                <div class="num">3</div>
+                <h3>You keep working like normal</h3>
+                <p>Your new email arrives in the <strong>same inbox you already use.</strong> Nothing to
+                learn, no new app, no lost messages. You just look legit now.</p>
+            </div>
+        </div>
+        <p class="note"><strong>Delivered in 48 hours.</strong> You get a one-page cheat sheet and a
+        professional signature for the bottom of every email — name, company, phone.</p>
+    </div>
+</section>
+
+<section class="price">
+    <div class="wrap">
+        <h2>One flat price. No subscription. Yours forever.</h2>
+        <div class="box">
+            <div class="amount">$299 <small>one-time — not per month</small></div>
+            <ul>
+                <li>you@yourcompany.com — sending <em>and</em> receiving</li>
+                <li>Works inside the Gmail/inbox you already use</li>
+                <li>Spam-folder protection records done right (SPF, DKIM, DMARC)</li>
+                <li>Professional email signature built for you</li>
+                <li>Set up for you in 48 hours — you lift zero fingers</li>
+            </ul>
+            <p class="anchor">Software companies charge <strong>$90 every month</strong> for this.
+            The big website builders bury it in a bundle you'll pay forever. This is <strong>once.</strong></p>
+        </div>
+        <div class="guarantee">
+            <div class="shield">🛡️</div>
+            <div><strong>The no-BS guarantee:</strong> if your professional email isn't sending and
+            receiving cleanly within 48 hours of me getting access, <strong>you don't pay.</strong>
+            Simple as that.</div>
+        </div>
+        <div class="crew">
+            <strong>Got a crew?</strong> Add addresses for your techs and office —
+            <strong>$199 per extra address</strong> (3 or more). One company, everyone matching, every
+            estimate looking sharp.
+        </div>
+    </div>
+</section>
+
+<section class="who">
+    <div class="wrap">
+        <h2>Built for the trades.</h2>
+        <p>If your work shows up in a truck, this is for you:</p>
+        <div class="trades">
+            <span class="t">Contractors</span><span class="t">Electricians</span>
+            <span class="t">Plumbers</span><span class="t">HVAC</span>
+            <span class="t">Welders</span><span class="t">Drywall</span>
+            <span class="t">Roofers</span><span class="t">Landscapers</span>
+            <span class="t">Painters</span><span class="t">Concrete</span>
+            <span class="t">Handymen</span><span class="t">Freelancers of every stripe</span>
+        </div>
+    </div>
+</section>
+
+<section class="order" id="order">
+    <div class="wrap">
+        <h2>Get set up this week.</h2>
+        <p class="lead">Fill this out — takes two minutes. I'll call or text you the same business day
+        to confirm the details, then you're 48 hours from looking like the company you already are.
+        Payment is after we talk, and only when it works.</p>
+        <form action="https://formspree.io/f/__FORMSPREE_TRADES__" method="POST">
+            <label>Your name
+                <input type="text" name="name" required placeholder="Mike Rivera">
+            </label>
+            <label>Business name
+                <input type="text" name="business" required placeholder="Rivera Drywall LLC">
+            </label>
+            <label>Phone (I'll text you first)
+                <input type="tel" name="phone" required placeholder="(555) 555-0134">
+            </label>
+            <label>Email you use today
+                <input type="email" name="email" required placeholder="mikesdrywall1987@gmail.com">
+            </label>
+            <label>Do you already own a web address (domain)?
+                <select name="domain_status">
+                    <option>No — get me one (+$50)</option>
+                    <option>Yes, I own one</option>
+                    <option>Not sure</option>
+                </select>
+            </label>
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+            <input type="hidden" name="_subject" value="New LookLegit Email order">
+            <button type="submit" class="btn">Claim my setup — $299 →</button>
+            <p class="fine">No payment now. No subscription ever. If it doesn't work, you don't pay.</p>
+        </form>
+    </div>
+</section>
+
+<section class="faq">
+    <div class="wrap">
+        <h2>Straight answers.</h2>
+        <details>
+            <summary>Will I lose my old email or my old messages?</summary>
+            <p>No. Nothing about your current inbox changes. Your new professional address flows into the
+            same place — you just also <em>send</em> from it. Old address keeps working as long as you want.</p>
+        </details>
+        <details>
+            <summary>I don't have a website. Do I need one?</summary>
+            <p>No. You need a <em>domain</em> (the yourcompany.com part), not a website. If you don't own
+            one, I'll register it for you (+$50) and it's yours — and if you ever want a website later,
+            you're already halfway there.</p>
+        </details>
+        <details>
+            <summary>I'm not a computer guy.</summary>
+            <p>That's exactly who this is for. You fill out one form. I do every technical step. You get a
+            one-page cheat sheet at the end. If you can send a text, you can use this.</p>
+        </details>
+        <details>
+            <summary>Why not just do it myself?</summary>
+            <p>You can — the same way I could hang my own drywall. It'll take a weekend, three support
+            forums, and it still might land in spam folders because of three records (SPF, DKIM, DMARC)
+            almost everyone gets wrong. Or it's done right in 48 hours while you're on a job.</p>
+        </details>
+        <details>
+            <summary>What's the catch with "one-time"?</summary>
+            <p>No catch. The only recurring cost is your domain registration (roughly $12–$20 <em>a year</em>,
+            paid to the registrar, not to me). No subscription to me, ever. If something breaks down the
+            road, I offer paid fixes — but there's nothing designed to break.</p>
+        </details>
+    </div>
+</section>
+
+<footer>
+    <div class="wrap">
+        <p>© 2026 LookLegit Email · Done-for-you professional email setup for the trades ·
+        <a href="mailto:__CONTACT_EMAIL__">__CONTACT_EMAIL__</a></p>
+    </div>
+</footer>
+
+</body>
+</html>
