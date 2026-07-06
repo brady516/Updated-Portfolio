@@ -121,7 +121,7 @@ every decision below is an exit-multiple decision:
 - **Add the MRR layer early:** a $15–25/mo "Email Care" plan (domain renewal,
   record monitoring, break-fix, priority support). A 30–40% attach rate is what
   moves the asset from the 2x bucket to the 3.5x bucket.
-- **Get delivery off Brady fast** (VA + runbook) and keep the brand LookLegit —
+- **Get delivery off Brady fast** (VA + runbook) and keep the brand Go Legit Local —
   a buyer can't acquire a founder's phone number.
 - **Best buyer is a strategic:** a local MSP / web agency / hosting reseller who
   bolts the list + machine onto their upsell stack (your $299 customer is their

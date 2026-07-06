@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 leadfinder.py — find tradespeople still running their business on a freemail
-address (gmail/yahoo/hotmail/...). Those are LookLegit Email leads.
+address (gmail/yahoo/hotmail/...). Those are Go Legit Local leads.
 
 Two-step, ToS-clean pipeline:
 
@@ -45,7 +45,7 @@ import urllib.parse
 import urllib.request
 import urllib.robotparser
 
-UA = "LookLegitLeadFinder/1.0 (small-business outreach; contact: __CONTACT_EMAIL__)"
+UA = "GoLegitLocalLeadFinder/1.0 (small-business outreach; contact: hello@golegitlocal.com)"
 PLACES_URL = "https://places.googleapis.com/v1/places:searchText"
 FIELD_MASK = ("places.displayName,places.formattedAddress,"
               "places.nationalPhoneNumber,places.websiteUri,nextPageToken")
@@ -265,7 +265,7 @@ def base_row(t: dict) -> dict:
 # ---------------------------------------------------------------- main
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="LookLegit lead finder")
+    p = argparse.ArgumentParser(description="Go Legit Local lead finder")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     s = sub.add_parser("places", help="build target list via official Google Places API")

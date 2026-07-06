@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-funnel.py — the LookLegit operating model. Demand-limited, not capacity-limited.
+funnel.py — the Go Legit Local operating model. Demand-limited, not capacity-limited.
 
 Plug in your (real, once you have them) conversion rates and it tells you the
 sales/day each channel produces, the revenue that implies, and whether you're
@@ -45,7 +45,7 @@ def report(a) -> None:
     deliver_hrs = total * (a.delivery_min / 60.0)
 
     print("=" * 56)
-    print("  LookLegit funnel model  (estimates until you have real data)")
+    print("  Go Legit Local funnel model  (estimates until you have real data)")
     print("=" * 56)
     print(f"  Price/setup            ${a.price:,.0f}")
     print(f"  Delivery time          {a.delivery_min:.0f} min  (~${a.price/(a.delivery_min/60):,.0f}/hr labor)")
@@ -101,7 +101,7 @@ def solve_target(a) -> None:
 
 
 def main() -> None:
-    p = argparse.ArgumentParser(description="LookLegit funnel / operating model")
+    p = argparse.ArgumentParser(description="Go Legit Local funnel / operating model")
     p.add_argument("--price", type=float, default=299)
     p.add_argument("--delivery-min", type=float, default=20)
     # cold email channel

@@ -1,4 +1,4 @@
-# The 90-second phone close — LookLegit Email
+# The 90-second phone close — Go Legit Local
 
 Use when a lead **replies** (cold email or partner referral) and you call them. This
 is a *low-pressure* close: at $299 with a money-back guarantee, it's a no-brainer, so

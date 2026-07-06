@@ -1,7 +1,7 @@
 # Lead generation — finding freemail tradespeople (compliance + workflow)
 
 `leadfinder.py` builds a list of local trades businesses running on a freemail
-address (`gmail/yahoo/hotmail/...`). Those are your LookLegit leads. This doc is the
+address (`gmail/yahoo/hotmail/...`). Those are your Go Legit Local leads. This doc is the
 rulebook so the list is built *and used* cleanly — your whole brand is "look
 legit," so the lead-gen can't be sketchy.
 

@@ -1,4 +1,4 @@
-# Remote delivery runbook — LookLegit Email
+# Remote delivery runbook — Go Legit Local
 
 Every setup happens from your desk. The client can be in any state. Total hands-on
 time per client once you've done a few: **~20 minutes** (was 45 — the script eats
@@ -27,7 +27,7 @@ Formspree emails you the order: name, business, phone, current email, domain sta
 
 **Same day, text them** (trades answer texts, not email):
 
-> "Hey [name], it's Brady — you filled out the LookLegit form for [business]. Two
+> "Hey [name], it's Brady — you filled out the Go Legit Local form for [business]. Two
 > quick questions and I can have you set up in 48 hrs: 1) If you own your web
 > address, who did you buy it from (GoDaddy/Namecheap/etc.)? 2) What should the new
 > email say — hello@, mike@, office@? I'll text you a payment link once we're set."

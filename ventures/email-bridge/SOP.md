@@ -5,8 +5,8 @@ upsell → get paid → repeat. Written so **anyone (you today, a VA tomorrow, a
 exit) can run it from this page.** If a step here needs you *specifically*, it's a bug
 in the process — fix the process.
 
-**Working brand:** [YOUR DOMAIN] (fill once registered). **Everything remote. Never
-drive anywhere.**
+**Brand:** Go Legit Local — **golegitlocal.com** (registered, Cloudflare). **Everything
+remote. Never drive anywhere.**
 
 ---
 
@@ -17,7 +17,7 @@ drive anywhere.**
       books are what let you sell this (buyers must verify SDE). Never commingle.
 - [ ] **Stripe Payment Links:** $299 core, +$50 domain, $199 crew-seat, $899 bundle.
 - [ ] **Formspree** form for the landing page → `__FORMSPREE_TRADES__`; contact email
-      → `__CONTACT_EMAIL__`.
+      → `hello@golegitlocal.com`.
 - [ ] **Landing page** live on its own domain (Cloudflare Pages/Worker).
 - [ ] **Calendly** — a 15-min "Email activation call" slot type.
 - [ ] **Google Cloud** Places API key → `PLACES_API_KEY`. **Cloudflare** API token →

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-provision.py — automate the LookLegit Email setup on Cloudflare.
+provision.py — automate the Go Legit Local setup on Cloudflare.
 
 Turns the ~30-minute dashboard portion of a client setup into one command:
 creates the zone (if needed), enables Email Routing, registers the client's
@@ -149,7 +149,7 @@ def ensure_rule(zone_id: str, domain: str, address: str, forward_to: str) -> Non
                 print(f"route {full}: already exists")
                 return
     call("POST", f"/zones/{zone_id}/email/routing/rules", {
-        "name": f"LookLegit {full}",
+        "name": f"Go Legit Local {full}",
         "enabled": True,
         "matchers": [{"type": "literal", "field": "to", "value": full}],
         "actions": [{"type": "forward", "value": [forward_to]}],
@@ -219,7 +219,7 @@ def cmd_check(domain: str) -> None:
 
 def main() -> None:
     import argparse
-    p = argparse.ArgumentParser(description="LookLegit Email — Cloudflare provisioning")
+    p = argparse.ArgumentParser(description="Go Legit Local — Cloudflare provisioning")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     s = sub.add_parser("setup", help="full setup for one client domain")
