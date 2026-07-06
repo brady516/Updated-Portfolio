@@ -4,11 +4,13 @@
 and **how?** Two frameworks answer them, and together they are the entire model.*
 
 > **BIAB is the GO SIGNAL — not the execution.** Brady built Liberatum (the debt-paydown
-> engine), then abstracted the *decision process* he'd used into a reusable machine:
-> BIAB. It answers *should we do this, and what's it worth?* — validation, demand read,
-> financial model, valuation → **go / no-go.** It has been tested across M&A deals,
-> Liberatum, a plumber, power washing, a restaurant — and it holds. That domain-
-> agnosticism is the proof it's a real framework, not a one-off.
+> engine), then abstracted the *decision process* he'd used, named it **BIAB**, and built
+> it into a **working Python program.** It is not a doc or a mental model — it's an
+> executable go-signal you *run* on an opportunity. It answers *should we do this, and
+> what's it worth?* — validation, demand read, financial model, valuation → **go /
+> no-go.** It has been run across M&A deals, Liberatum, a plumber, power washing, a
+> restaurant — and it holds. That domain-agnosticism, in *running code*, is the proof
+> it's a real engine, not a one-off.
 >
 > **Your brother's framework is the other side of the entire model — the EXECUTION.**
 > Once BIAB says *go*, his sales-page/offer template is *how you actually build and sell
@@ -43,7 +45,8 @@ them at *anything.*
 ## Side 1 — BIAB (the go signal: decide + price)
 
 **Job:** tell you whether a tool, a pain, or a deal is worth doing — and what it's worth.
-It is a **decision engine**, domain-agnostic. It does *not* execute.
+It is a **decision engine**, domain-agnostic, and it's **literal software** — a Python
+program you run on an opportunity, not a checklist you eyeball. It does *not* execute.
 
 **What it reads:**
 - **Validation** — is the pain real? (You're often the first user — the honest test.)
@@ -61,6 +64,12 @@ It is a **decision engine**, domain-agnostic. It does *not* execute.
 *This is Brady's native move — the corporate-finance seat, productized. It's why it works
 as well on an M&A target as on a power-washing route: the question "is this worth doing,
 and what's it worth?" is the same everywhere.*
+
+**And because BIAB is a *program*, it is itself an asset** — a productized decision engine
+that runs across domains. That's the thing worth noticing from the licensing question: the
+sellable IP was never a course on how to think. It's a **tool that already works.** (Prove
+it on enough live calls, and BIAB-the-program may be the most valuable thing in the whole
+portfolio — the pick-and-shovel you sell to everyone else building businesses.)
 
 ## Side 2 — Your brother's framework (the execution: build + sell)
 
@@ -114,6 +123,7 @@ by BIAB and executed by the template.*
 ## The one rule
 
 A framework is proven by **running it**, never by admiring it. **BIAB already cleared
-that bar** — it green-lit Liberatum and held across five different domains. The execution
-side clears it the day Go Legit Local lands its first sale. Decide *and* do. You've built
-the decide. The only thing left is the do — the tool, or the call.
+that bar in the most literal way — it's a running program** that green-lit Liberatum and
+held across five different domains. The execution side clears it the day Go Legit Local
+lands its first sale. Decide *and* do. You've built the decide — in code. The only thing
+left is the do — the tool, or the call.
