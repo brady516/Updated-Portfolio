@@ -1,155 +1,119 @@
 # How to Build the Business of the Future
 
-*The distillation, corrected. Three frameworks — one you built, one your brother built,
-and the finance discipline you already carry — fused into a repeatable system for
-turning a tool or a pain into a valued, honest, built-to-sell business.*
+*The distillation. Every deal and every build has exactly two questions: **should we?**
+and **how?** Two frameworks answer them, and together they are the entire model.*
 
-> **A note on BIAB (getting the record straight).** BIAB is not an off-the-shelf agency
-> framework. It's **Brady's own method, extracted from building Liberatum.** You built
-> the debt-paydown engine first; then, hammering on it in Excel, you pushed on the
-> *process* you'd used and abstracted it into a reusable machine. The product taught you
-> the method. That's why it's real — it's *earned*, not invented. Liberatum is BIAB's
-> proof.
-
----
-
-## The three legs
-
-1. **BIAB — the strategic engine.** How a **tool or a pain becomes a demand-layered,
-   valued company.** *(Proven by Liberatum.)*
-2. **Your brother's framework — the tactical layer.** How you **package and convert the
-   offer** at any given stage. *(Proven by the Go Legit Local packages.)*
-3. **You — allocation + integrity.** Which venture to fund, how to price on value, how to
-   keep it honest, and how to design the exit.
-
-BIAB decides *what to build and in what order, toward what valuation.* The brother's
-template decides *how to sell it right now.* You decide *whether to fund it and keep it
-clean.* Strategy, tactics, and capital — the three things a business needs and almost no
-solo founder has all of.
+> **BIAB is the GO SIGNAL — not the execution.** Brady built Liberatum (the debt-paydown
+> engine), then abstracted the *decision process* he'd used into a reusable machine:
+> BIAB. It answers *should we do this, and what's it worth?* — validation, demand read,
+> financial model, valuation → **go / no-go.** It has been tested across M&A deals,
+> Liberatum, a plumber, power washing, a restaurant — and it holds. That domain-
+> agnosticism is the proof it's a real framework, not a one-off.
+>
+> **Your brother's framework is the other side of the entire model — the EXECUTION.**
+> Once BIAB says *go*, his sales-page/offer template is *how you actually build and sell
+> it.*
 
 ---
 
-## Leg 1 — BIAB (the real one)
+## The whole model in one line
 
-**What it is:** a repeatable method for turning a personal tool (usually a spreadsheet
-you built to solve your *own* problem) into a staged software business you can value —
-entering where demand actually is today and climbing toward a platform, an OS, and an
-exit.
+> **BIAB decides and prices. The brother's framework executes.** Decide → do.
 
-**The Demand Layer Framework** — demand climbs these layers over ~7 years, and the
-product *shape* evolves to meet each one (Liberatum's own ladder shown):
+This is not a metaphor — it's **exactly how M&A works.** The investment committee decides
+go/no-go and sets the price (BIAB — Brady's native seat). The operators run the play
+(the brother's framework). You've productized the two halves of a deal and can now point
+them at *anything.*
 
-| Demand layer | Product shape (Liberatum) |
-|---|---|
-| Validation | Beta Visualizer |
-| Pain-Search | Payoff Dashboard |
-| Decision | Scenario Engine |
-| Coordination | Multi-Loan Planner |
-| Platform | Household Dashboard |
-| Channel | Command Center (Consumer + Partner) |
-| System | **Debt OS** |
-
-**The method, generalized (tool-agnostic):**
-
-1. **Start from a real tool you built** — you're the first user; the pain is proven
-   because it was *yours.*
-2. **Map the demand layers** — don't build the OS first. Find where demand actually is
-   (validation / pain-search) and enter there with the *minimal* product shape.
-3. **Match a shape to each layer** — the smallest thing that meets today's demand, then
-   evolve it up the ladder as each layer validates.
-4. **Model it** — scenarios (Bear / Base / Bull), a signup→active→paid funnel, consumer +
-   B2B/partner revenue, milestones ($100K → $1M → $5M → $10M ARR).
-5. **Value it three ways** — Comparable Companies, DCF, VC Method — so you always know
-   what the asset is worth at the current layer.
-6. **Climb** — each validated layer funds the shape that reaches the next.
-
-*This is your native move: you build spreadsheet tools (car-loan payoff, DCF, Monte
-Carlo, the debt engine), and BIAB is the machine that turns any of them into a company.
-Your whole store shelf is BIAB-able.*
-
-## Leg 2 — Your brother's framework (offer & conversion)
-
-A fill-in-the-blank sales-page skeleton that converts because it answers the buyer's
-questions *in the order they ask them*: intro → what's offered → what they get → the
-mind-read ("what are they thinking? overcome it") → the offer ladder → rules of
-engagement → closing offer → captions. It works at **every** demand layer and for **any**
-offer, software or service. *(Every Go Legit Local package is this template, filled in.)*
-
-## Leg 3 — You (allocation + integrity + exit)
-
-The layer neither framework has:
-- **Allocation** — concentrate on the venture that reaches cashflow fastest; let it fund
-  the rest. Price on value, verify on hours (`email-bridge/rates.md`).
-- **Exit design** — clean books, MRR, systemized delivery, brand ≠ your name; sell at a
-  multiple (SDE for services, the BIAB 3-method valuation for software).
-- **The integrity firewall** — take the mechanics, refuse the hype. No fake scarcity, no
-  guarantees, no lock-in, no dark patterns (`marketing/conversion-psychology.md`). *The
-  honest one in a field of hustlers* is a position no competitor can take, because taking
-  it would make them you.
+```
+      Should we?  ──────────►  How?
+      ┌────────────────┐      ┌────────────────┐
+      │     BIAB        │      │  BROTHER'S      │
+      │  the GO SIGNAL  │─GO──►│  FRAMEWORK      │
+      │ validate·model  │      │  execute:       │
+      │ ·value·go/no-go │◄─────│  offer→sell→    │
+      └────────────────┘ results/  deliver       │
+              ▲          re-value └────────────────┘
+              │                            │
+     INTEGRITY FIREWALL governs both ◄─────┘
+```
 
 ---
 
-## Two archetypes, one holding company
+## Side 1 — BIAB (the go signal: decide + price)
 
-The framework spans both kinds of asset — and you're building a HoldCo that owns both:
+**Job:** tell you whether a tool, a pain, or a deal is worth doing — and what it's worth.
+It is a **decision engine**, domain-agnostic. It does *not* execute.
 
-| | **Liberatum** | **Go Legit Local** |
+**What it reads:**
+- **Validation** — is the pain real? (You're often the first user — the honest test.)
+- **Demand layers** — where is demand *today*, and what's the staged path up? Liberatum's
+  own ladder: Validation → Pain-Search → Decision → Coordination → Platform → Channel →
+  System (Beta Visualizer → Dashboard → Scenario Engine → Planner → Household Dashboard →
+  Command Center → **Debt OS**). You enter at the live layer, not the top.
+- **Financial model** — scenarios (Bear/Base/Bull), signup→active→paid funnel, consumer +
+  B2B revenue, milestones ($100K → $1M → $5M → $10M ARR).
+- **Valuation** — three methods (Comparable Companies, DCF, VC Method) → what the asset is
+  worth at the current layer.
+
+**Output:** a **go / no-go**, an entry point, and a price. That's it. Then it hands off.
+
+*This is Brady's native move — the corporate-finance seat, productized. It's why it works
+as well on an M&A target as on a power-washing route: the question "is this worth doing,
+and what's it worth?" is the same everywhere.*
+
+## Side 2 — Your brother's framework (the execution: build + sell)
+
+Once BIAB says *go*, this is **how you actually do it.** A fill-in-the-blank sales-page
+skeleton that converts because it answers the buyer's questions in the order they ask:
+intro → what's offered → what they get → **the mind-read** ("what are they thinking?
+overcome it") → the offer ladder → rules of engagement → closing offer → captions. It
+works for **any** offer BIAB green-lit — software or service. *(Every Go Legit Local
+package is this template, filled in.)*
+
+## The standard over both — the integrity firewall
+
+Take the mechanics, refuse the hype. No fake scarcity, no guarantees, no lock-in, no dark
+patterns (`marketing/conversion-psychology.md`). *The honest one in a field of hustlers*
+is a position no competitor can take — taking it would make them you. This governs both
+sides: BIAB won't green-light a lie, and the execution won't sell one.
+
+---
+
+## It runs on anything (the tested set)
+
+BIAB gives the go signal; the brother's framework executes. The pair is domain-agnostic —
+already run against:
+
+| Target | BIAB's job (should we / worth?) | Execution (how) |
 |---|---|---|
-| Type | Venture-scale **SaaS** | Cashflow-scale **productized service** |
-| Native engine | **BIAB** (tool → OS) | Offer framework + build-to-sell |
-| Valued by | 3-method (Comps/DCF/VC) | SDE multiple |
-| Horizon | Long climb to a platform | Fast cashflow, sell in 1–3 yrs |
+| **M&A deal** | diligence + valuation → go/no-go + price | integration / operating plan |
+| **Liberatum** (SaaS) | demand ladder + 3-method valuation | staged product + GTM |
+| **Plumber / power washing / restaurant** (service) | validate demand + SDE math | Go-Legit-style offer + close |
 
-BIAB is the growth engine for the *software* side; the offer framework + build-to-sell is
-the engine for the *service* side; **you** allocate capital and attention across both.
-
----
-
-## How they interlock (the loop)
-
-```
-   YOU pick the bet + fund it            (allocation)
-              │
-              ▼
-   BIAB says which product shape/offer   (strategy: what & when)
-   belongs at the current demand layer
-              │
-              ▼
-   BROTHER'S TEMPLATE converts it        (tactics: sell it now)
-              │
-              ▼
-   Deliver → measure → climb the layer   (execution)
-              │
-              ▼
-   VALUATION (3-method / SDE) tells you   (allocation: hold or sell)
-   what the asset is worth
-              │
-   INTEGRITY FIREWALL governs every step ◄┘
-```
+Two archetypes fall out: **venture-scale software** (BIAB → 3-method valuation, the
+Liberatum lane) and **cashflow-scale service** (BIAB → SDE math, the Go Legit Local lane).
+You allocate across both — a personal holding company where every business was *green-lit
+by BIAB and executed by the template.*
 
 ---
 
 ## The repeatable method (spin up venture N+1)
 
-1. **Start from a real tool or pain you've validated by living it.** (BIAB's first rule,
-   and the honest one — the Finn lesson.)
-2. **Map the demand layers; enter at the live one** with the minimal product shape.
-3. **Write the offer into the brother's template** and convert.
-4. **Model and value it** (scenarios + funnel; 3-method for software, SDE for service).
-5. **Allocate** — fund the climb, or hold/sell. Keep the firewall.
-6. **Climb** toward the platform/OS (software) or **systematize** toward the exit
-   (service). Repeat with venture N+2.
-
-That loop *is* the business of the future: a solo operator + AI + earned frameworks,
-turning tools and pains into valued assets — a personal holding company where each
-business can be built, held, or sold.
+1. **Run BIAB first.** Validate the pain (live it), read the demand layer, model it, value
+   it. **Get the go/no-go and the price before you build anything.**
+2. **If it's a go, drop the offer into the brother's template** and start executing.
+3. **Enter at the live demand layer** with the minimal shape; sell it with the template.
+4. **Feed results back into BIAB** — re-value; decide to climb, hold, or sell.
+5. **Integrity firewall on every step** — no lie gets green-lit or sold.
+6. Repeat with venture N+2. The go-signal and the execution engine are reusable; only the
+   target changes.
 
 ---
 
 ## The one rule
 
 A framework is proven by **running it**, never by admiring it. **BIAB already cleared
-that bar — Liberatum is the proof.** The offer framework clears it the day Go Legit Local
-lands its first sale. Everything here is earned or about to be. The only thing that turns
-this distillation from a beautiful theory into a fortune is the part no framework can do
-for you: **build the tool, or make the call.**
+that bar** — it green-lit Liberatum and held across five different domains. The execution
+side clears it the day Go Legit Local lands its first sale. Decide *and* do. You've built
+the decide. The only thing left is the do — the tool, or the call.
