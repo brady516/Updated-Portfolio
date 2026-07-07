@@ -1,88 +1,92 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>Go Legit Local — swash-under-L wordmark</title>
+<title>Go Legit Local — swash-under-L wordmark (tilted, one color)</title>
 <style>
   :root{ --navy:#0f1b2d; --orange:#ff6b1a; --cream:#f5efe1; }
   *{box-sizing:border-box}
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#e9e6df;color:var(--navy);padding:32px}
   h1{font-size:1.5rem;margin:0 0 4px}
-  .sub{color:#66707e;margin:0 0 26px;max-width:640px;line-height:1.5}
+  .sub{color:#66707e;margin:0 0 26px;max-width:660px;line-height:1.5}
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px}
   .card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(15,27,45,.12)}
   .card h2{font-size:.95rem;margin:0;padding:13px 18px;border-bottom:1px solid #eee}
-  .stage{display:flex;align-items:center;justify-content:center;padding:34px 18px;min-height:150px}
+  .stage{display:flex;align-items:center;justify-content:center;padding:30px 18px;min-height:150px}
   .light{background:var(--cream)} .dark{background:var(--navy)}
   .note{font-size:.85rem;color:#5a6472;padding:12px 18px 16px;line-height:1.45}
 </style>
 
-<h1>Go Legit Local — the swash-under-L wordmark</h1>
-<p class="sub">The last <strong>l</strong> of <em>Local</em> drops its foot and sweeps back under the whole word — one connected mark. Rough SVG sketch (system font + hand-drawn swash) to lock the direction; final art wants a real type treatment.</p>
-
-<!-- reusable swash: right tip meets the final-l foot (~x=398), tapers to a point at left -->
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <path id="swash" d="M 398 106 C 384 122, 300 134, 210 132 C 130 130, 64 124, 30 110
-                         C 66 116, 150 120, 245 118 C 322 116, 384 110, 398 106 Z"/>
-  </defs>
-</svg>
+<h1>Go Legit Local — tilted, single-color, swash under</h1>
+<p class="sub">Whole mark rotated ~15° up to the right; the terminal <strong>l</strong> of <em>Local</em> sweeps under the words as one connected underline, <strong>same color as the word</strong>. Rough SVG sketch — judge the direction, not the finish.</p>
 
 <div class="grid">
 
   <div class="card">
-    <h2>Primary · italic serif, navy + orange swash</h2>
+    <h2>Primary · upright serif, tilted 15°</h2>
     <div class="stage light">
-      <svg width="300" height="120" viewBox="0 0 440 160" aria-label="Legit Local wordmark">
-        <text x="406" y="104" text-anchor="end" fill="#0f1b2d" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-weight="700" font-size="60">Legit Local</text>
-        <use href="#swash" fill="#ff6b1a"/>
-        <text x="216" y="146" text-anchor="middle" fill="#0f1b2d" font-family="Georgia,serif" font-size="12" font-weight="700" letter-spacing="6">DIGITAL TRADES</text>
+      <svg width="320" height="150" viewBox="0 0 460 210" aria-label="Legit Local tilted wordmark">
+        <g transform="rotate(-15 215 115)" fill="#0f1b2d">
+          <text x="406" y="110" text-anchor="end" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="60">Legit Local</text>
+          <path d="M 398 112 C 384 128, 300 140, 210 138 C 130 136, 64 130, 30 118
+                   C 66 124, 150 128, 245 126 C 322 124, 384 118, 398 112 Z"/>
+        </g>
       </svg>
     </div>
     <div class="stage dark">
-      <svg width="300" height="120" viewBox="0 0 440 160" aria-label="Legit Local wordmark, light">
-        <text x="406" y="104" text-anchor="end" fill="#f5efe1" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-weight="700" font-size="60">Legit Local</text>
-        <use href="#swash" fill="#ff6b1a"/>
-        <text x="216" y="146" text-anchor="middle" fill="#f5efe1" font-family="Georgia,serif" font-size="12" font-weight="700" letter-spacing="6">DIGITAL TRADES</text>
+      <svg width="320" height="150" viewBox="0 0 460 210" aria-label="Legit Local tilted, light">
+        <g transform="rotate(-15 215 115)" fill="#f5efe1">
+          <text x="406" y="110" text-anchor="end" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="60">Legit Local</text>
+          <path d="M 398 112 C 384 128, 300 140, 210 138 C 130 136, 64 130, 30 118
+                   C 66 124, 150 128, 245 126 C 322 124, 384 118, 398 112 Z"/>
+        </g>
       </svg>
     </div>
-    <p class="note">The italic gives it motion into the swash. The <strong>l</strong>'s foot is the underline — nothing else added.</p>
+    <p class="note">Everything one color. The tilt gives the lift; the <strong>l</strong>-foot is the underline.</p>
   </div>
 
   <div class="card">
-    <h2>Upright · bolder, more "sign-painter/union"</h2>
+    <h2>Variant · italic (extra lean)</h2>
     <div class="stage light">
-      <svg width="300" height="120" viewBox="0 0 440 160" aria-label="Legit Local upright">
-        <text x="406" y="104" text-anchor="end" fill="#0f1b2d" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="60">Legit Local</text>
-        <use href="#swash" fill="#ff6b1a"/>
-        <text x="216" y="146" text-anchor="middle" fill="#0f1b2d" font-family="Georgia,serif" font-size="12" font-weight="700" letter-spacing="6">DIGITAL TRADES</text>
+      <svg width="320" height="150" viewBox="0 0 460 210" aria-label="Legit Local italic tilted">
+        <g transform="rotate(-15 215 115)" fill="#0f1b2d">
+          <text x="406" y="110" text-anchor="end" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-weight="700" font-size="60">Legit Local</text>
+          <path d="M 398 112 C 384 128, 300 140, 210 138 C 130 136, 64 130, 30 118
+                   C 66 124, 150 128, 245 126 C 322 124, 384 118, 398 112 Z"/>
+        </g>
       </svg>
     </div>
     <div class="stage dark">
-      <svg width="300" height="120" viewBox="0 0 440 160" aria-label="Legit Local upright light">
-        <text x="406" y="104" text-anchor="end" fill="#f5efe1" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="60">Legit Local</text>
-        <use href="#swash" fill="#f5efe1"/>
-        <text x="216" y="146" text-anchor="middle" fill="#f5efe1" font-family="Georgia,serif" font-size="12" font-weight="700" letter-spacing="6">DIGITAL TRADES</text>
+      <svg width="320" height="150" viewBox="0 0 460 210" aria-label="Legit Local italic tilted light">
+        <g transform="rotate(-15 215 115)" fill="#f5efe1">
+          <text x="406" y="110" text-anchor="end" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-weight="700" font-size="60">Legit Local</text>
+          <path d="M 398 112 C 384 128, 300 140, 210 138 C 130 136, 64 130, 30 118
+                   C 66 124, 150 128, 245 126 C 322 124, 384 118, 398 112 Z"/>
+        </g>
       </svg>
     </div>
-    <p class="note">Upright reads steadier — closer to the union-charter feel. Swash can be orange or matched to the word.</p>
+    <p class="note">Italic + tilt = the most Dodgers-y motion. Might be one lean too many — that's for your eye.</p>
   </div>
 
   <div class="card">
-    <h2>Full lockup · "Go Legit Local"</h2>
+    <h2>Full lockup · "Go Legit Local", tilted</h2>
     <div class="stage light">
-      <svg width="320" height="120" viewBox="0 0 460 160" aria-label="Go Legit Local wordmark">
-        <text x="426" y="104" text-anchor="end" fill="#0f1b2d" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-weight="700" font-size="54">Go Legit Local</text>
-        <path d="M 418 108 C 402 124, 300 136, 200 134 C 120 132, 56 126, 22 112
-                 C 60 118, 150 122, 250 120 C 336 118, 402 112, 418 108 Z" fill="#ff6b1a"/>
+      <svg width="340" height="150" viewBox="0 0 480 210" aria-label="Go Legit Local tilted">
+        <g transform="rotate(-15 225 115)" fill="#0f1b2d">
+          <text x="430" y="110" text-anchor="end" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="54">Go Legit Local</text>
+          <path d="M 422 112 C 406 128, 300 140, 200 138 C 118 136, 52 130, 18 118
+                   C 56 124, 150 128, 250 126 C 338 124, 406 118, 422 112 Z"/>
+        </g>
       </svg>
     </div>
     <div class="stage dark">
-      <svg width="320" height="120" viewBox="0 0 460 160" aria-label="Go Legit Local wordmark light">
-        <text x="426" y="104" text-anchor="end" fill="#f5efe1" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-weight="700" font-size="54">Go Legit Local</text>
-        <path d="M 418 108 C 402 124, 300 136, 200 134 C 120 132, 56 126, 22 112
-                 C 60 118, 150 122, 250 120 C 336 118, 402 112, 418 108 Z" fill="#ff6b1a"/>
+      <svg width="340" height="150" viewBox="0 0 480 210" aria-label="Go Legit Local tilted light">
+        <g transform="rotate(-15 225 115)" fill="#f5efe1">
+          <text x="430" y="110" text-anchor="end" font-family="Georgia,'Times New Roman',serif" font-weight="700" font-size="54">Go Legit Local</text>
+          <path d="M 422 112 C 406 128, 300 140, 200 138 C 118 136, 52 130, 18 118
+                   C 56 124, 150 128, 250 126 C 338 124, 406 118, 422 112 Z"/>
+        </g>
       </svg>
     </div>
-    <p class="note">The swash stretches to underline all three words. Longer tail = more of the Dodgers sweep.</p>
+    <p class="note">Longer swash underlines all three words; whole lockup lifted 15°.</p>
   </div>
 
 </div>
