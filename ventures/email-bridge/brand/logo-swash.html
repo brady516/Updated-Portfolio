@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>Go Legit Local — script, l connected to swash</title>
+<title>Go Legit Local — script, clean l + underline</title>
 <style>
   :root{ --navy:#0f1b2d; --cream:#f5efe1; }
   *{box-sizing:border-box}
@@ -15,14 +15,15 @@
   .note{font-size:.85rem;color:#5a6472;padding:12px 18px 16px;line-height:1.45}
 </style>
 
-<h1>Go Legit Local — the l connected to the swash</h1>
-<p class="sub">Same script + 15° tilt + single color — now the tail <strong>rises up into the final l's stem</strong> (drawn behind the letter), so it reads as one continuous stroke instead of a floating underline. Renders with your system script fonts; final art locks one licensed face, outlined.</p>
+<h1>Go Legit Local — clean l, connected to a flat underline</h1>
+<p class="sub">The word is set as "Legit Loca" in script; the final <strong>l is drawn by hand</strong> as a clean tall vertical that flows straight into a shallow underline swash — no diagonal, so it can't read as a "y." Tilted 15°, single color. No number, no badge.</p>
 
-<!-- swash whose right end is a neck rising up into the final l (word anchored end x=410) -->
+<!-- hand-drawn final "l" + flat underline swash, one path. Word "Legit Loca" is anchored end at x=398 so the l sits right after. -->
 <svg width="0" height="0" style="position:absolute"><defs>
-  <path id="sw" d="M 396 68 L 406 68 L 406 118 C 388 132, 300 142, 200 140
-                   C 120 138, 58 132, 26 122 C 60 126, 150 128, 245 126
-                   C 320 124, 384 120, 396 118 L 396 68 Z"/>
+  <path id="lsw" d="M 398 52 C 398 48 407 48 407 55 L 408 116 C 408 122 405 125 400 126
+                    C 340 131 200 133 110 131 C 70 130 40 129 22 125
+                    C 55 126 150 128 245 127 C 320 126 382 124 394 121
+                    L 396 55 C 396 50 398 49 398 52 Z"/>
 </defs></svg>
 
 <div class="grid">
@@ -30,68 +31,43 @@
   <div class="card">
     <h2>A · elegant script</h2>
     <div class="stage light">
-      <svg width="330" height="150" viewBox="0 0 460 210" aria-label="Legit Local connected">
-        <g transform="rotate(-15 215 118)" fill="#0f1b2d">
-          <use href="#sw"/>
-          <text x="410" y="118" text-anchor="end" font-family="'Snell Roundhand','Apple Chancery','Lucida Calligraphy','URW Chancery L',cursive" font-weight="700" font-size="70">Legit Local</text>
+      <svg width="330" height="150" viewBox="0 0 460 210" aria-label="Legit Local clean l">
+        <g transform="rotate(-15 210 116)" fill="#0f1b2d">
+          <text x="398" y="118" text-anchor="end" font-family="'Snell Roundhand','Apple Chancery','Lucida Calligraphy','URW Chancery L',cursive" font-weight="700" font-size="70">Legit Loca</text>
+          <use href="#lsw"/>
         </g>
       </svg>
     </div>
     <div class="stage dark">
-      <svg width="330" height="150" viewBox="0 0 460 210" aria-label="Legit Local connected light">
-        <g transform="rotate(-15 215 118)" fill="#f5efe1">
-          <use href="#sw"/>
-          <text x="410" y="118" text-anchor="end" font-family="'Snell Roundhand','Apple Chancery','Lucida Calligraphy','URW Chancery L',cursive" font-weight="700" font-size="70">Legit Local</text>
+      <svg width="330" height="150" viewBox="0 0 460 210" aria-label="Legit Local clean l light">
+        <g transform="rotate(-15 210 116)" fill="#f5efe1">
+          <text x="398" y="118" text-anchor="end" font-family="'Snell Roundhand','Apple Chancery','Lucida Calligraphy','URW Chancery L',cursive" font-weight="700" font-size="70">Legit Loca</text>
+          <use href="#lsw"/>
         </g>
       </svg>
     </div>
-    <p class="note">Swash drawn <em>behind</em> the word so the l's stroke sits on top and flows into the tail. One color, one connected mark.</p>
+    <p class="note">Final l = a clean vertical to the baseline; underline runs flat off its foot. Reads "l," not "y."</p>
   </div>
 
   <div class="card">
     <h2>B · brush script (bolder)</h2>
     <div class="stage light">
-      <svg width="330" height="150" viewBox="0 0 460 210" aria-label="Legit Local brush connected">
-        <g transform="rotate(-15 215 118)" fill="#0f1b2d">
-          <use href="#sw"/>
-          <text x="410" y="118" text-anchor="end" font-family="'Brush Script MT','Segoe Script','Bradley Hand',cursive" font-weight="700" font-size="72">Legit Local</text>
+      <svg width="330" height="150" viewBox="0 0 460 210" aria-label="Legit Local brush clean l">
+        <g transform="rotate(-15 210 116)" fill="#0f1b2d">
+          <text x="398" y="118" text-anchor="end" font-family="'Brush Script MT','Segoe Script','Bradley Hand',cursive" font-weight="700" font-size="72">Legit Loca</text>
+          <use href="#lsw"/>
         </g>
       </svg>
     </div>
     <div class="stage dark">
-      <svg width="330" height="150" viewBox="0 0 460 210" aria-label="Legit Local brush connected light">
-        <g transform="rotate(-15 215 118)" fill="#f5efe1">
-          <use href="#sw"/>
-          <text x="410" y="118" text-anchor="end" font-family="'Brush Script MT','Segoe Script','Bradley Hand',cursive" font-weight="700" font-size="72">Legit Local</text>
+      <svg width="330" height="150" viewBox="0 0 460 210" aria-label="Legit Local brush clean l light">
+        <g transform="rotate(-15 210 116)" fill="#f5efe1">
+          <text x="398" y="118" text-anchor="end" font-family="'Brush Script MT','Segoe Script','Bradley Hand',cursive" font-weight="700" font-size="72">Legit Loca</text>
+          <use href="#lsw"/>
         </g>
       </svg>
     </div>
-    <p class="note">Heavier hand — the thicker stroke connects to the swash even more naturally.</p>
-  </div>
-
-  <div class="card">
-    <h2>C · full lockup "Go Legit Local"</h2>
-    <div class="stage light">
-      <svg width="350" height="150" viewBox="0 0 490 210" aria-label="Go Legit Local connected">
-        <g transform="rotate(-15 230 118)" fill="#0f1b2d">
-          <path d="M 424 68 L 434 68 L 434 118 C 414 132, 300 142, 200 140
-                   C 118 138, 52 132, 18 122 C 56 126, 150 128, 250 126
-                   C 336 124, 410 120, 424 118 L 424 68 Z"/>
-          <text x="438" y="118" text-anchor="end" font-family="'Snell Roundhand','Apple Chancery','Lucida Calligraphy',cursive" font-weight="700" font-size="62">Go Legit Local</text>
-        </g>
-      </svg>
-    </div>
-    <div class="stage dark">
-      <svg width="350" height="150" viewBox="0 0 490 210" aria-label="Go Legit Local connected light">
-        <g transform="rotate(-15 230 118)" fill="#f5efe1">
-          <path d="M 424 68 L 434 68 L 434 118 C 414 132, 300 142, 200 140
-                   C 118 138, 52 132, 18 122 C 56 126, 150 128, 250 126
-                   C 336 124, 410 120, 424 118 L 424 68 Z"/>
-          <text x="438" y="118" text-anchor="end" font-family="'Snell Roundhand','Apple Chancery','Lucida Calligraphy',cursive" font-weight="700" font-size="62">Go Legit Local</text>
-        </g>
-      </svg>
-    </div>
-    <p class="note">Longer tail underlining all three, still growing out of the final l.</p>
+    <p class="note">The heavier brush weight matches the drawn l's thickness best.</p>
   </div>
 
 </div>
