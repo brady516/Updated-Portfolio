@@ -27,13 +27,15 @@ from pathlib import Path
 
 from narrative_monitor import (
     CsvFilingSource,
-    NarrativeEvent,
+    JsonlNarrativeSource,
     SignalEngine,
     SignalStore,
     consume,
     execution_gate,
     extract_claims,
+    narrative_entropy,
     narrative_intensity,
+    parrot_propagation,
     publish_signal,
 )
 from narrative_monitor.store import _to_payload
@@ -43,25 +45,15 @@ logging.basicConfig(
 )
 
 DATA = Path(__file__).parent / "data" / "ibm_sample.csv"
+NARRATIVE = Path(__file__).parent / "data" / "ibm_narrative.jsonl"
 
 
 def main() -> None:
-    # 1. What is the narrative?
-    events = [
-        NarrativeEvent(
-            ticker="IBM",
-            event_time="2026-04-22T08:00:00-04:00",
-            headline="IBM issues soft guidance; shares fall 23%",
-            body=(
-                "Management cited deal timing, AI infrastructure spending, "
-                "budget reallocation and customer uncertainty. Pipeline "
-                "remains strong, executives said."
-            ),
-            source="demo",
-        )
-    ]
+    # 1. What is the narrative? Read the whole parrot layer, not one quote.
+    events = JsonlNarrativeSource(NARRATIVE).fetch("IBM")
     claims = extract_claims(events)
     intensity = narrative_intensity(claims)
+    propagation = parrot_propagation(events)
 
     # 2. Has the narrative appeared in reported financials?
     snapshots = CsvFilingSource(DATA).fetch("IBM")
@@ -78,7 +70,23 @@ def main() -> None:
     accepted = consume(line, live=False)
 
     print(json.dumps(asdict(signal), indent=2, default=str))
-    print("\nClaims identified:", ", ".join(signal.claims) or "(none)")
+    print("\n--- parrot layer ---")
+    print(
+        f"sources: {propagation.benign_sources} benign / "
+        f"{propagation.admit_sources} admit"
+    )
+    print(
+        f"originated by: {propagation.originator} ({propagation.originator_type})"
+    )
+    print("dominant frames:", ", ".join(propagation.dominant_frames) or "(none)")
+    print(f"H(N) narrative entropy: {narrative_entropy(claims):.2f}")
+    print(f"expected_decay: {signal.expected_decay}")
+    if propagation.capitulation_lag_hours is not None:
+        print(
+            "first dissent (capitulation) after "
+            f"{propagation.capitulation_lag_hours:.1f}h"
+        )
+    print("\n--- gate ---")
     print("Confirmed criteria:", ", ".join(signal.confirmed_criteria) or "(none)")
     print("execution_gate():", execution_gate(line))
     print("order placed:", accepted)

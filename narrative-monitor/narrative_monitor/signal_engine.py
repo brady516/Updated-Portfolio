@@ -25,12 +25,11 @@ trusted — a restated row can never be executable. Stdlib only.
 from __future__ import annotations
 
 import math
-from collections import Counter
 from collections.abc import Sequence
 from dataclasses import dataclass
 from datetime import UTC, datetime
 
-from .entropy import clip, noisy_or, ramp, stance_entropy
+from .entropy import clip, noisy_or, ramp
 from .models import (
     FundamentalSnapshot,
     NarrativeClaim,
@@ -38,6 +37,7 @@ from .models import (
     Signal,
     SignalState,
 )
+from .narrative_monitor import benign_alignment, narrative_entropy
 
 # state cut points on the breakdown score S_t
 CONFIRMED_SCORE = 0.60
@@ -104,11 +104,11 @@ class SignalEngine:
         prior_year = by_period.get(cur_p.prior_year())
 
         # --- narrative side: benign alignment A and entropy H(N) ----------
-        stances = [c.stance for c in claims if c.stance in ("benign", "admit")]
-        benign_alignment = (
-            stances.count("benign") / len(stances) if stances else 0.5
-        )
-        h_narrative = stance_entropy(Counter(stances)) if stances else 0.0
+        # Source-weighted (see narrative_monitor) so the parrot layer is read
+        # by how many sources hold each stance, not by raw phrase counts.
+        has_stance = any(c.stance in ("benign", "admit") for c in claims)
+        alignment = benign_alignment(claims)
+        h_narrative = narrative_entropy(claims)
 
         # --- reporting side: continuous divergence channels ---------------
         det = self._deterioration_channels(
@@ -133,14 +133,14 @@ class SignalEngine:
         # --- combine into the breakdown score S_t -------------------------
         entropy_factor = 0.5 + 0.5 * (1.0 - h_narrative)
         breakdown_score = round(
-            d_report * (0.5 + 0.5 * benign_alignment) * entropy_factor, 4
+            d_report * (0.5 + 0.5 * alignment) * entropy_factor, 4
         )
         improve_score = round(
-            d_improve * (0.5 + 0.5 * (1.0 - benign_alignment)) * entropy_factor,
+            d_improve * (0.5 + 0.5 * (1.0 - alignment)) * entropy_factor,
             4,
         )
 
-        has_narrative = bool(stances) or narrative_intensity > 0
+        has_narrative = has_stance or narrative_intensity > 0
         state = self._state(
             breakdown_score, improve_score, d_report, has_narrative
         )
@@ -171,7 +171,7 @@ class SignalEngine:
             )
 
         metrics = self._metrics(
-            current, prior_year, by_period, benign_alignment,
+            current, prior_year, by_period, alignment,
             h_narrative, h_reporting, d_report, narrative_intensity,
         )
 
@@ -488,12 +488,18 @@ class SignalEngine:
 
     @staticmethod
     def _expected_decay(h_narrative: float, has_narrative: bool) -> str:
-        """Slow capitulation <=> tight (low-entropy) parrot consensus."""
+        """Slow capitulation <=> tight (low-entropy) parrot consensus.
+
+        Binary entropy runs high even for lopsided splits (a lone dissenter in
+        six sources is H~0.65), so the bands are set wide: near-unanimous is
+        slow, a single dissenter is still medium, only a genuinely divided
+        narrative is fast.
+        """
         if not has_narrative:
             return "n/a"
-        if h_narrative < 0.25:
+        if h_narrative < 0.40:
             return "slow"
-        if h_narrative < 0.60:
+        if h_narrative < 0.75:
             return "medium"
         return "fast"
 

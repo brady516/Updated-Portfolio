@@ -91,13 +91,33 @@ Invariant: `score ∝ D_report`, so with **zero reporting divergence the score i
 zero** no matter how loud the narrative.
 
 The IBM demo lands on **`early_evidence`**: reporting divergence is 0.47 (TTM FCF
-fell; FCF margin fell YoY two quarters running), but management's own "customer
-uncertainty" hedge splits the narrative (`H(N)` = 0.65), so the score is **0.29** —
-below the 0.60 confirmed bar, `execution_eligible: false`. Formally cutting
-full-year FCF guidance adds the guidance channel and pushes it past 0.60 into
-`confirmed_deterioration` — `tests/` proves that transition, and proves that a
-*unanimous* benign narrative over the same reporting scores higher (and decays
-slower) than a split one.
+fell; FCF margin fell YoY two quarters running), but the parrot layer isn't
+unanimous — five sources echo management's benign frame and one analyst dissents
+(`H(N)` = 0.65), so the score is **0.29** — below the 0.60 confirmed bar,
+`execution_eligible: false`. Formally cutting full-year FCF guidance adds the
+guidance channel and pushes it past 0.60 into `confirmed_deterioration` — `tests/`
+proves that transition, and proves that a *unanimous* benign narrative over the same
+reporting scores higher (and decays slower) than a split one.
+
+## The parrot layer
+
+`H(N)` is only meaningful over a *corpus*. `narrative_ingestor` assembles the whole
+layer — the management frame plus every sell-side note and media piece that echoes
+or dissents — and measures its propagation:
+
+```
+sources: 5 benign / 1 admit
+originated by: ibm_earnings_call (management)
+dominant frames: deal_timing, ai_investment
+H(N) narrative entropy: 0.65   expected_decay: medium
+first dissent (capitulation) after 6.3h
+```
+
+Entropy is **source-weighted**: each source contributes weight 1 split by its own
+stance mix, so one analyst repeating a frame five ways can't masquerade as a
+five-source consensus. `expected_decay` reads off `H(N)` — near-unanimous is `slow`
+(the highest-conviction, longest-lived breakdown), a lone dissenter is `medium`, a
+genuinely divided narrative is `fast`.
 
 ## The output the trading system consumes
 
@@ -111,7 +131,7 @@ slower) than a split one.
   "divergence": 0.47,
   "narrative_entropy": 0.65,
   "reporting_entropy": 0.0,
-  "expected_decay": "fast",
+  "expected_decay": "medium",
   "confidence": 0.92,
   "execution_eligible": false,
   "confirmed_criteria": ["ttm_fcf_decline", "fcf_margin_two_period_decline"],
@@ -141,7 +161,8 @@ others.
 | Service | Job |
 |---|---|
 | `filing_ingestor.py` | SEC/company filings → normalized `FundamentalSnapshot`. Ships a CSV loader; subclass `FilingSource` per provider. |
-| `narrative_monitor.py` | News / transcripts → structured `NarrativeClaim`s + narrative entropy. Identifies the claim and its stance, never the direction. |
+| `narrative_ingestor.py` | Raw feeds → the parrot layer of `NarrativeEvent`s (management / sell-side / media), plus propagation analytics. Ships a JSONL loader. |
+| `narrative_monitor.py` | News / transcripts → structured `NarrativeClaim`s + source-weighted narrative entropy. Identifies the claim and its stance, never the direction. |
 | `signal_engine.py` | The breakdown model — continuous channels, divergence, entropy weighting, state + gate. |
 | `execution_adapter.py` | Paper/live broker interface behind hard limits. Dry-run by default. |
 | `entropy.py` | Information-theoretic primitives (noisy-OR, Shannon entropy, ramps) — no domain knowledge, trivially testable. |
@@ -156,9 +177,12 @@ The provider adapters are the integration seam — write them around your own st
 
 - **Filings / fundamentals:** SEC EDGAR company-facts for raw filings; Bloomberg or
   FactSet for pre-normalized metrics. Implement `FilingSource.fetch`.
-- **Narrative:** news and transcript feeds → `NarrativeEvent`s → `extract_claims`.
-  Swap the keyword `CLAIM_LEXICON` for a model-backed extractor; the
-  `NarrativeClaim` output contract stays the same.
+- **Narrative:** point one or more `NarrativeSource` adapters at your transcript /
+  news / sell-side feeds → `NarrativeEvent`s → `extract_claims`. The keyword
+  `CLAIM_LEXICON` is deterministic but has **no negation handling** ("not deal
+  timing" still matches `deal_timing`) — swap it for a model-backed extractor for
+  production; the `NarrativeClaim` contract stays the same. Breadth of sources is
+  what makes `H(N)` meaningful, so wire management, sell-side, and media distinctly.
 - **Execution:** Interactive Brokers or another OMS behind `execution_adapter.consume`.
   It stays a dry run until you attach a broker with position sizing and hard limits —
   the correct default for a research engine.

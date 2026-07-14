@@ -139,6 +139,10 @@ class NarrativeEvent:
     headline: str
     body: str
     source: str
+    # Where in the parrot layer this sits. The frame originates with
+    # "management" and is echoed by "sell_side" and "media"; measuring that
+    # propagation is how narrative entropy and decay are estimated.
+    source_type: str = "other"  # management | sell_side | media | other
 
 
 @dataclass(frozen=True)

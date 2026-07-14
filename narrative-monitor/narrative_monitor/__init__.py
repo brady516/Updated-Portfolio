@@ -21,6 +21,12 @@ from .models import (
     Signal,
     SignalState,
 )
+from .narrative_ingestor import (
+    JsonlNarrativeSource,
+    NarrativeSource,
+    PropagationSummary,
+    parrot_propagation,
+)
 from .narrative_monitor import (
     benign_alignment,
     extract_claims,
@@ -34,9 +40,12 @@ __all__ = [
     "CsvFilingSource",
     "FilingSource",
     "FundamentalSnapshot",
+    "JsonlNarrativeSource",
     "NarrativeClaim",
     "NarrativeEvent",
+    "NarrativeSource",
     "Period",
+    "PropagationSummary",
     "Signal",
     "SignalEngine",
     "SignalState",
@@ -47,5 +56,6 @@ __all__ = [
     "extract_claims",
     "narrative_entropy",
     "narrative_intensity",
+    "parrot_propagation",
     "publish_signal",
 ]

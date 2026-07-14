@@ -28,10 +28,16 @@ from narrative_monitor import (
     narrative_entropy,
     narrative_intensity,
 )
+from narrative_monitor import (
+    JsonlNarrativeSource,
+    benign_alignment,
+    parrot_propagation,
+)
 from narrative_monitor.entropy import noisy_or, ramp, stance_entropy
 from narrative_monitor.store import _to_payload
 
 DATA = Path(__file__).parent.parent / "data" / "ibm_sample.csv"
+NARRATIVE = Path(__file__).parent.parent / "data" / "ibm_narrative.jsonl"
 
 
 def _flat(period: str, **overrides) -> FundamentalSnapshot:
@@ -162,6 +168,41 @@ class IbmDemoTests(unittest.TestCase):
         self.assertGreater(s_split.narrative_entropy, s_unanimous.narrative_entropy)
         self.assertLessEqual(s_split.breakdown_score, s_unanimous.breakdown_score)
         self.assertEqual(s_split.expected_decay, "fast")
+
+
+class ParrotLayerTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.events = JsonlNarrativeSource(NARRATIVE).fetch("IBM")
+
+    def test_feed_loads_multiple_sources(self) -> None:
+        self.assertGreater(len(self.events), 3)
+        self.assertTrue(any(e.source_type == "management" for e in self.events))
+        self.assertTrue(any(e.source_type == "sell_side" for e in self.events))
+
+    def test_source_weighting_beats_a_chatty_analyst(self) -> None:
+        # One source shouting five benign phrases is not a five-source consensus.
+        chatty = extract_claims([_benign_event("loud_analyst")])
+        two_sided = extract_claims(
+            [
+                _benign_event("analyst_a"),
+                NarrativeEvent(
+                    "IBM", "t", "weak demand",
+                    "demand environment and execution issue", "analyst_b",
+                ),
+            ]
+        )
+        # chatty single source -> unanimous; two balanced sources -> split
+        self.assertEqual(narrative_entropy(chatty), 0.0)
+        self.assertGreater(narrative_entropy(two_sided), narrative_entropy(chatty))
+        self.assertEqual(benign_alignment(two_sided), 0.5)
+
+    def test_propagation_finds_originator_and_capitulation(self) -> None:
+        prop = parrot_propagation(self.events)
+        self.assertEqual(prop.originator_type, "management")  # frame starts here
+        self.assertGreaterEqual(prop.benign_sources, 4)
+        self.assertEqual(prop.admit_sources, 1)               # lone dissenter
+        self.assertTrue(prop.capitulated)
+        self.assertGreater(prop.capitulation_lag_hours, 0)    # dissent came later
 
 
 class ObfuscationTests(unittest.TestCase):

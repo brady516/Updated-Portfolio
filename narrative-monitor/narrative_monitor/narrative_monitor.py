@@ -91,26 +91,47 @@ def narrative_intensity(claims: Iterable[NarrativeClaim]) -> float:
     return min(1.0, distinct / 3.0)
 
 
+def _stance_weights(claims: Sequence[NarrativeClaim]) -> tuple[float, float]:
+    """Aggregate benign/admit weight across the parrot layer, weighting by
+    SOURCE, not raw phrase count.
+
+    Each source contributes total weight 1, split by the proportion of its own
+    claims that are benign vs admit. So a chatty analyst who repeats one frame
+    ten ways cannot masquerade as a ten-source consensus, and two sources on
+    opposite sides read as a genuine 50/50 split.
+    """
+    by_source: dict[str, Counter[str]] = {}
+    for c in claims:
+        if c.stance in ("benign", "admit"):
+            by_source.setdefault(c.source, Counter())[c.stance] += 1
+    benign = admit = 0.0
+    for counts in by_source.values():
+        total = sum(counts.values())
+        if total == 0:
+            continue
+        benign += counts.get("benign", 0) / total
+        admit += counts.get("admit", 0) / total
+    return benign, admit
+
+
 def benign_alignment(claims: Sequence[NarrativeClaim]) -> float:
-    """Fraction of the narrative (by source) that denies weakness.
+    """Source-weighted fraction of the narrative that denies weakness.
 
     High -> the consensus is "nothing is really wrong," which is exactly the
     frame a diverging filing breaks. If the narrative already admits weakness,
     there is no breakdown to catch — it is acknowledged and largely priced.
     Returns 0.5 (neutral) when there is no benign/admit signal at all.
     """
-    stances = [c.stance for c in claims if c.stance in ("benign", "admit")]
-    if not stances:
+    benign, admit = _stance_weights(claims)
+    if benign + admit == 0:
         return 0.5
-    return stances.count("benign") / len(stances)
+    return benign / (benign + admit)
 
 
 def narrative_entropy(claims: Sequence[NarrativeClaim]) -> float:
-    """H(N) in [0,1]: entropy of the benign/admit stance distribution, weighted
-    by how many sources carry each stance. 0 = unanimous parrots."""
-    counts: Counter[str] = Counter(
-        c.stance for c in claims if c.stance in ("benign", "admit")
-    )
-    if not counts:
+    """H(N) in [0,1]: entropy of the source-weighted benign/admit split.
+    0 = unanimous parrots (slow to capitulate); 1 = evenly divided."""
+    benign, admit = _stance_weights(claims)
+    if benign + admit == 0:
         return 0.0
-    return stance_entropy(counts)
+    return stance_entropy({"benign": benign, "admit": admit})
