@@ -156,4 +156,8 @@ it sidesteps the competition rather than re-entering it.
 The formalization of this thesis — continuous divergence via noisy-OR over the
 channels, Shannon narrative entropy over the parrot stances, reporting entropy from
 disclosure microstructure, and an as-filed point-in-time contract — is implemented
-in `narrative_monitor/entropy.py` and `narrative_monitor/signal_engine.py`.
+in `narrative_monitor/entropy.py` and `narrative_monitor/signal_engine.py`. The
+forward-calibration harness that grades it point-in-time and stratifies by `H(N)`
+(§6) is in `narrative_monitor/backtest.py`; `run_backtest_demo.py` runs it on a
+synthetic panel with a known effect baked in, to prove the machinery recovers what
+is there.

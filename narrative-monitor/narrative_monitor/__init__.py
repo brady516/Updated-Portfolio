@@ -21,6 +21,13 @@ from .models import (
     Signal,
     SignalState,
 )
+from .backtest import (
+    BacktestReport,
+    CsvPriceSource,
+    Observation,
+    PriceSeries,
+    run_backtest,
+)
 from .narrative_ingestor import (
     JsonlNarrativeSource,
     NarrativeSource,
@@ -37,10 +44,14 @@ from .signal_engine import SignalEngine
 from .store import SignalStore, publish_signal
 
 __all__ = [
+    "BacktestReport",
     "CsvFilingSource",
+    "CsvPriceSource",
     "FilingSource",
     "FundamentalSnapshot",
     "JsonlNarrativeSource",
+    "Observation",
+    "PriceSeries",
     "NarrativeClaim",
     "NarrativeEvent",
     "NarrativeSource",
@@ -58,4 +69,5 @@ __all__ = [
     "narrative_intensity",
     "parrot_propagation",
     "publish_signal",
+    "run_backtest",
 ]

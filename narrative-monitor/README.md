@@ -166,6 +166,7 @@ others.
 | `signal_engine.py` | The breakdown model — continuous channels, divergence, entropy weighting, state + gate. |
 | `execution_adapter.py` | Paper/live broker interface behind hard limits. Dry-run by default. |
 | `entropy.py` | Information-theoretic primitives (noisy-OR, Shannon entropy, ramps) — no domain knowledge, trivially testable. |
+| `backtest.py` | Forward-calibration harness — walks the panel point-in-time and grades each signal against a realized forward return. |
 
 **Point-in-time contract:** the engine trusts **as-filed data only**. A snapshot
 marked `restated=True` can raise a state but can *never* be `execution_eligible` —
@@ -186,6 +187,42 @@ The provider adapters are the integration seam — write them around your own st
 - **Execution:** Interactive Brokers or another OMS behind `execution_adapter.consume`.
   It stays a dry run until you attach a broker with position sizing and hard limits —
   the correct default for a research engine.
+
+## Calibrating it without lying to yourself
+
+The score is only worth trusting if it predicts *forward* returns out of sample.
+`backtest.py` is the harness for that, and it enforces the three disciplines from
+[`THESIS.md`](THESIS.md) §6 in code:
+
+- **As-filed only** — a `restated=True` row, or one whose `reported_at` is after the
+  evaluation date, is invisible at that date.
+- **Score forward, don't fit backward** — `S_t` uses only `≤ t` data; the realized
+  return over `[t, t+h]` grades it and is never fed back.
+- **Stratify by `H(N)`** — the report puts the low- vs high-entropy forward returns
+  side by side, so the thesis's own prediction (low-entropy breakdowns persist
+  longer) can be *refuted*.
+
+```bash
+python3 run_backtest_demo.py   # SYNTHETIC data — validates the harness, not the thesis
+```
+
+```
+By state:            n   mean_fwd   hit_rate
+  confirmed_deterioration  8   -13.63%      100%
+  early_evidence        8     0.00%        0%     <- high-entropy: fast decay, no edge
+Deterioration by narrative entropy (thesis test):
+  low           8   -13.63%                        <- unanimous benign consensus persists
+  high          8     0.00%
+Information coefficient (score vs -fwd return): +0.85
+Execution-eligible mean forward return: -14.48%
+```
+
+The demo bakes a known effect into fabricated data so you can watch the harness
+*recover* it — it validates the machinery and its point-in-time discipline. Real
+validation needs real as-filed filings, a real parrot-layer feed, and real prices
+(`CsvPriceSource` loads `ticker,date,close`). **Sector-gating the channels**
+(financials/REITs have no comparable FCF/gross-margin microstructure) is the next
+piece before running this across a broad universe.
 
 ## Not investment advice
 
