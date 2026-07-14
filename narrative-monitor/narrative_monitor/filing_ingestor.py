@@ -42,10 +42,20 @@ def _opt_float(value: str | None) -> float | None:
     return float(value)
 
 
+def _opt_int(value: str | None) -> int | None:
+    if value is None or value.strip() == "":
+        return None
+    return int(value)
+
+
 def _opt_bool(value: str | None) -> bool | None:
     if value is None or value.strip() == "":
         return None
     return value.strip().lower() in {"1", "true", "yes", "y"}
+
+
+def _flag(value: str | None) -> bool:
+    return bool(value) and value.strip().lower() in {"1", "true", "yes", "y"}
 
 
 class FilingSource(ABC):
@@ -95,6 +105,11 @@ class CsvFilingSource(FilingSource):
                         delayed_deals_recovered=_opt_bool(
                             row.get("delayed_deals_recovered")
                         ),
+                        reported_segments=_opt_int(row.get("reported_segments")),
+                        non_gaap_metric_count=_opt_int(
+                            row.get("non_gaap_metric_count")
+                        ),
+                        restated=_flag(row.get("restated")),
                         **kwargs,
                     )
                 )

@@ -92,7 +92,16 @@ class FundamentalSnapshot:
     #            False = they did not (supports deterioration, criterion #7),
     #            None  = not yet knowable.
     delayed_deals_recovered: bool | None = None
+    # Disclosure microstructure — the reporting-entropy H(R) channel. A drop in
+    # reported segments or a jump in non-GAAP metrics is obfuscation, and
+    # obfuscation while the narrative stays confident is itself divergence.
+    reported_segments: int | None = None
+    non_gaap_metric_count: int | None = None
     reported_at: str = ""
+    # POINT-IN-TIME CONTRACT: True means this row reflects a later restatement.
+    # Restated data is the one way the future leaks into a contemporaneous
+    # signal, so the engine refuses to make a restated row executable.
+    restated: bool = False
 
     @property
     def parsed_period(self) -> Period:
@@ -146,6 +155,13 @@ class NarrativeClaim:
     label: str
     phrase: str
     source: str
+    # The claim's stance toward the reporting, NEVER its market direction:
+    #   "benign" = the frame asserts nothing is really wrong (timing, AI
+    #              investment, temporary headwind, pipeline intact),
+    #   "admit"  = the frame concedes weakness (guidance cut, demand softness),
+    #   "neutral" = no stance.
+    # A benign consensus contradicted by the reporting is the breakdown setup.
+    stance: str = "neutral"
 
 
 @dataclass(frozen=True)
@@ -163,3 +179,12 @@ class Signal:
     execution_eligible: bool
     claims: list[str] = field(default_factory=list)
     confirmed_criteria: list[str] = field(default_factory=list)
+    # Breakdown model (see THESIS.md). `breakdown_score` is S_t in [0,1];
+    # `divergence` is signed (>0 reporting worse than narrative implies).
+    divergence: float = 0.0
+    breakdown_score: float = 0.0
+    narrative_entropy: float = 0.0
+    reporting_entropy: float = 0.0
+    # Ordinal capitulation speed derived from narrative entropy:
+    # "slow" (tight consensus) | "medium" | "fast" | "n/a".
+    expected_decay: str = "n/a"

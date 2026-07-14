@@ -21,7 +21,12 @@ from .models import (
     Signal,
     SignalState,
 )
-from .narrative_monitor import extract_claims, narrative_intensity
+from .narrative_monitor import (
+    benign_alignment,
+    extract_claims,
+    narrative_entropy,
+    narrative_intensity,
+)
 from .signal_engine import SignalEngine
 from .store import SignalStore, publish_signal
 
@@ -36,9 +41,11 @@ __all__ = [
     "SignalEngine",
     "SignalState",
     "SignalStore",
+    "benign_alignment",
     "consume",
     "execution_gate",
     "extract_claims",
+    "narrative_entropy",
     "narrative_intensity",
     "publish_signal",
 ]

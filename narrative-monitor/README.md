@@ -12,6 +12,13 @@ It writes machine-readable signals to JSONL so a separate trading process can pi
 them up — and it refuses to mark anything executable until the numbers, not the
 story, confirm deterioration.
 
+**The full model is in [`THESIS.md`](THESIS.md).** In short: the signal is the
+*divergence* between a confident, low-entropy narrative and the reporting
+microstructure — not deterioration on its own. That framing is what makes it
+look-ahead-free (both sides are contemporaneous), decay-resistant (the crowd *is*
+the narrative), and completeness-native (obfuscation feeds the signal instead of
+disqualifying the name).
+
 Stdlib-only Python 3.11+ (no installs, no API keys). Run the demo:
 
 ```bash
@@ -49,29 +56,48 @@ A management explanation, an analyst's framing, or one seasonally-weak quarter c
 | `improving` | The comparable-period evidence points the other way. |
 | `inconclusive` | Nothing material triggered. |
 
-## Confirmation: at least three of seven (comparable-period, never sequential)
+## The score: divergence × narrative entropy (comparable-period, never sequential)
 
 Every comparison is **year-over-year comparable-period** (Q4/Q4, Q3/Q3) or
 **trailing-twelve-month** — because a Q4→Q1 free-cash-flow drop is *seasonality*,
 not deterioration, and that seasonal trap is the single most common way a narrative
 gets mistaken for a fact.
 
-`confirmed_deterioration` requires **at least three** of:
+```
+breakdown_score  =  D_report  ×  (0.5 + 0.5·benign_alignment)  ×  (0.5 + 0.5·(1 − H(N)))
+```
+
+**`D_report`** is the reporting divergence: seven microstructure channels, each
+scored *continuously* to a [0,1] magnitude and combined by **noisy-OR** (weak
+channels compound; a missing channel simply drops out — that is the completeness
+behavior). The channels:
 
 1. Trailing-twelve-month FCF declines.
 2. FCF margin declines for two consecutive comparable periods.
-3. Gross margin contracts by more than 100 bps.
-4. Receivables grow at least 10 percentage points faster than revenue.
+3. Gross margin contracts (>100 bps floor, saturates at 300 bps).
+4. Receivables grow faster than revenue (10 ppt floor).
 5. Capex / capitalized development rises while organic revenue slows.
 6. Full-year FCF guidance is reduced.
 7. Previously delayed deals fail to appear in subsequent revenue.
+   *(plus an 8th: disclosure withdrawal — segments dropped / non-GAAP proliferating
+   / a line that was reported a year ago now blank — the H(R) obfuscation channel.)*
 
-The IBM demo lands on **`early_evidence`**: the narrative is loud (soft guidance, AI
-infrastructure, deal timing, budget reallocation — six claims, intensity 1.0), but
-only **two** criteria confirm (TTM FCF fell; FCF margin fell YoY two quarters
-running). So `execution_eligible` is **false**. Formally cutting full-year FCF
-guidance would add the third criterion and flip it to `confirmed_deterioration` —
-`tests/` proves exactly that transition.
+**`benign_alignment`** is how much the narrative *denies* weakness; **`H(N)`** is
+the parrot layer's entropy. A benign, unanimous (low-`H(N)`) consensus contradicted
+by the reporting is the breakdown — and low entropy also implies **slow
+capitulation**, reported as `expected_decay`.
+
+Invariant: `score ∝ D_report`, so with **zero reporting divergence the score is
+zero** no matter how loud the narrative.
+
+The IBM demo lands on **`early_evidence`**: reporting divergence is 0.47 (TTM FCF
+fell; FCF margin fell YoY two quarters running), but management's own "customer
+uncertainty" hedge splits the narrative (`H(N)` = 0.65), so the score is **0.29** —
+below the 0.60 confirmed bar, `execution_eligible: false`. Formally cutting
+full-year FCF guidance adds the guidance channel and pushes it past 0.60 into
+`confirmed_deterioration` — `tests/` proves that transition, and proves that a
+*unanimous* benign narrative over the same reporting scores higher (and decays
+slower) than a split one.
 
 ## The output the trading system consumes
 
@@ -81,6 +107,11 @@ guidance would add the third criterion and flip it to `confirmed_deterioration` 
 {
   "ticker": "IBM",
   "state": "early_evidence",
+  "breakdown_score": 0.29,
+  "divergence": 0.47,
+  "narrative_entropy": 0.65,
+  "reporting_entropy": 0.0,
+  "expected_decay": "fast",
   "confidence": 0.92,
   "execution_eligible": false,
   "confirmed_criteria": ["ttm_fcf_decline", "fcf_margin_two_period_decline"],
@@ -110,9 +141,14 @@ others.
 | Service | Job |
 |---|---|
 | `filing_ingestor.py` | SEC/company filings → normalized `FundamentalSnapshot`. Ships a CSV loader; subclass `FilingSource` per provider. |
-| `narrative_monitor.py` | News / transcripts → structured `NarrativeClaim`s. Identifies the claim, never the direction. |
-| `signal_engine.py` | Evidence scoring and state transitions — the 7 criteria and the gate. |
+| `narrative_monitor.py` | News / transcripts → structured `NarrativeClaim`s + narrative entropy. Identifies the claim and its stance, never the direction. |
+| `signal_engine.py` | The breakdown model — continuous channels, divergence, entropy weighting, state + gate. |
 | `execution_adapter.py` | Paper/live broker interface behind hard limits. Dry-run by default. |
+| `entropy.py` | Information-theoretic primitives (noisy-OR, Shannon entropy, ramps) — no domain knowledge, trivially testable. |
+
+**Point-in-time contract:** the engine trusts **as-filed data only**. A snapshot
+marked `restated=True` can raise a state but can *never* be `execution_eligible` —
+restated numbers are the one way the future leaks into a contemporaneous signal.
 
 ## Wiring it to real infrastructure
 
