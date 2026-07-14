@@ -1,0 +1,5 @@
+# generated at runtime — the audit log and the execution feed
+fundamental_monitor.db
+fundamental_signals.jsonl
+__pycache__/
+*.pyc

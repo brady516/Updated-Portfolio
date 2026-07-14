@@ -22,6 +22,7 @@ newsletter loop, integrity checklist, tooling, deploy).
 | Word Salad sourcing | [`newsletter/word-salad-bank.md`](newsletter/word-salad-bank.md) |
 | Salad Scout (jargon-sourcing CLI) | [`salad-scout/`](salad-scout/) |
 | Valuation Lab (lead-magnet Claude skill) | [`lead-magnet/`](lead-magnet/) |
+| Narrative Monitor (research + signal-gating engine) | [`narrative-monitor/`](narrative-monitor/) |
 
 ## The standard
 
