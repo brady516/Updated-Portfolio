@@ -167,6 +167,7 @@ others.
 | `execution_adapter.py` | Paper/live broker interface behind hard limits. Dry-run by default. |
 | `entropy.py` | Information-theoretic primitives (noisy-OR, Shannon entropy, ramps) — no domain knowledge, trivially testable. |
 | `backtest.py` | Forward-calibration harness — walks the panel point-in-time and grades each signal against a realized forward return. |
+| `channels.py` | Per-sector `ChannelSet`s (industrial / financial / reit) — the microstructure the truth is denominated in. Add a sector without touching the engine. |
 
 **Point-in-time contract:** the engine trusts **as-filed data only**. A snapshot
 marked `restated=True` can raise a state but can *never* be `execution_eligible` —
@@ -187,6 +188,48 @@ The provider adapters are the integration seam — write them around your own st
 - **Execution:** Interactive Brokers or another OMS behind `execution_adapter.consume`.
   It stays a dry run until you attach a broker with position sizing and hard limits —
   the correct default for a research engine.
+
+## Every sector has microstructure — the truth is just denominated differently
+
+There is no sector without a cash-vs-story axis; only industrials denominate it in
+FCF and gross margin. Banks and REITs report *management estimates* — loan-loss
+reserves, fair-value marks, straight-line rent, FFO adjustments — so the narrative
+has **more** room to diverge from cash, not less. They are the richest hunting
+ground, not an exception to gate off.
+
+A **`ChannelSet`** (see `channels.py`) maps each sector onto the same seven-slot
+structure. `SignalEngine` selects it by `snapshot.sector`; the divergence × entropy
+math, the state machine, the gate, and the backtest are **identical** across
+sectors.
+
+| Generic slot | Industrial | Financial (bank) | REIT |
+|---|---|---|---|
+| primary cash | free cash flow | net income | AFFO |
+| cash decline | TTM FCF | reserve build < net charge-offs | TTM AFFO |
+| margin ×2 | FCF margin | NIM compression | same-store NOI |
+| quality wedge | gross margin | allowance coverage ratio | FFO→AFFO wedge |
+| accrual outrunning cash | receivables vs revenue | NPAs vs loan growth | straight-line rent vs NOI |
+| capitalization masking | capex + revenue slowing | coverage down + charge-offs up | cap. interest + NOI slowing |
+| guidance | FY FCF | NII | AFFO |
+| the tell | delayed deals | reserve releases that reverse | dividend > AFFO |
+| H(R) obfuscation | segments/non-GAAP | AFS→HTM / AOCI vs equity | stale cap-rate marks |
+
+```bash
+python3 run_sector_demo.py   # a bank and a REIT: benign narrative, broken filing
+```
+
+```
+Bank  (financial)  state: confirmed_deterioration   H(R): 0.5   executable: True
+  channels: reserve_release_below_chargeoffs, allowance_coverage_decline,
+            npa_outrun_loans, nim_two_period_compression, tbvps_erosion, ...
+REIT  (reit)       state: confirmed_deterioration   executable: True
+  channels: ttm_affo_decline, affo_wedge_widening, dividend_above_affo,
+            same_store_noi_two_period_decline, capitalized_interest_up_noi_slowing
+```
+
+Adding a sector is a new `ChannelSet` and a registry entry — the engine never
+changes. Snapshots carry sector line items in `line_items` (the CSV loader routes
+any non-reserved numeric column there), so no schema churn per sector.
 
 ## Calibrating it without lying to yourself
 
@@ -220,9 +263,9 @@ Execution-eligible mean forward return: -14.48%
 The demo bakes a known effect into fabricated data so you can watch the harness
 *recover* it — it validates the machinery and its point-in-time discipline. Real
 validation needs real as-filed filings, a real parrot-layer feed, and real prices
-(`CsvPriceSource` loads `ticker,date,close`). **Sector-gating the channels**
-(financials/REITs have no comparable FCF/gross-margin microstructure) is the next
-piece before running this across a broad universe.
+(`CsvPriceSource` loads `ticker,date,close`). The harness is sector-aware — each
+observation is scored through its own `ChannelSet` — so a broad-universe run reads
+a bank on reserves and a REIT on AFFO, not on FCF.
 
 ## Not investment advice
 

@@ -28,6 +28,14 @@ from .backtest import (
     PriceSeries,
     run_backtest,
 )
+from .channels import (
+    CHANNEL_SETS,
+    ChannelSet,
+    FinancialChannels,
+    IndustrialChannels,
+    ReitChannels,
+    channel_set_for,
+)
 from .narrative_ingestor import (
     JsonlNarrativeSource,
     NarrativeSource,
@@ -44,10 +52,16 @@ from .signal_engine import SignalEngine
 from .store import SignalStore, publish_signal
 
 __all__ = [
+    "CHANNEL_SETS",
     "BacktestReport",
+    "ChannelSet",
     "CsvFilingSource",
     "CsvPriceSource",
     "FilingSource",
+    "FinancialChannels",
+    "IndustrialChannels",
+    "ReitChannels",
+    "channel_set_for",
     "FundamentalSnapshot",
     "JsonlNarrativeSource",
     "Observation",

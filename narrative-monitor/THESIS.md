@@ -128,8 +128,11 @@ discipline:
   benign consensus + high divergence should show *longer* return persistence than
   high-entropy setups. If it doesn't, the entropy weighting is decoration and should
   be cut.
-- **Sector-gate the channels.** Financials/REITs have no comparable FCF/gross-margin
-  microstructure; those channels are skipped, not forced.
+- **Read each sector's own microstructure.** Financials/REITs are not skipped —
+  they are the richest case, because reserves, marks, and FFO adjustments are
+  management estimates with more room for the story to diverge from cash. Each
+  sector has a `ChannelSet` (bank credit reserves, REIT AFFO wedge); the divergence
+  × entropy engine is identical. There is no sector without microstructure.
 
 ## 7. Why this is orthogonal to VIX (the lesson from the last variation)
 

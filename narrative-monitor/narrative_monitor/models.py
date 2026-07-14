@@ -102,6 +102,15 @@ class FundamentalSnapshot:
     # Restated data is the one way the future leaks into a contemporaneous
     # signal, so the engine refuses to make a restated row executable.
     restated: bool = False
+    # Which microstructure the truth is denominated in. Selects the ChannelSet
+    # (industrial | financial | reit | ...). The divergence x entropy math is
+    # identical across sectors; only the line items being read change.
+    sector: str = "industrial"
+    # Sector-specific line items keyed by name (e.g. "net_charge_offs",
+    # "affo", "same_store_noi"). Keeps FundamentalSnapshot from growing a field
+    # per sector — a ChannelSet reads exactly the keys it needs and treats a
+    # missing key as untestable, never as "supported".
+    line_items: dict[str, float] = field(default_factory=dict)
 
     @property
     def parsed_period(self) -> Period:

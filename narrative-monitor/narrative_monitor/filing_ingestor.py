@@ -58,6 +58,22 @@ def _flag(value: str | None) -> bool:
     return bool(value) and value.strip().lower() in {"1", "true", "yes", "y"}
 
 
+def _is_number(value: str) -> bool:
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+
+
+# columns the loader maps to typed fields; everything else numeric -> line_items
+_RESERVED = frozenset(
+    {"ticker", "period", "reported_at", "delayed_deals_recovered",
+     "reported_segments", "non_gaap_metric_count", "restated", "sector"}
+    | set(_FLOAT_FIELDS)
+)
+
+
 class FilingSource(ABC):
     """Provider adapter contract. Implement `fetch` for EDGAR, Bloomberg, etc."""
 
@@ -97,6 +113,13 @@ class CsvFilingSource(FilingSource):
                     "capex",
                 ):
                     kwargs[required] = float(row[required])
+                # any numeric column not reserved above is a sector line item
+                line_items = {
+                    key: float(val)
+                    for key, val in row.items()
+                    if key not in _RESERVED and val not in (None, "")
+                    and _is_number(val)
+                }
                 snapshots.append(
                     FundamentalSnapshot(
                         ticker=row["ticker"].strip(),
@@ -110,6 +133,8 @@ class CsvFilingSource(FilingSource):
                             row.get("non_gaap_metric_count")
                         ),
                         restated=_flag(row.get("restated")),
+                        sector=(row.get("sector") or "industrial").strip(),
+                        line_items=line_items,
                         **kwargs,
                     )
                 )
