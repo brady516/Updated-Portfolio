@@ -233,6 +233,10 @@ Lender (lender)     confirmed   channels: origination_growth_into_rising_delinqu
 SaaS   (saas)       confirmed   channels: revenue_up_billings_rolling_over
             (+19% revenue while billings -3%), net_revenue_retention_declining (to 98%),
             deferred_revenue_decline, crpo_growth_below_revenue …
+Energy (energy)     confirmed   channels: reserve_replacement_falling (to 75%),
+            outspending_cash_flow, netback_two_period_compression, negative_reserve_revisions …
+BDC    (bdc)        confirmed   channels: pik_income_share_rising, nav_per_share_decline,
+            dividend_above_nii, non_accrual_rate_rising …
 ```
 
 The broker case started as a checking-account grievance: a "durable franchise"
@@ -243,9 +247,9 @@ SaaS cases are *conditional* inversions: fast loan growth is fine until the newe
 vintages rot, and decelerating GAAP revenue is fine until billings/RPO/NRR roll over
 underneath it.
 
-Seven sectors ship today — industrial, financial, reit, broker, insurance, lender,
-saas. The last three are *inverse, conditional* microstructures where growth or a
-headline number moves opposite to the cash truth:
+Nine sectors ship today — industrial, financial, reit, broker, insurance, lender,
+saas, energy, bdc. Several are *inverse, conditional* microstructures where growth
+or a headline number moves opposite to the cash truth:
 
 - **lender** — originations growth is celebrated, but growth **while the newest
   vintages deteriorate** is the breakdown. Growth alone never fires
@@ -255,11 +259,16 @@ headline number moves opposite to the cash truth:
   up + billings down is the tell; billings *out*growing revenue never fires.
 - **broker** — the P&L is a rate carry on customer float; the divergence is NII
   reliance **rising**, not merely being high (a known, priced level).
+- **energy** — "reserves growing, production up" while **F&D cost rises, the reserve
+  base shifts to undeveloped barrels, and the company outspends cash flow**; PV-10
+  marked at a stale trailing SEC price hides it.
+- **bdc** — "income growing, NAV stable" while income is increasingly **PIK
+  (non-cash), non-accruals rise, and the dividend runs above what's earned** on a
+  book the manager marks itself.
 
-Adding another (energy: reserve replacement, PV-10 vs the strip) is a new
-`ChannelSet` and a registry entry — the engine never changes. Snapshots carry sector
-line items in `line_items` (the CSV loader routes any non-reserved numeric column
-there), so no schema churn per sector.
+Adding another is a new `ChannelSet` and a registry entry — the engine never
+changes. Snapshots carry sector line items in `line_items` (the CSV loader routes
+any non-reserved numeric column there), so no schema churn per sector.
 
 ## Calibrating it without lying to yourself
 
@@ -299,26 +308,26 @@ a bank on reserves and a REIT on AFFO, not on FCF.
 
 ### The whole system wired together
 
-`run_multisector_backtest.py` runs **all seven sectors through one pipeline** — for
+`run_multisector_backtest.py` runs **all nine sectors through one pipeline** — for
 each, a benign low-entropy name (persistent decline), a split high-entropy name
 (mean-reverts inside the horizon), and a healthy name (drifts up):
 
 ```
 By state:                 n   mean_fwd   hit_rate
-  confirmed_deterioration 30   -13.31%      100%
-  early_evidence          50    -0.33%       10%
-  inconclusive            61     0.12%        0%
+  confirmed_deterioration 40   -13.21%      100%
+  early_evidence          60    -0.27%        8%
+  inconclusive            73     0.02%        0%
 Deterioration by narrative entropy:
-  low                     37   -11.84%              <- unanimous benign consensus persists
-  high                    30     0.00%              <- split narrative decays fast
-Information coefficient:  +0.87
-Execution-eligible mean forward return:  -14.00%
-Confirmed: BROKLO, FINALO, INDULO, INSULO, LENDLO, REITLO, SAASLO
+  low                     47   -12.07%              <- unanimous benign consensus persists
+  high                    40     0.00%              <- split narrative decays fast
+Information coefficient:  +0.88
+Execution-eligible mean forward return:  -14.21%
+Confirmed: BDCLO, BROKLO, ENERLO, FINALO, INDULO, INSULO, LENDLO, REITLO, SAASLO
 ```
 
 Every sector's low-entropy inversion confirms and prints a negative forward return;
 the high-entropy versions decay to zero; the healthy names drift up — the thesis
-reproduced across all seven microstructures through a single gated, calibrated
+reproduced across all nine microstructures through a single gated, calibrated
 engine.
 
 ## Not investment advice

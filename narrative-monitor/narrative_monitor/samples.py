@@ -153,6 +153,38 @@ def saas(ticker: str = "SAASX") -> list[FundamentalSnapshot]:
     })
 
 
+def energy(ticker: str = "ENGX") -> list[FundamentalSnapshot]:
+    return _panel(ticker, "energy", {
+        "fd_cost_per_boe":          [10,10,11,11,13,14,15,16,18],
+        "reserve_replacement_ratio":[1.20,1.18,1.15,1.10,.95,.90,.85,.80,.75],
+        "pud_reserve_share":        [.30,.30,.31,.31,.35,.38,.40,.42,.45],
+        "netback_per_boe":          [30,31,30,32,26,24,22,23,20],
+        "reserve_revisions":        [.02,.02,.01,.01,-.02,-.03,-.04,-.05,-.06],
+        "pv10":                     [100,105,100,110,100,98,96,98,95],
+        "strip_price":              [80,82,80,85,65,60,55,58,50],
+    }, typed={
+        "revenue":            [10,11,10,12,9,8.5,8,9,7.5],
+        "operating_cash_flow":[8,8.5,8,9,7,6.5,6,6.5,5.5],
+        "capex":              [6,6,6,6,8,8.5,9,9.5,10],
+        "free_cash_flow":     [2,2.5,2,3,-1,-2,-3,-3,-4.5],
+    })
+
+
+def bdc(ticker: str = "BDCX") -> list[FundamentalSnapshot]:
+    return _panel(ticker, "bdc", {
+        "nav_per_share":            [10.0,10.1,10.0,10.2,9.8,9.6,9.4,9.2,9.0],
+        "pik_income":               [5,5,6,6,10,12,14,16,18],
+        "total_investment_income":  [50]*9,
+        "non_accrual_rate":         [.01,.01,.012,.012,.02,.03,.04,.05,.06],
+        "dividend_per_share":       [.35]*9,
+        "nii_per_share":            [.40,.40,.39,.39,.35,.33,.31,.29,.27],
+        "net_investment_income":    [20,20,19,19,17,16,15,14,13],
+        "fair_value_to_cost":       [1.02,1.01,1.00,1.00,.98,.96,.94,.92,.90],
+        "realized_loss_pct":        [0,0,0,0,.01,.02,.03,.04,.05],
+        "level3_asset_share":       [.60,.60,.61,.61,.64,.66,.68,.70,.72],
+    }, "fy_nii_guidance", {"2025-Q2":75,"2025-Q3":70,"2025-Q4":65,"2026-Q1":60})
+
+
 # ------------------------------------------------------------ healthy panels
 def industrial_healthy(ticker: str = "INDOK") -> list[FundamentalSnapshot]:
     return _panel(ticker, "industrial", {}, typed={
@@ -243,6 +275,38 @@ def saas_healthy(ticker: str = "SAASOK") -> list[FundamentalSnapshot]:
     })
 
 
+def energy_healthy(ticker: str = "ENGOK") -> list[FundamentalSnapshot]:
+    return _panel(ticker, "energy", {
+        "fd_cost_per_boe":          [10,10,10,10,9,9,9,9,8],
+        "reserve_replacement_ratio":[1.20,1.20,1.20,1.20,1.25,1.25,1.30,1.30,1.35],
+        "pud_reserve_share":        [.30]*9,
+        "netback_per_boe":          [30,31,30,32,33,34,33,35,36],
+        "reserve_revisions":        [.02]*9,
+        "pv10":                     [100,102,101,105,108,110,109,112,114],
+        "strip_price":              [80,81,80,83,85,86,85,88,90],
+    }, typed={
+        "revenue":            [10,11,10,12,11,12,11,13,12],
+        "operating_cash_flow":[8,8.5,8,9,9,9.5,9,10,10],
+        "capex":              [4]*9,
+        "free_cash_flow":     [4,4.5,4,5,5,5.5,5,6,6],
+    })
+
+
+def bdc_healthy(ticker: str = "BDCOK") -> list[FundamentalSnapshot]:
+    return _panel(ticker, "bdc", {
+        "nav_per_share":            [10.0,10.1,10.2,10.3,10.4,10.5,10.6,10.7,10.8],
+        "pik_income":               [5]*9,
+        "total_investment_income":  [50]*9,
+        "non_accrual_rate":         [.01]*9,
+        "dividend_per_share":       [.35]*9,
+        "nii_per_share":            [.40,.40,.41,.41,.42,.42,.43,.43,.44],
+        "net_investment_income":    [20,20,21,21,22,22,23,23,24],
+        "fair_value_to_cost":       [1.02,1.02,1.02,1.02,1.03,1.03,1.03,1.03,1.04],
+        "realized_loss_pct":        [0]*9,
+        "level3_asset_share":       [.60]*9,
+    })
+
+
 # breakdown builder, healthy builder — keyed by sector name
 SECTORS: dict[str, tuple[Callable, Callable]] = {
     "industrial": (industrial, industrial_healthy),
@@ -252,6 +316,8 @@ SECTORS: dict[str, tuple[Callable, Callable]] = {
     "insurance": (insurer, insurer_healthy),
     "lender": (lender, lender_healthy),
     "saas": (saas, saas_healthy),
+    "energy": (energy, energy_healthy),
+    "bdc": (bdc, bdc_healthy),
 }
 
 

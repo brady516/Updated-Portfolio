@@ -15,8 +15,9 @@ weights by narrative entropy exactly as before.
 Sectors implemented: industrial (FCF/margins), financial (bank credit reserves),
 reit (AFFO wedge), broker (rate carry on customer float), insurance (reserve
 adequacy / combined ratio), lender (growth-as-adverse-selection / vintage
-delinquency), saas (billings/RPO leading GAAP revenue). Adding another is one
-subclass plus a registry entry.
+delinquency), saas (billings/RPO leading GAAP revenue), energy (reserve
+replacement / capital efficiency), bdc (PIK income / self-marked NAV). Adding
+another is one subclass plus a registry entry.
 
 Stdlib only.
 """
@@ -920,6 +921,228 @@ class SaasChannels(ChannelSet):
         return out
 
 
+# ------------------------------------------------------------------ energy E&P
+class EnergyChannels(ChannelSet):
+    """Oil & gas E&P microstructure: capital efficiency and reserve quality.
+
+    The narrative "reserves growing, production up" while the cash economics rot:
+    finding & development costs rise, the reserve base shifts to undeveloped
+    (PUD) barrels that need future capital, the company outspends cash flow to
+    show growth, and reserves are quietly written down. PV-10 marked at a stale
+    trailing SEC price hides it. line_items: fd_cost_per_boe,
+    reserve_replacement_ratio, pud_reserve_share, netback_per_boe,
+    reserve_revisions (<0 = write-down, as a fraction of reserves), pv10,
+    strip_price. Capex, operating cash flow, and FCF are typed fields.
+    """
+
+    sector = "energy"
+
+    _FD = staticmethod(ChannelContext.item("fd_cost_per_boe"))
+    _RRR = staticmethod(ChannelContext.item("reserve_replacement_ratio"))
+    _PUD = staticmethod(ChannelContext.item("pud_reserve_share"))
+    _NETBACK = staticmethod(ChannelContext.item("netback_per_boe"))
+    _REVISIONS = staticmethod(ChannelContext.item("reserve_revisions"))
+    _PV10 = staticmethod(ChannelContext.item("pv10"))
+    _STRIP = staticmethod(ChannelContext.item("strip_price"))
+    _FCF = staticmethod(lambda s: s.free_cash_flow if s is not None else None)
+
+    def primary_ttm(self, ctx: ChannelContext) -> float | None:
+        return ctx.ttm(self._FCF)
+
+    def deterioration(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+        cur_p = ctx.current.parsed_period
+
+        # 1. TTM free cash flow declines (severe -25%)
+        now, prev = ctx.ttm(self._FCF), ctx.ttm(self._FCF, cur_p.prior_year())
+        m = _decline(now, prev, 0.25)
+        out.append(Channel("ttm_fcf_decline", m,
+            f"TTM free cash flow fell to {now:.1f} from {prev:.1f}." if m > 0
+            else "TTM FCF did not decline (or window incomplete)."))
+
+        # 2. Finding & development cost per boe rising (capital efficiency down)
+        m = _two_period_level_rise(ctx, self._FD, floor=0.5, severe=8.0)
+        out.append(Channel("fd_cost_per_boe_rising", m,
+            "Finding & development cost per boe rose two quarters running." if m > 0
+            else "F&D cost per boe did not rise two consecutive quarters."))
+
+        # 3. Reserve replacement ratio falling (and below 100% = liquidating)
+        rrr_change = ctx.level_change_yoy(self._RRR)
+        rrr_now = self._RRR(ctx.current)
+        m = ramp(-rrr_change, 0.05, 0.50) if rrr_change is not None and rrr_change < 0 else 0.0
+        if rrr_now is not None and rrr_now < 1.0:
+            m = noisy_or([m, ramp(1.0 - rrr_now, 0.0, 0.50)])
+        out.append(Channel("reserve_replacement_falling", m,
+            f"Reserve replacement fell to {rrr_now:.0%} (liquidating the base)." if m > 0
+            else "Reserve replacement held up."))
+
+        # 4. Reserve mix shifting to undeveloped (PUD) barrels — future capex owed
+        c = ctx.level_change_yoy(self._PUD)
+        m = ramp(c, 0.02, 0.15) if c is not None and c > 0 else 0.0
+        out.append(Channel("pud_reserve_share_rising", m,
+            "Reserve mix shifted to undeveloped (PUD) barrels YoY." if m > 0
+            else "PUD reserve share did not rise."))
+
+        # 5. Outspending cash flow to show growth (reinvestment rate > 100%)
+        capex, ocf = ctx.current.capex, ctx.current.operating_cash_flow
+        m = ramp(capex / ocf - 1.0, 0.0, 0.50) if ocf and ocf > 0 and capex > ocf else 0.0
+        out.append(Channel("outspending_cash_flow", m,
+            f"Capex {capex:.1f} exceeded operating cash flow {ocf:.1f}." if m > 0
+            else "Capex did not exceed operating cash flow."))
+
+        # 6. Cash netback per boe compressing two comparable periods
+        m = _two_period_yoy_decline(ctx, self._NETBACK, floor=0.02, severe=0.20)
+        out.append(Channel("netback_two_period_compression", m,
+            "Cash netback per boe compressed YoY two quarters running." if m > 0
+            else "Netback per boe did not compress two consecutive quarters."))
+
+        # 7. Negative reserve revisions — writing down the resource base
+        rev = self._REVISIONS(ctx.current)
+        m = ramp(-rev, 0.01, 0.15) if rev is not None and rev < 0 else 0.0
+        out.append(Channel("negative_reserve_revisions", m,
+            "Reserves were revised down (the base was overstated)." if m > 0
+            else "No negative reserve revisions."))
+        return out
+
+    def improvement(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+        cur_p = ctx.current.parsed_period
+        now, prev = ctx.ttm(self._FCF), ctx.ttm(self._FCF, cur_p.prior_year())
+        out.append(Channel("ttm_fcf_rise", _rise(now, prev, 0.25),
+                            "TTM free cash flow rose YoY."))
+        c = ctx.level_change_yoy(self._NETBACK)
+        out.append(Channel("netback_expansion",
+                           ramp(c, 0.02, 0.20) if c is not None and c > 0 else 0.0,
+                           "Cash netback per boe expanded YoY."))
+        return out
+
+    def reporting_entropy(self, ctx: ChannelContext) -> float:
+        """Adds the E&P tell: PV-10 holding while the strip price falls — reserves
+        marked at a stale trailing SEC price."""
+        base = super().reporting_entropy(ctx)
+        strip_yoy, pv10_yoy = ctx.yoy(self._STRIP), ctx.yoy(self._PV10)
+        extra = 0.0
+        if (strip_yoy is not None and strip_yoy < -0.05
+                and pv10_yoy is not None and pv10_yoy > strip_yoy + 0.10):
+            extra = ramp(pv10_yoy - strip_yoy, 0.10, 0.40)
+        return round(noisy_or([base, extra]), 4)
+
+
+# ------------------------------------------------------------------ BDCs
+class BdcChannels(ChannelSet):
+    """BDC / mortgage-REIT microstructure: reported income is a non-cash mark.
+
+    The narrative "net investment income growing, NAV stable, dividend covered"
+    while income is increasingly PIK (payment-in-kind = the borrower can't pay
+    cash), NAV is self-marked down, and the dividend runs above what's earned.
+    line_items: nav_per_share, pik_income, total_investment_income,
+    non_accrual_rate, dividend_per_share, nii_per_share, net_investment_income,
+    fair_value_to_cost, realized_loss_pct (of NAV), level3_asset_share,
+    fy_nii_guidance.
+    """
+
+    sector = "bdc"
+
+    _NAV = staticmethod(ChannelContext.item("nav_per_share"))
+    _NONACCRUAL = staticmethod(ChannelContext.item("non_accrual_rate"))
+    _NII = staticmethod(ChannelContext.item("net_investment_income"))
+    _FVTC = staticmethod(ChannelContext.item("fair_value_to_cost"))
+    _GUID = staticmethod(ChannelContext.item("fy_nii_guidance"))
+
+    @staticmethod
+    def _pik_share(s: FundamentalSnapshot | None) -> float | None:
+        if s is None:
+            return None
+        pik, tot = s.line_items.get("pik_income"), s.line_items.get("total_investment_income")
+        if pik is None or not tot:
+            return None
+        return pik / tot
+
+    @staticmethod
+    def _coverage(s: FundamentalSnapshot | None) -> float | None:
+        if s is None:
+            return None
+        dps, nii = s.line_items.get("dividend_per_share"), s.line_items.get("nii_per_share")
+        if dps is None or not nii:
+            return None
+        return dps / nii
+
+    def primary_ttm(self, ctx: ChannelContext) -> float | None:
+        return ctx.ttm(self._NII)
+
+    def deterioration(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+
+        # 1. NAV per share declines two comparable periods (self-marked erosion)
+        m = _two_period_yoy_decline(ctx, self._NAV, floor=0.01, severe=0.10)
+        out.append(Channel("nav_per_share_decline", m,
+            "NAV per share fell YoY two quarters running." if m > 0
+            else "NAV per share did not fall two consecutive quarters."))
+
+        # 2. PIK income share rising — income the borrowers can't pay in cash
+        m = _two_period_level_rise(ctx, self._pik_share, floor=0.01, severe=0.10)
+        out.append(Channel("pik_income_share_rising", m,
+            "PIK (non-cash) income rose as a share of total income." if m > 0
+            else "PIK income share did not rise two consecutive quarters."))
+
+        # 3. Non-accrual rate rising — investments that stopped paying
+        m = _two_period_level_rise(ctx, self._NONACCRUAL, floor=0.005, severe=0.05)
+        out.append(Channel("non_accrual_rate_rising", m,
+            "Portfolio non-accruals rose two quarters running." if m > 0
+            else "Non-accrual rate did not rise two consecutive quarters."))
+
+        # 4. Dividend runs above net investment income (payout > 100%)
+        payout = self._coverage(ctx.current)
+        m = ramp(payout - 1.0, 0.0, 0.20) if payout is not None and payout > 1.0 else 0.0
+        out.append(Channel("dividend_above_nii", m,
+            f"Dividend/NII payout is {payout:.0%} — above what's earned." if m > 0
+            else "Dividend is covered by net investment income."))
+
+        # 5. Fair-value-to-cost falling — the self-marks are turning down
+        c = ctx.level_change_yoy(self._FVTC)
+        m = ramp(-c, 0.005, 0.05) if c is not None and c < 0 else 0.0
+        out.append(Channel("fair_value_marks_declining", m,
+            "Portfolio fair-value-to-cost fell YoY (marks turning down)." if m > 0
+            else "Fair-value marks did not decline."))
+
+        # 6. NII / dividend guidance reduced
+        m = _guidance_cut(ctx, self._GUID)
+        out.append(Channel("nii_guidance_cut", m,
+            "Net-investment-income guidance was reduced." if m > 0
+            else "NII guidance was not reduced."))
+
+        # 7. Realized losses on exits — prior marks proved too high
+        rl = ctx.value(ChannelContext.item("realized_loss_pct"), ctx.current)
+        m = ramp(rl, 0.005, 0.05) if rl is not None and rl > 0 else 0.0
+        out.append(Channel("realized_losses_on_exits", m,
+            "Realized losses on exits — earlier marks were too high." if m > 0
+            else "No realized losses on exits."))
+        return out
+
+    def improvement(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+        cur_p = ctx.current.parsed_period
+        now, prev = ctx.ttm(self._NII), ctx.ttm(self._NII, cur_p.prior_year())
+        out.append(Channel("ttm_nii_rise", _rise(now, prev, 0.25),
+                            "TTM net investment income rose YoY."))
+        c = ctx.level_change_yoy(self._NAV)
+        out.append(Channel("nav_per_share_rise",
+                           ramp(c, 0.01, 0.10) if c is not None and c > 0 else 0.0,
+                           "NAV per share rose YoY."))
+        return out
+
+    def reporting_entropy(self, ctx: ChannelContext) -> float:
+        """Adds the BDC tell: a rising share of hard-to-value Level 3 assets the
+        manager marks itself."""
+        base = super().reporting_entropy(ctx)
+        l3 = ctx.current.line_items.get("level3_asset_share")
+        l3_prev = ctx.prior_year.line_items.get("level3_asset_share") if ctx.prior_year else None
+        extra = 0.0
+        if l3 is not None and l3_prev is not None and l3 > l3_prev:
+            extra = ramp(l3 - l3_prev, 0.02, 0.20)
+        return round(noisy_or([base, extra]), 4)
+
+
 # ------------------------------------------------------------------ shared ramps
 def _decline(now: float | None, prev: float | None, severe: float) -> float:
     if now is None or prev is None or prev == 0:
@@ -1005,6 +1228,8 @@ CHANNEL_SETS: dict[str, ChannelSet] = {
     "insurance": InsuranceChannels(),
     "lender": LenderChannels(),
     "saas": SaasChannels(),
+    "energy": EnergyChannels(),
+    "bdc": BdcChannels(),
 }
 
 

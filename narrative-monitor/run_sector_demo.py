@@ -23,6 +23,8 @@ LABELS = {
     "insurance": "Insurer — 'underwriting stays disciplined'",
     "lender": "Lender — 'record originations, TAM expansion'",
     "saas": "SaaS — 'best-in-class retention, durable growth'",
+    "energy": "Energy — 'reserves growing, production up'",
+    "bdc": "BDC — 'income growing, NAV stable, dividend covered'",
 }
 
 

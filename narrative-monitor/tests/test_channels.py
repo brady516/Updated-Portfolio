@@ -285,6 +285,40 @@ class SaasChannelTests(unittest.TestCase):
         self.assertFalse(sig.execution_eligible)
 
 
+class EnergyChannelTests(unittest.TestCase):
+    def test_capital_efficiency_breakdown_confirms(self) -> None:
+        sig = SignalEngine().evaluate(samples.energy("E"), claims=[])
+        self.assertEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        for key in ("reserve_replacement_falling", "outspending_cash_flow",
+                    "netback_two_period_compression", "negative_reserve_revisions"):
+            self.assertIn(key, sig.confirmed_criteria)
+        self.assertTrue(sig.execution_eligible)
+
+    def test_stale_pv10_raises_reporting_entropy(self) -> None:
+        sig = SignalEngine().evaluate(samples.energy("E"), claims=[])
+        self.assertGreater(sig.reporting_entropy, 0.0)  # PV-10 held while strip fell
+
+    def test_healthy_energy_does_not_fire(self) -> None:
+        sig = SignalEngine().evaluate(samples.energy_healthy("E"), claims=[])
+        self.assertNotEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        self.assertFalse(sig.execution_eligible)
+
+
+class BdcChannelTests(unittest.TestCase):
+    def test_pik_and_marks_breakdown_confirms(self) -> None:
+        sig = SignalEngine().evaluate(samples.bdc("B"), claims=[])
+        self.assertEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        for key in ("pik_income_share_rising", "nav_per_share_decline",
+                    "dividend_above_nii", "non_accrual_rate_rising"):
+            self.assertIn(key, sig.confirmed_criteria)
+        self.assertTrue(sig.execution_eligible)
+
+    def test_healthy_bdc_does_not_fire(self) -> None:
+        sig = SignalEngine().evaluate(samples.bdc_healthy("B"), claims=[])
+        self.assertNotEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        self.assertFalse(sig.execution_eligible)
+
+
 class UniverseTests(unittest.TestCase):
     def test_every_sector_breakdown_confirms_healthy_does_not(self) -> None:
         from narrative_monitor import extract_claims, narrative_intensity
