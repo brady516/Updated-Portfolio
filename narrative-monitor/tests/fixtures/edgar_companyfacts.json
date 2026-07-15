@@ -1,0 +1,65 @@
+{
+  "cik": 1234567,
+  "entityName": "TESTCO INC",
+  "facts": {
+    "us-gaap": {
+      "RevenueFromContractWithCustomerExcludingAssessedTax": {
+        "label": "Revenue",
+        "units": {
+          "USD": [
+            {"start": "2023-01-01", "end": "2023-03-31", "val": 100, "fy": 2023, "fp": "Q1", "form": "10-Q", "filed": "2023-04-20", "frame": "CY2023Q1"},
+            {"start": "2023-01-01", "end": "2023-03-31", "val": 98, "fy": 2023, "fp": "Q1", "form": "10-Q/A", "filed": "2023-11-01", "frame": "CY2023Q1"},
+            {"start": "2023-04-01", "end": "2023-06-30", "val": 110, "fy": 2023, "fp": "Q2", "form": "10-Q", "filed": "2023-07-20", "frame": "CY2023Q2"},
+            {"start": "2023-07-01", "end": "2023-09-30", "val": 120, "fy": 2023, "fp": "Q3", "form": "10-Q", "filed": "2023-10-20", "frame": "CY2023Q3"},
+            {"start": "2023-01-01", "end": "2023-12-31", "val": 460, "fy": 2023, "fp": "FY", "form": "10-K", "filed": "2024-02-15", "frame": "CY2023"},
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 105, "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-04-19", "frame": "CY2024Q1"}
+          ]
+        }
+      },
+      "CostOfRevenue": {
+        "units": {
+          "USD": [
+            {"start": "2023-01-01", "end": "2023-03-31", "val": 60, "fy": 2023, "fp": "Q1", "form": "10-Q", "filed": "2023-04-20", "frame": "CY2023Q1"},
+            {"start": "2023-04-01", "end": "2023-06-30", "val": 66, "fy": 2023, "fp": "Q2", "form": "10-Q", "filed": "2023-07-20", "frame": "CY2023Q2"},
+            {"start": "2023-07-01", "end": "2023-09-30", "val": 72, "fy": 2023, "fp": "Q3", "form": "10-Q", "filed": "2023-10-20", "frame": "CY2023Q3"},
+            {"start": "2023-01-01", "end": "2023-12-31", "val": 280, "fy": 2023, "fp": "FY", "form": "10-K", "filed": "2024-02-15", "frame": "CY2023"},
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 63, "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-04-19", "frame": "CY2024Q1"}
+          ]
+        }
+      },
+      "NetCashProvidedByUsedInOperatingActivities": {
+        "units": {
+          "USD": [
+            {"start": "2023-01-01", "end": "2023-03-31", "val": 25, "fy": 2023, "fp": "Q1", "form": "10-Q", "filed": "2023-04-20", "frame": "CY2023Q1"},
+            {"start": "2023-04-01", "end": "2023-06-30", "val": 28, "fy": 2023, "fp": "Q2", "form": "10-Q", "filed": "2023-07-20", "frame": "CY2023Q2"},
+            {"start": "2023-07-01", "end": "2023-09-30", "val": 30, "fy": 2023, "fp": "Q3", "form": "10-Q", "filed": "2023-10-20", "frame": "CY2023Q3"},
+            {"start": "2023-01-01", "end": "2023-12-31", "val": 110, "fy": 2023, "fp": "FY", "form": "10-K", "filed": "2024-02-15", "frame": "CY2023"},
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 26, "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-04-19", "frame": "CY2024Q1"}
+          ]
+        }
+      },
+      "PaymentsToAcquirePropertyPlantAndEquipment": {
+        "units": {
+          "USD": [
+            {"start": "2023-01-01", "end": "2023-03-31", "val": 8, "fy": 2023, "fp": "Q1", "form": "10-Q", "filed": "2023-04-20", "frame": "CY2023Q1"},
+            {"start": "2023-04-01", "end": "2023-06-30", "val": 8, "fy": 2023, "fp": "Q2", "form": "10-Q", "filed": "2023-07-20", "frame": "CY2023Q2"},
+            {"start": "2023-07-01", "end": "2023-09-30", "val": 9, "fy": 2023, "fp": "Q3", "form": "10-Q", "filed": "2023-10-20", "frame": "CY2023Q3"},
+            {"start": "2023-01-01", "end": "2023-12-31", "val": 35, "fy": 2023, "fp": "FY", "form": "10-K", "filed": "2024-02-15", "frame": "CY2023"},
+            {"start": "2024-01-01", "end": "2024-03-31", "val": 9, "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-04-19", "frame": "CY2024Q1"}
+          ]
+        }
+      },
+      "AccountsReceivableNetCurrent": {
+        "units": {
+          "USD": [
+            {"end": "2023-03-31", "val": 40, "fy": 2023, "fp": "Q1", "form": "10-Q", "filed": "2023-04-20", "frame": "CY2023Q1I"},
+            {"end": "2023-06-30", "val": 42, "fy": 2023, "fp": "Q2", "form": "10-Q", "filed": "2023-07-20", "frame": "CY2023Q2I"},
+            {"end": "2023-09-30", "val": 44, "fy": 2023, "fp": "Q3", "form": "10-Q", "filed": "2023-10-20", "frame": "CY2023Q3I"},
+            {"end": "2023-12-31", "val": 46, "fy": 2023, "fp": "FY", "form": "10-K", "filed": "2024-02-15", "frame": "CY2023Q4I"},
+            {"end": "2024-03-31", "val": 41, "fy": 2024, "fp": "Q1", "form": "10-Q", "filed": "2024-04-19", "frame": "CY2024Q1I"}
+          ]
+        }
+      }
+    }
+  }
+}

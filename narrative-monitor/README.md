@@ -160,7 +160,8 @@ others.
 
 | Service | Job |
 |---|---|
-| `filing_ingestor.py` | SEC/company filings → normalized `FundamentalSnapshot`. Ships a CSV loader; subclass `FilingSource` per provider. |
+| `filing_ingestor.py` | Filings → normalized `FundamentalSnapshot`. Ships a CSV loader; subclass `FilingSource` per provider. |
+| `edgar.py` | Live `FilingSource` over SEC EDGAR company-facts (XBRL) — ticker → CIK → as-filed, point-in-time snapshots. |
 | `narrative_ingestor.py` | Raw feeds → the parrot layer of `NarrativeEvent`s (management / sell-side / media), plus propagation analytics. Ships a JSONL loader. |
 | `narrative_monitor.py` | News / transcripts → structured `NarrativeClaim`s + source-weighted narrative entropy. Identifies the claim and its stance, never the direction. |
 | `signal_engine.py` | The breakdown model — continuous channels, divergence, entropy weighting, state + gate. |
@@ -177,8 +178,9 @@ restated numbers are the one way the future leaks into a contemporaneous signal.
 
 The provider adapters are the integration seam — write them around your own stack:
 
-- **Filings / fundamentals:** SEC EDGAR company-facts for raw filings; Bloomberg or
-  FactSet for pre-normalized metrics. Implement `FilingSource.fetch`.
+- **Filings / fundamentals:** `EdgarFilingSource` (built — SEC EDGAR company-facts,
+  as-filed) is the reference implementation; Bloomberg or FactSet adapters are the
+  same `FilingSource.fetch` seam for pre-normalized metrics.
 - **Narrative:** point one or more `NarrativeSource` adapters at your transcript /
   news / sell-side feeds → `NarrativeEvent`s → `extract_claims`. The keyword
   `CLAIM_LEXICON` is deterministic but has **no negation handling** ("not deal
@@ -329,6 +331,46 @@ Every sector's low-entropy inversion confirms and prints a negative forward retu
 the high-entropy versions decay to zero; the healthy names drift up — the thesis
 reproduced across all nine microstructures through a single gated, calibrated
 engine.
+
+## Live data — SEC EDGAR
+
+`edgar.py` is a real `FilingSource` over SEC's free, public XBRL company-facts API
+(no key, just a declared User-Agent). It turns a ticker into as-filed,
+point-in-time `FundamentalSnapshot`s:
+
+```bash
+EDGAR_EMAIL="you@example.com" python3 run_live_demo.py IBM AAPL NVDA
+```
+
+```python
+from narrative_monitor import EdgarFilingSource, SignalEngine
+snaps = EdgarFilingSource(email="you@example.com").fetch("IBM")   # ticker -> CIK -> facts
+signal = SignalEngine().evaluate(snaps, claims=[])                # same engine, real numbers
+```
+
+Two disciplines are enforced in the normalizer, because both are ways live data
+lies to you:
+
+- **As-filed only.** company-facts returns every value ever filed for a period
+  (original 10-Q/10-K *and* later amendments). For each period it keeps the
+  **earliest-filed** value — the number that existed on the filing date — and uses
+  that `filed` date as `reported_at`. Restatements are never used. This is the same
+  point-in-time contract the backtest depends on, now enforced at ingestion.
+- **Discrete quarters.** XBRL flow facts arrive as 3-month, 6/9-month YTD, and
+  annual durations. The normalizer takes the discrete calendar-quarter facts (SEC
+  `frame` `CY2023Q3`) and **derives Q4 = annual − (Q1+Q2+Q3)**, so comparable-period
+  and TTM logic see clean quarters. `tests/test_edgar.py` verifies all of this
+  offline against a recorded fixture of the real EDGAR schema.
+
+The live adapter emits the **industrial** concept set (revenue, FCF, gross margin,
+receivables) — the tags every filer reports. Sector-specific XBRL (bank
+`AllowanceForLoanAndLeaseLosses`, REIT FFO, insurer reserves) is a follow-on
+concept map; the normalization in `edgar.py` is the seam where it plugs in.
+
+> Note: this adapter needs outbound HTTPS to `sec.gov`. Some sandboxes (including
+> the one this was built in) block that egress at the proxy — `run_live_demo.py`
+> reports it clearly. Run where SEC is reachable, or have an admin allowlist
+> `data.sec.gov` and `www.sec.gov`.
 
 ## Not investment advice
 

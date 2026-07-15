@@ -28,6 +28,7 @@ from .backtest import (
     PriceSeries,
     run_backtest,
 )
+from .edgar import EdgarClient, EdgarFilingSource
 from .channels import (
     CHANNEL_SETS,
     BdcChannels,
@@ -66,6 +67,8 @@ __all__ = [
     "EnergyChannels",
     "CsvFilingSource",
     "CsvPriceSource",
+    "EdgarClient",
+    "EdgarFilingSource",
     "FilingSource",
     "FinancialChannels",
     "IndustrialChannels",
