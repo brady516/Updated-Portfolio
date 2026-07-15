@@ -35,6 +35,7 @@ from .channels import (
     FinancialChannels,
     IndustrialChannels,
     InsuranceChannels,
+    LenderChannels,
     ReitChannels,
     channel_set_for,
 )
@@ -64,6 +65,7 @@ __all__ = [
     "FinancialChannels",
     "IndustrialChannels",
     "InsuranceChannels",
+    "LenderChannels",
     "ReitChannels",
     "channel_set_for",
     "FundamentalSnapshot",

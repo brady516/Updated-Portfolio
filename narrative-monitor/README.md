@@ -227,6 +227,9 @@ Broker (broker)     confirmed   channels: nii_reliance_high (NII = 168% of preta
             nii_two_period_compression, customer_float_erosion, rate_cut_earnings_exposure …
 Insurer(insurance)  confirmed   channels: combined_ratio_two_period_rise,
             underwriting_loss_masked, accident_year_worse_than_reported, adverse_reserve_development …
+Lender (lender)     confirmed   channels: origination_growth_into_rising_delinquency
+            (+53% originations while delinquency rose), vintage_early_delinquency_rising,
+            roll_rate_rising, reserve_release_below_chargeoffs …
 ```
 
 The broker case is the one that started as a checking-account grievance: a
@@ -234,11 +237,17 @@ The broker case is the one that started as a checking-account grievance: a
 income** — a rate carry on customer float. The engine flags it not as fraud (the
 number is disclosed) but as earnings that evaporate on the first cut.
 
-Five sectors ship today — industrial, financial, reit, broker, insurance. Adding
-another (energy: reserve replacement, PV-10 vs the strip) is a new `ChannelSet` and
-a registry entry — the engine never changes. Snapshots carry sector line items in
-`line_items` (the CSV loader routes any non-reserved numeric column there), so no
-schema churn per sector.
+Six sectors ship today — industrial, financial, reit, broker, insurance, lender.
+The **lender** set encodes an *inverse, conditional* microstructure: originations
+growth is celebrated, but growth **while the newest vintages deteriorate** is the
+breakdown (adverse selection / loosening underwriting, with CECL letting recognition
+lag). Growth alone never fires — `test_fast_growth_with_clean_credit_does_not_fire`
+proves +53% originations with clean vintages stays inconclusive.
+
+Adding another (energy: reserve replacement, PV-10 vs the strip) is a new
+`ChannelSet` and a registry entry — the engine never changes. Snapshots carry sector
+line items in `line_items` (the CSV loader routes any non-reserved numeric column
+there), so no schema churn per sector.
 
 ## Calibrating it without lying to yourself
 

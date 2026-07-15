@@ -129,12 +129,42 @@ def _healthy_insurer() -> list:
     })
 
 
+def _broken_lender() -> list:
+    return _panel("lender", {
+        "originations":               [50,55,60,65,75,85,95,105,115],
+        "receivables":                [200,210,220,230,245,260,278,298,320],
+        "allowance_for_credit_losses":[6.0,6.3,6.6,6.9,6.8,6.9,7.0,7.1,7.2],
+        "net_charge_offs":            [1.0,1.0,1.1,1.1,1.4,1.7,2.1,2.5,3.0],
+        "provision_for_credit_losses":[1.3,1.3,1.3,1.3,1.6,1.8,2.0,2.2,2.4],
+        "delinquency_rate":           [.030,.030,.032,.032,.038,.042,.046,.050,.055],
+        "vintage_early_delinquency":  [.020,.020,.021,.021,.028,.032,.036,.040,.045],
+        "roll_rate":                  [.15,.15,.16,.16,.18,.20,.22,.24,.26],
+        "net_income":                 [8,8.2,8.4,8.6,7.0,6.0,5.0,4.0,3.0],
+    }, "fy_loss_rate_guidance", {"2025-Q2":.045,"2025-Q3":.050,"2025-Q4":.055,"2026-Q1":.060})
+
+
+def _healthy_fast_grower() -> list:
+    # SAME +53% origination growth, but clean credit: the inversion must NOT fire
+    return _panel("lender", {
+        "originations":               [50,55,60,65,75,85,95,105,115],
+        "receivables":                [200,210,220,230,245,260,278,298,320],
+        "allowance_for_credit_losses":[6.0,6.3,6.6,6.9,7.4,7.9,8.5,9.1,9.8],
+        "net_charge_offs":            [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+        "provision_for_credit_losses":[1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2,1.2],
+        "delinquency_rate":           [.030]*9,
+        "vintage_early_delinquency":  [.020,.020,.020,.020,.019,.019,.018,.018,.017],
+        "roll_rate":                  [.15]*9,
+        "net_income":                 [8,8.5,9,9.5,10,10.5,11,11.5,12],
+    })
+
+
 class SectorSelectionTests(unittest.TestCase):
     def test_registry_routes_by_sector(self) -> None:
         self.assertEqual(channel_set_for("financial").sector, "financial")
         self.assertEqual(channel_set_for("reit").sector, "reit")
         self.assertEqual(channel_set_for("broker").sector, "broker")
         self.assertEqual(channel_set_for("insurance").sector, "insurance")
+        self.assertEqual(channel_set_for("lender").sector, "lender")
         self.assertEqual(channel_set_for("unknown").sector, "industrial")
 
     def test_signal_reports_its_sector(self) -> None:
@@ -212,6 +242,26 @@ class InsuranceChannelTests(unittest.TestCase):
     def test_healthy_insurer_does_not_fire(self) -> None:
         sig = SignalEngine().evaluate(_healthy_insurer(), claims=[])
         self.assertEqual(sig.metrics["reporting_divergence"], 0.0)
+        self.assertNotEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        self.assertFalse(sig.execution_eligible)
+
+
+class LenderChannelTests(unittest.TestCase):
+    def test_growth_into_bad_credit_confirms(self) -> None:
+        sig = SignalEngine().evaluate(_broken_lender(), claims=[])
+        self.assertEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        for key in ("origination_growth_into_rising_delinquency",
+                    "vintage_early_delinquency_rising", "roll_rate_rising",
+                    "allowance_coverage_decline"):
+            self.assertIn(key, sig.confirmed_criteria)
+        self.assertTrue(sig.execution_eligible)
+
+    def test_fast_growth_with_clean_credit_does_not_fire(self) -> None:
+        # The inversion is CONDITIONAL: +53% originations with clean vintages is
+        # not a breakdown. Growth alone must never confirm.
+        sig = SignalEngine().evaluate(_healthy_fast_grower(), claims=[])
+        self.assertNotIn("origination_growth_into_rising_delinquency",
+                         sig.confirmed_criteria)
         self.assertNotEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
         self.assertFalse(sig.execution_eligible)
 

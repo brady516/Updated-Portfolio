@@ -114,6 +114,24 @@ def insurance_panel() -> list[FundamentalSnapshot]:
     return _panel("INSURX", "insurance", series, "fy_combined_ratio_guidance", guid)
 
 
+def lender_panel() -> list[FundamentalSnapshot]:
+    # originations accelerate while the newest vintages rot: growth by loosening
+    # underwriting, reserves lagging, roll rates climbing.
+    series = {
+        "originations":               [50,55,60,65,75,85,95,105,115],
+        "receivables":                [200,210,220,230,245,260,278,298,320],
+        "allowance_for_credit_losses":[6.0,6.3,6.6,6.9,6.8,6.9,7.0,7.1,7.2],
+        "net_charge_offs":            [1.0,1.0,1.1,1.1,1.4,1.7,2.1,2.5,3.0],
+        "provision_for_credit_losses":[1.3,1.3,1.3,1.3,1.6,1.8,2.0,2.2,2.4],
+        "delinquency_rate":           [.030,.030,.032,.032,.038,.042,.046,.050,.055],
+        "vintage_early_delinquency":  [.020,.020,.021,.021,.028,.032,.036,.040,.045],
+        "roll_rate":                  [.15,.15,.16,.16,.18,.20,.22,.24,.26],
+        "net_income":                 [8,8.2,8.4,8.6,7.0,6.0,5.0,4.0,3.0],
+    }
+    guid = {"2025-Q2":.045,"2025-Q3":.050,"2025-Q4":.055,"2026-Q1":.060}
+    return _panel("LENDX", "lender", series, "fy_loss_rate_guidance", guid)
+
+
 def _run(name: str, panel, body: str) -> None:
     events = [NarrativeEvent(panel[0].ticker, "2026-04-20T08:00:00-04:00",
                              f"{panel[0].ticker} update", body, s, "sell_side")
@@ -140,6 +158,8 @@ def main() -> None:
          "durable franchise, pipeline remains strong, the rate move is a temporary headwind")
     _run("Insurer — 'underwriting stays disciplined'", insurance_panel(),
          "underwriting is disciplined, pipeline remains strong, a temporary headwind on cats")
+    _run("Lender — 'record originations, TAM expansion'", lender_panel(),
+         "record originations, pipeline remains strong, the vintage is a temporary headwind")
 
 
 if __name__ == "__main__":

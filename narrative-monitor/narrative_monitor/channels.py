@@ -14,7 +14,8 @@ weights by narrative entropy exactly as before.
 
 Sectors implemented: industrial (FCF/margins), financial (bank credit reserves),
 reit (AFFO wedge), broker (rate carry on customer float), insurance (reserve
-adequacy / combined ratio). Adding another is one subclass plus a registry entry.
+adequacy / combined ratio), lender (growth-as-adverse-selection / vintage
+delinquency). Adding another is one subclass plus a registry entry.
 
 Stdlib only.
 """
@@ -700,6 +701,117 @@ class InsuranceChannels(ChannelSet):
         return out
 
 
+# ------------------------------------------------------------------ lenders
+class LenderChannels(ChannelSet):
+    """Consumer-finance / specialty-lender microstructure: growth IS adverse
+    selection.
+
+    The narrative "record originations, TAM expansion" is celebrated; the truth
+    is that fast growth means winning the loans nobody else wanted, and CECL
+    reserving lets recognition lag. The inversion is conditional: growth alone is
+    fine — growth WHILE the newest vintages deteriorate is the breakdown.
+    line_items: originations, receivables, allowance_for_credit_losses,
+      net_charge_offs, provision_for_credit_losses, delinquency_rate,
+      vintage_early_delinquency (newest cohort, the leading tell), roll_rate,
+      net_income, fy_loss_rate_guidance (higher = worse)
+    """
+
+    sector = "lender"
+
+    _NI = staticmethod(ChannelContext.item("net_income"))
+    _ORIG = staticmethod(ChannelContext.item("originations"))
+    _RECV = staticmethod(ChannelContext.item("receivables"))
+    _NCO = staticmethod(ChannelContext.item("net_charge_offs"))
+    _PROV = staticmethod(ChannelContext.item("provision_for_credit_losses"))
+    _DELINQ = staticmethod(ChannelContext.item("delinquency_rate"))
+    _VINTAGE = staticmethod(ChannelContext.item("vintage_early_delinquency"))
+    _ROLL = staticmethod(ChannelContext.item("roll_rate"))
+    _GUID = staticmethod(ChannelContext.item("fy_loss_rate_guidance"))
+
+    @staticmethod
+    def _coverage(s: FundamentalSnapshot | None) -> float | None:
+        if s is None:
+            return None
+        acl, recv = s.line_items.get("allowance_for_credit_losses"), s.line_items.get("receivables")
+        if acl is None or not recv:
+            return None
+        return acl / recv
+
+    def primary_ttm(self, ctx: ChannelContext) -> float | None:
+        return ctx.ttm(self._NI)
+
+    def deterioration(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+        cur_p = ctx.current.parsed_period
+
+        # 1. TTM net income declines (severe -25%)
+        now, prev = ctx.ttm(self._NI), ctx.ttm(self._NI, cur_p.prior_year())
+        m = _decline(now, prev, 0.25)
+        out.append(Channel("ttm_net_income_decline", m,
+            f"TTM net income fell to {now:.1f} from {prev:.1f}." if m > 0
+            else "TTM net income did not decline (or window incomplete)."))
+
+        # 2. Newest-vintage early delinquency rises two comparable periods —
+        #    the leading credit tell (loosening underwriting shows here first)
+        m = _two_period_level_rise(ctx, self._VINTAGE, floor=0.003, severe=0.03)
+        out.append(Channel("vintage_early_delinquency_rising", m,
+            "Newest-vintage early delinquency rose YoY two quarters running." if m > 0
+            else "Vintage early delinquency did not rise two consecutive quarters."))
+
+        # 3. Allowance coverage falls as the book grows (CECL under-provisioning)
+        c = ctx.level_change_yoy(self._coverage)
+        m = ramp(-c, 0.001, 0.010) if c is not None and c < 0 else 0.0
+        out.append(Channel("allowance_coverage_decline", m,
+            f"Allowance coverage fell {c:+.2%} of receivables YoY." if m > 0
+            else "Allowance coverage did not fall materially."))
+
+        # 4. THE inversion: originations accelerate WHILE delinquency rises —
+        #    growth by loosening underwriting, not franchise strength
+        orig_yoy = ctx.yoy(self._ORIG)
+        delinq_rising = ctx.level_change_yoy(self._DELINQ)
+        m = (ramp(orig_yoy, 0.15, 0.50)
+             if orig_yoy is not None and orig_yoy > 0.15
+             and delinq_rising is not None and delinq_rising > 0 else 0.0)
+        out.append(Channel("origination_growth_into_rising_delinquency", m,
+            f"Originations grew {orig_yoy:+.0%} YoY while delinquency rose." if m > 0
+            else "Not both: fast origination growth and rising delinquency."))
+
+        # 5. Provisions run below net charge-offs (reserve release flatters EPS)
+        prov, nco = self._PROV(ctx.current), self._NCO(ctx.current)
+        m = 0.0
+        if prov is not None and nco is not None and nco > 0 and prov < nco:
+            m = ramp((nco - prov) / nco, 0.05, 0.50)
+        out.append(Channel("reserve_release_below_chargeoffs", m,
+            f"Provision {prov:.2f} ran below net charge-offs {nco:.2f}." if m > 0
+            else "Provisions covered net charge-offs."))
+
+        # 6. Guided loss rate raised (worse)
+        m = _guidance_worse_up(ctx, self._GUID)
+        out.append(Channel("loss_rate_guidance_worse", m,
+            "Full-year loss-rate guidance was raised (worse)." if m > 0
+            else "Loss-rate guidance was not raised."))
+
+        # 7. Roll rate rising — early delinquency rolling through to loss
+        m = _two_period_level_rise(ctx, self._ROLL, floor=0.01, severe=0.10)
+        out.append(Channel("roll_rate_rising", m,
+            "Delinquency roll rate rose YoY two quarters running." if m > 0
+            else "Delinquency roll rate did not rise two consecutive quarters."))
+        return out
+
+    def improvement(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+        cur_p = ctx.current.parsed_period
+        now, prev = ctx.ttm(self._NI), ctx.ttm(self._NI, cur_p.prior_year())
+        out.append(Channel("ttm_net_income_rise", _rise(now, prev, 0.25),
+                            "TTM net income rose YoY."))
+        # newest-vintage early delinquency falling = credit improving
+        c = ctx.level_change_yoy(self._VINTAGE)
+        out.append(Channel("vintage_delinquency_improving",
+                           ramp(-c, 0.003, 0.03) if c is not None and c < 0 else 0.0,
+                           "Newest-vintage early delinquency improved YoY."))
+        return out
+
+
 # ------------------------------------------------------------------ shared ramps
 def _decline(now: float | None, prev: float | None, severe: float) -> float:
     if now is None or prev is None or prev == 0:
@@ -783,6 +895,7 @@ CHANNEL_SETS: dict[str, ChannelSet] = {
     "reit": ReitChannels(),
     "broker": BrokerChannels(),
     "insurance": InsuranceChannels(),
+    "lender": LenderChannels(),
 }
 
 
