@@ -202,34 +202,43 @@ structure. `SignalEngine` selects it by `snapshot.sector`; the divergence × ent
 math, the state machine, the gate, and the backtest are **identical** across
 sectors.
 
-| Generic slot | Industrial | Financial (bank) | REIT |
-|---|---|---|---|
-| primary cash | free cash flow | net income | AFFO |
-| cash decline | TTM FCF | reserve build < net charge-offs | TTM AFFO |
-| margin ×2 | FCF margin | NIM compression | same-store NOI |
-| quality wedge | gross margin | allowance coverage ratio | FFO→AFFO wedge |
-| accrual outrunning cash | receivables vs revenue | NPAs vs loan growth | straight-line rent vs NOI |
-| capitalization masking | capex + revenue slowing | coverage down + charge-offs up | cap. interest + NOI slowing |
-| guidance | FY FCF | NII | AFFO |
-| the tell | delayed deals | reserve releases that reverse | dividend > AFFO |
-| H(R) obfuscation | segments/non-GAAP | AFS→HTM / AOCI vs equity | stale cap-rate marks |
+| Generic slot | Industrial | Financial (bank) | REIT | Broker | Insurance |
+|---|---|---|---|---|---|
+| primary cash | free cash flow | net income | AFFO | net income | net income |
+| cash decline | TTM FCF | reserve build < charge-offs | TTM AFFO | TTM net income | combined ratio ↑ ×2 |
+| margin ×2 | FCF margin | NIM compression | same-store NOI | NII compression | loss ratio |
+| quality wedge | gross margin | allowance coverage | FFO→AFFO wedge | NII share of pretax | accident-yr vs reported |
+| accrual outrunning cash | receivables vs revenue | NPAs vs loans | straight-line rent vs NOI | float erosion (cash sorting) | premiums grow into rising losses |
+| capitalization / carry | capex + rev slowing | coverage ↓ + charge-offs ↑ | cap. interest + NOI slowing | rate-cut earnings exposure | underwriting loss masked by investment income |
+| guidance | FY FCF | NII | AFFO | NII | combined ratio (↑ = worse) |
+| the tell | delayed deals | reserve releases that reverse | dividend > AFFO | rate carry dressed as franchise | reserve releases / adverse development |
+| H(R) obfuscation | segments/non-GAAP | AFS→HTM / AOCI vs equity | stale cap-rate marks | non-GAAP proliferation | "adjusted" combined ratio |
 
 ```bash
 python3 run_sector_demo.py   # a bank and a REIT: benign narrative, broken filing
 ```
 
 ```
-Bank  (financial)  state: confirmed_deterioration   H(R): 0.5   executable: True
-  channels: reserve_release_below_chargeoffs, allowance_coverage_decline,
-            npa_outrun_loans, nim_two_period_compression, tbvps_erosion, ...
-REIT  (reit)       state: confirmed_deterioration   executable: True
-  channels: ttm_affo_decline, affo_wedge_widening, dividend_above_affo,
-            same_store_noi_two_period_decline, capitalized_interest_up_noi_slowing
+Bank   (financial)  confirmed   channels: reserve_release_below_chargeoffs,
+            allowance_coverage_decline, npa_outrun_loans, nim_two_period_compression …
+REIT   (reit)       confirmed   channels: ttm_affo_decline, affo_wedge_widening,
+            dividend_above_affo, same_store_noi_two_period_decline …
+Broker (broker)     confirmed   channels: nii_reliance_high (NII = 168% of pretax),
+            nii_two_period_compression, customer_float_erosion, rate_cut_earnings_exposure …
+Insurer(insurance)  confirmed   channels: combined_ratio_two_period_rise,
+            underwriting_loss_masked, accident_year_worse_than_reported, adverse_reserve_development …
 ```
 
-Adding a sector is a new `ChannelSet` and a registry entry — the engine never
-changes. Snapshots carry sector line items in `line_items` (the CSV loader routes
-any non-reserved numeric column there), so no schema churn per sector.
+The broker case is the one that started as a checking-account grievance: a
+"durable franchise" narrative over a P&L that is **168% of pretax in net interest
+income** — a rate carry on customer float. The engine flags it not as fraud (the
+number is disclosed) but as earnings that evaporate on the first cut.
+
+Five sectors ship today — industrial, financial, reit, broker, insurance. Adding
+another (energy: reserve replacement, PV-10 vs the strip) is a new `ChannelSet` and
+a registry entry — the engine never changes. Snapshots carry sector line items in
+`line_items` (the CSV loader routes any non-reserved numeric column there), so no
+schema churn per sector.
 
 ## Calibrating it without lying to yourself
 

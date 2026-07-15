@@ -12,6 +12,10 @@ consumes. Every channel is comparable-period (Q4/Q4) or trailing-twelve-month an
 returns a continuous [0,1] magnitude; the engine combines them with noisy-OR and
 weights by narrative entropy exactly as before.
 
+Sectors implemented: industrial (FCF/margins), financial (bank credit reserves),
+reit (AFFO wedge), broker (rate carry on customer float), insurance (reserve
+adequacy / combined ratio). Adding another is one subclass plus a registry entry.
+
 Stdlib only.
 """
 
@@ -496,6 +500,206 @@ class ReitChannels(ChannelSet):
         return out
 
 
+# ------------------------------------------------------------------ brokers
+class BrokerChannels(ChannelSet):
+    """Broker / capital-markets microstructure: earnings quality BY SOURCE.
+
+    The narrative "durable franchise earnings" over a P&L that is really a
+    rate-carry on customer float. The breakdown is the carry turning — net
+    interest income compressing and the float base eroding (cash sorting) —
+    while the sell-side still calls it a franchise. line_items:
+      net_interest_income, pretax_income, customer_credit_balances,
+      commission_revenue, rate_sensitivity_25bp (annual NII lost per -25 bps),
+      net_income, fy_nii_guidance
+    """
+
+    sector = "broker"
+
+    _NII = staticmethod(ChannelContext.item("net_interest_income"))
+    _FLOAT = staticmethod(ChannelContext.item("customer_credit_balances"))
+    _COMM = staticmethod(ChannelContext.item("commission_revenue"))
+    _RATESENS = staticmethod(ChannelContext.item("rate_sensitivity_25bp"))
+    _NI = staticmethod(ChannelContext.item("net_income"))
+    _GUID = staticmethod(ChannelContext.item("fy_nii_guidance"))
+
+    @staticmethod
+    def _nii_reliance(s: FundamentalSnapshot | None) -> float | None:
+        if s is None:
+            return None
+        nii, pretax = s.line_items.get("net_interest_income"), s.line_items.get("pretax_income")
+        if nii is None or not pretax:
+            return None
+        return nii / pretax
+
+    def primary_ttm(self, ctx: ChannelContext) -> float | None:
+        return ctx.ttm(self._NI)
+
+    def deterioration(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+        cur_p = ctx.current.parsed_period
+
+        # 1. TTM net income declines (severe -25%)
+        now, prev = ctx.ttm(self._NI), ctx.ttm(self._NI, cur_p.prior_year())
+        m = _decline(now, prev, 0.25)
+        out.append(Channel("ttm_net_income_decline", m,
+            f"TTM net income fell to {now:.0f} from {prev:.0f}." if m > 0
+            else "TTM net income did not decline (or window incomplete)."))
+
+        # 2. Net interest income compresses two consecutive comparable periods
+        m = _two_period_yoy_decline(ctx, self._NII, floor=0.02, severe=0.20)
+        out.append(Channel("nii_two_period_compression", m,
+            "Net interest income compressed YoY two quarters running." if m > 0
+            else "NII did not compress YoY two consecutive quarters."))
+
+        # 3. Rate-carry reliance: NII as a share of pretax is high (the P&L IS
+        #    interest, not franchise) — 45% floor, 75% severe
+        r = self._nii_reliance(ctx.current)
+        m = ramp(r, 0.45, 0.75) if r is not None and r > 0.45 else 0.0
+        out.append(Channel("nii_reliance_high", m,
+            f"Net interest income is {r:.0%} of pretax — a rate carry." if m > 0
+            else "Net interest income is not an outsized share of pretax."))
+
+        # 4. Customer float erodes YoY (cash sorting out of idle balances)
+        fy = ctx.yoy(self._FLOAT)
+        m = ramp(-fy, 0.0, 0.20) if fy is not None and fy < 0 else 0.0
+        out.append(Channel("customer_float_erosion", m,
+            f"Customer credit balances fell {fy:+.1%} YoY (cash sorting)." if m > 0
+            else "Customer float did not erode YoY."))
+
+        # 5. NII compressing while commissions don't compensate
+        niy, cy = ctx.yoy(self._NII), ctx.yoy(self._COMM)
+        m = (ramp(-niy, 0.0, 0.20)
+             if niy is not None and niy < 0 and (cy is None or cy <= 0) else 0.0)
+        out.append(Channel("nii_down_commissions_flat", m,
+            "NII fell YoY and commissions did not compensate." if m > 0
+            else "Not both: NII down and commissions flat/down."))
+
+        # 6. Net-interest-income guidance reduced
+        m = _guidance_cut(ctx, self._GUID)
+        out.append(Channel("nii_guidance_cut", m,
+            "Net-interest-income guidance was reduced." if m > 0
+            else "NII guidance was not reduced."))
+
+        # 7. The coiled spring: a rate cut wipes a large share of earnings
+        rs, ttm_ni = self._RATESENS(ctx.current), ctx.ttm(self._NI)
+        m = (ramp(rs / ttm_ni, 0.05, 0.30)
+             if rs is not None and ttm_ni and ttm_ni > 0 else 0.0)
+        out.append(Channel("rate_cut_earnings_exposure", m,
+            "Disclosed rate sensitivity is a large share of earnings." if m > 0
+            else "Rate sensitivity is a modest share of earnings."))
+        return out
+
+    def improvement(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+        cur_p = ctx.current.parsed_period
+        now, prev = ctx.ttm(self._NI), ctx.ttm(self._NI, cur_p.prior_year())
+        out.append(Channel("ttm_net_income_rise", _rise(now, prev, 0.25),
+                            "TTM net income rose YoY."))
+        fy = ctx.yoy(self._FLOAT)
+        out.append(Channel("customer_float_growth",
+                           ramp(fy, 0.0, 0.20) if fy is not None and fy > 0 else 0.0,
+                           "Customer float grew YoY."))
+        return out
+
+
+# ------------------------------------------------------------------ insurers
+class InsuranceChannels(ChannelSet):
+    """Insurance microstructure: reserve adequacy and underwriting discipline.
+
+    The narrative "great underwriting / profitable" propped up by prior-year
+    reserve releases while the current accident year deteriorates and the
+    combined ratio crosses 100. Investment income masks an underwriting loss.
+    line_items: combined_ratio, loss_ratio, accident_year_loss_ratio,
+      favorable_reserve_development (>0 release, <0 adverse strengthening, $),
+      pretax_income, net_premiums_written, net_income, fy_combined_ratio_guidance
+    """
+
+    sector = "insurance"
+
+    _COMBINED = staticmethod(ChannelContext.item("combined_ratio"))
+    _LOSS = staticmethod(ChannelContext.item("loss_ratio"))
+    _AYLOSS = staticmethod(ChannelContext.item("accident_year_loss_ratio"))
+    _DEV = staticmethod(ChannelContext.item("favorable_reserve_development"))
+    _PRETAX = staticmethod(ChannelContext.item("pretax_income"))
+    _NPW = staticmethod(ChannelContext.item("net_premiums_written"))
+    _NI = staticmethod(ChannelContext.item("net_income"))
+    _GUID = staticmethod(ChannelContext.item("fy_combined_ratio_guidance"))
+
+    def primary_ttm(self, ctx: ChannelContext) -> float | None:
+        return ctx.ttm(self._NI)
+
+    def deterioration(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+
+        # 1. Combined ratio deteriorates (rises) two consecutive comparable periods
+        m = _two_period_level_rise(ctx, self._COMBINED, floor=0.005, severe=0.05)
+        out.append(Channel("combined_ratio_two_period_rise", m,
+            "Combined ratio worsened YoY two quarters running." if m > 0
+            else "Combined ratio did not worsen YoY two consecutive quarters."))
+
+        # 2. Reserve-release reliance: favorable development a big share of pretax
+        dev, pretax = self._DEV(ctx.current), self._PRETAX(ctx.current)
+        m = 0.0
+        if dev is not None and pretax and dev > 0:
+            m = ramp(dev / pretax, 0.05, 0.30)
+        out.append(Channel("reserve_release_reliance", m,
+            "Prior-year reserve releases are propping up pretax income." if m > 0
+            else "Earnings are not leaning on reserve releases."))
+
+        # 3. Accident-year loss ratio worse than the reported loss ratio
+        ay, reported = self._AYLOSS(ctx.current), self._LOSS(ctx.current)
+        gap = ay - reported if ay is not None and reported is not None else None
+        m = ramp(gap, 0.02, 0.10) if gap is not None and gap > 0 else 0.0
+        out.append(Channel("accident_year_worse_than_reported", m,
+            "Current accident-year loss ratio exceeds the reported ratio." if m > 0
+            else "Accident-year and reported loss ratios are aligned."))
+
+        # 4. Premiums grow fast while the loss ratio rises -> buying business
+        npw_yoy = ctx.yoy(self._NPW)
+        loss_rising = ctx.level_change_yoy(self._LOSS)
+        m = (ramp(npw_yoy, 0.10, 0.30)
+             if npw_yoy is not None and npw_yoy > 0.10
+             and loss_rising is not None and loss_rising > 0 else 0.0)
+        out.append(Channel("npw_growth_while_loss_rising", m,
+            f"Premiums grew {npw_yoy:+.1%} YoY while the loss ratio rose." if m > 0
+            else "Not both: premium growth and a rising loss ratio."))
+
+        # 5. Underwriting loss masked by investment income (combined ratio > 1)
+        cr = self._COMBINED(ctx.current)
+        m = ramp(cr - 1.0, 0.0, 0.10) if cr is not None and cr > 1.0 else 0.0
+        out.append(Channel("underwriting_loss_masked", m,
+            f"Combined ratio {cr:.0%} is an underwriting loss." if m > 0
+            else "Underwriting is at or below breakeven."))
+
+        # 6. Combined-ratio guidance worsened (guided higher)
+        m = _guidance_worse_up(ctx, self._GUID)
+        out.append(Channel("combined_ratio_guidance_worse", m,
+            "Full-year combined-ratio guidance was raised (worse)." if m > 0
+            else "Combined-ratio guidance was not raised."))
+
+        # 7. Adverse prior-year development -> they were under-reserved
+        m = 0.0
+        if dev is not None and pretax and dev < 0:
+            m = ramp(-dev / pretax, 0.02, 0.20)
+        out.append(Channel("adverse_reserve_development", m,
+            "Prior-year reserves were strengthened (under-reserved)." if m > 0
+            else "No adverse prior-year reserve development."))
+        return out
+
+    def improvement(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+        cur_p = ctx.current.parsed_period
+        now, prev = ctx.ttm(self._NI), ctx.ttm(self._NI, cur_p.prior_year())
+        out.append(Channel("ttm_net_income_rise", _rise(now, prev, 0.25),
+                            "TTM net income rose YoY."))
+        # combined ratio improving (falling) YoY
+        c = ctx.level_change_yoy(self._COMBINED)
+        out.append(Channel("combined_ratio_improving",
+                           ramp(-c, 0.005, 0.05) if c is not None and c < 0 else 0.0,
+                           "Combined ratio improved YoY."))
+        return out
+
+
 # ------------------------------------------------------------------ shared ramps
 def _decline(now: float | None, prev: float | None, severe: float) -> float:
     if now is None or prev is None or prev == 0:
@@ -550,11 +754,35 @@ def _two_period_yoy_decline(
     return ramp(min(-this, -last), floor, severe)
 
 
+def _two_period_level_rise(
+    ctx: ChannelContext, getter: Getter, floor: float, severe: float
+) -> float:
+    """A ratio getter *rising* (level) YoY for two consecutive quarters — used
+    where higher is worse (a combined ratio climbing toward and past 100)."""
+    cur_p = ctx.current.parsed_period
+    this = ctx.margin_change_at(getter, cur_p)
+    last = ctx.margin_change_at(getter, ctx.prior_quarter(cur_p))
+    if this is None or last is None or this < floor or last < floor:
+        return 0.0
+    return ramp(min(this, last), floor, severe)
+
+
+def _guidance_worse_up(ctx: ChannelContext, getter: Getter) -> float:
+    """Guidance for a metric where higher is worse (combined ratio) revised up."""
+    now = getter(ctx.current)
+    prev = ctx.prior_guidance(getter)
+    if now is None or prev is None or prev == 0 or now <= prev:
+        return 0.0
+    return ramp((now - prev) / abs(prev), 0.0, 0.15)
+
+
 # ------------------------------------------------------------------ registry
 CHANNEL_SETS: dict[str, ChannelSet] = {
     "industrial": IndustrialChannels(),
     "financial": FinancialChannels(),
     "reit": ReitChannels(),
+    "broker": BrokerChannels(),
+    "insurance": InsuranceChannels(),
 }
 
 

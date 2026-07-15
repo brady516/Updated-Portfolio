@@ -83,6 +83,37 @@ def reit_panel() -> list[FundamentalSnapshot]:
     return _panel("REITX", "reit", series, "fy_affo_guidance", guid)
 
 
+def broker_panel() -> list[FundamentalSnapshot]:
+    # a rate carry turning over: NII peaks then compresses, float erodes,
+    # net income falls, while reliance on NII and rate sensitivity stay high.
+    series = {
+        "net_interest_income":     [700,750,800,850,820,780,730,690,640],
+        "pretax_income":           [500,540,580,620,560,520,470,430,380],
+        "net_income":              [400,430,460,490,450,420,380,350,300],
+        "customer_credit_balances":[90,92,94,96,93,90,86,82,78],
+        "commission_revenue":      [200,205,200,210,200,198,195,195,190],
+        "rate_sensitivity_25bp":   [150,150,160,160,180,190,195,200,200],
+    }
+    guid = {"2025-Q2":3200,"2025-Q3":3000,"2025-Q4":2800,"2026-Q1":2600}
+    return _panel("BROKERX", "broker", series, "fy_nii_guidance", guid)
+
+
+def insurance_panel() -> list[FundamentalSnapshot]:
+    # combined ratio crosses 100, current accident year worse than reported,
+    # premiums grow into a rising loss ratio, reserves turn adverse.
+    series = {
+        "combined_ratio":            [.95,.96,.95,.94,.99,1.01,1.03,1.04,1.06],
+        "loss_ratio":                [.65,.66,.65,.64,.69,.71,.73,.74,.76],
+        "accident_year_loss_ratio":  [.66,.67,.66,.65,.74,.77,.80,.82,.85],
+        "favorable_reserve_development":[30,32,30,33,20,15,8,2,-10],
+        "pretax_income":             [200,210,205,215,180,160,140,120,100],
+        "net_premiums_written":      [100,102,101,103,112,116,120,124,130],
+        "net_income":                [160,168,164,172,144,128,112,96,80],
+    }
+    guid = {"2025-Q2":0.99,"2025-Q3":1.01,"2025-Q4":1.03,"2026-Q1":1.05}
+    return _panel("INSURX", "insurance", series, "fy_combined_ratio_guidance", guid)
+
+
 def _run(name: str, panel, body: str) -> None:
     events = [NarrativeEvent(panel[0].ticker, "2026-04-20T08:00:00-04:00",
                              f"{panel[0].ticker} update", body, s, "sell_side")
@@ -105,6 +136,10 @@ def main() -> None:
          "credit remains benign, net interest margin pressure is a temporary headwind")
     _run("REIT — 'external growth is accretive'", reit_panel(),
          "pipeline remains strong, ai investment aside our growth is intact via deal timing")
+    _run("Broker — 'durable franchise earnings'", broker_panel(),
+         "durable franchise, pipeline remains strong, the rate move is a temporary headwind")
+    _run("Insurer — 'underwriting stays disciplined'", insurance_panel(),
+         "underwriting is disciplined, pipeline remains strong, a temporary headwind on cats")
 
 
 if __name__ == "__main__":

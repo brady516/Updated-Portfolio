@@ -82,10 +82,59 @@ def _broken_reit() -> list:
        {"2025-Q2":1.6,"2025-Q3":1.5,"2025-Q4":1.4,"2026-Q1":1.3})
 
 
+def _broken_broker() -> list:
+    return _panel("broker", {
+        "net_interest_income":     [700,750,800,850,820,780,730,690,640],
+        "pretax_income":           [500,540,580,620,560,520,470,430,380],
+        "net_income":              [400,430,460,490,450,420,380,350,300],
+        "customer_credit_balances":[90,92,94,96,93,90,86,82,78],
+        "commission_revenue":      [200,205,200,210,200,198,195,195,190],
+        "rate_sensitivity_25bp":   [150,150,160,160,180,190,195,200,200],
+    }, "fy_nii_guidance", {"2025-Q2":3200,"2025-Q3":3000,"2025-Q4":2800,"2026-Q1":2600})
+
+
+def _healthy_broker() -> list:
+    return _panel("broker", {
+        "net_interest_income":     [600,620,640,660,680,700,720,740,760],
+        "pretax_income":           [1600,1620,1640,1660,1680,1700,1720,1740,1760],
+        "net_income":              [1200,1225,1250,1275,1300,1325,1350,1375,1400],
+        "customer_credit_balances":[90,92,94,96,98,100,102,104,106],
+        "commission_revenue":      [200,205,210,215,220,225,230,235,240],
+        "rate_sensitivity_25bp":   [50,50,50,50,50,50,50,50,50],
+    })
+
+
+def _broken_insurer() -> list:
+    return _panel("insurance", {
+        "combined_ratio":            [.95,.96,.95,.94,.99,1.01,1.03,1.04,1.06],
+        "loss_ratio":                [.65,.66,.65,.64,.69,.71,.73,.74,.76],
+        "accident_year_loss_ratio":  [.66,.67,.66,.65,.74,.77,.80,.82,.85],
+        "favorable_reserve_development":[30,32,30,33,20,15,8,2,-10],
+        "pretax_income":             [200,210,205,215,180,160,140,120,100],
+        "net_premiums_written":      [100,102,101,103,112,116,120,124,130],
+        "net_income":                [160,168,164,172,144,128,112,96,80],
+    }, "fy_combined_ratio_guidance",
+       {"2025-Q2":0.99,"2025-Q3":1.01,"2025-Q4":1.03,"2026-Q1":1.05})
+
+
+def _healthy_insurer() -> list:
+    return _panel("insurance", {
+        "combined_ratio":            [.95,.94,.95,.94,.93,.93,.92,.92,.91],
+        "loss_ratio":                [.65,.64,.65,.64,.63,.63,.62,.62,.61],
+        "accident_year_loss_ratio":  [.65,.64,.65,.64,.63,.63,.62,.62,.61],
+        "favorable_reserve_development":[10,10,10,10,10,10,10,10,10],
+        "pretax_income":             [200,205,205,210,212,214,216,218,220],
+        "net_premiums_written":      [100,101,102,103,104,105,106,107,108],
+        "net_income":                [160,164,164,168,170,172,174,175,176],
+    })
+
+
 class SectorSelectionTests(unittest.TestCase):
     def test_registry_routes_by_sector(self) -> None:
         self.assertEqual(channel_set_for("financial").sector, "financial")
         self.assertEqual(channel_set_for("reit").sector, "reit")
+        self.assertEqual(channel_set_for("broker").sector, "broker")
+        self.assertEqual(channel_set_for("insurance").sector, "insurance")
         self.assertEqual(channel_set_for("unknown").sector, "industrial")
 
     def test_signal_reports_its_sector(self) -> None:
@@ -133,6 +182,38 @@ class ReitChannelTests(unittest.TestCase):
         # REIT execution gate keys off AFFO's TTM window, not FCF.
         sig = SignalEngine().evaluate(_broken_reit(), claims=[])
         self.assertIsNotNone(sig.metrics["primary_ttm"])
+
+
+class BrokerChannelTests(unittest.TestCase):
+    def test_rate_carry_turning_confirms(self) -> None:
+        sig = SignalEngine().evaluate(_broken_broker(), claims=[])
+        self.assertEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        for key in ("nii_reliance_high", "nii_two_period_compression",
+                    "customer_float_erosion", "ttm_net_income_decline"):
+            self.assertIn(key, sig.confirmed_criteria)
+        self.assertTrue(sig.execution_eligible)
+
+    def test_healthy_up_cycle_broker_does_not_confirm(self) -> None:
+        # NII rising, float growing, net income up, low reliance -> not a breakdown
+        sig = SignalEngine().evaluate(_healthy_broker(), claims=[])
+        self.assertNotEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        self.assertFalse(sig.execution_eligible)
+
+
+class InsuranceChannelTests(unittest.TestCase):
+    def test_reserve_masking_confirms(self) -> None:
+        sig = SignalEngine().evaluate(_broken_insurer(), claims=[])
+        self.assertEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        for key in ("combined_ratio_two_period_rise", "underwriting_loss_masked",
+                    "accident_year_worse_than_reported", "adverse_reserve_development"):
+            self.assertIn(key, sig.confirmed_criteria)
+        self.assertTrue(sig.execution_eligible)
+
+    def test_healthy_insurer_does_not_fire(self) -> None:
+        sig = SignalEngine().evaluate(_healthy_insurer(), claims=[])
+        self.assertEqual(sig.metrics["reporting_divergence"], 0.0)
+        self.assertNotEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        self.assertFalse(sig.execution_eligible)
 
 
 if __name__ == "__main__":

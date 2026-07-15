@@ -30,9 +30,11 @@ from .backtest import (
 )
 from .channels import (
     CHANNEL_SETS,
+    BrokerChannels,
     ChannelSet,
     FinancialChannels,
     IndustrialChannels,
+    InsuranceChannels,
     ReitChannels,
     channel_set_for,
 )
@@ -54,12 +56,14 @@ from .store import SignalStore, publish_signal
 __all__ = [
     "CHANNEL_SETS",
     "BacktestReport",
+    "BrokerChannels",
     "ChannelSet",
     "CsvFilingSource",
     "CsvPriceSource",
     "FilingSource",
     "FinancialChannels",
     "IndustrialChannels",
+    "InsuranceChannels",
     "ReitChannels",
     "channel_set_for",
     "FundamentalSnapshot",
