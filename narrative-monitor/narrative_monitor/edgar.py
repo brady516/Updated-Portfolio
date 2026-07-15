@@ -63,12 +63,16 @@ class EdgarClient:
     """Proxy- and CA-aware HTTP client for SEC EDGAR. Read-only, polite."""
 
     def __init__(self, email: str, *, min_interval: float = 0.2,
-                 cafile: str | None = None) -> None:
+                 cafile: str | None = None, cache_dir: str | None = None) -> None:
         # SEC requires a User-Agent that identifies you with a contact address.
         self.user_agent = f"narrative-monitor {email}"
         self.min_interval = min_interval
         self._last = 0.0
         self._ticker_cik: dict[str, int] | None = None
+        # optional on-disk cache of raw responses (skip re-downloading on re-runs)
+        self.cache_dir = cache_dir
+        if cache_dir:
+            os.makedirs(cache_dir, exist_ok=True)
         ctx = ssl.create_default_context()
         cafile = cafile or os.environ.get("SSL_CERT_FILE")
         if not cafile and os.path.exists("/root/.ccr/ca-bundle.crt"):
@@ -81,6 +85,14 @@ class EdgarClient:
         )
 
     def _get(self, url: str, retries: int = 4) -> bytes:
+        cache_path = None
+        if self.cache_dir:
+            import hashlib
+            key = hashlib.sha1(url.encode()).hexdigest()
+            cache_path = os.path.join(self.cache_dir, f"{key}.json")
+            if os.path.exists(cache_path):
+                with open(cache_path, "rb") as fh:
+                    return fh.read()
         for attempt in range(retries):
             wait = self.min_interval - (time.monotonic() - self._last)
             if wait > 0:
@@ -96,6 +108,9 @@ class EdgarClient:
                     if resp.headers.get("Content-Encoding") == "gzip":
                         import gzip
                         data = gzip.decompress(data)
+                    if cache_path:
+                        with open(cache_path, "wb") as fh:
+                            fh.write(data)
                     return data
             except urllib.error.HTTPError as exc:
                 if exc.code in (429, 503) and attempt < retries - 1:
@@ -114,6 +129,15 @@ class EdgarClient:
             return self._ticker_cik[ticker.upper()]
         except KeyError:
             raise KeyError(f"Ticker {ticker!r} not found in SEC ticker map.")
+
+    def all_tickers(self) -> list[str]:
+        """Every ticker in SEC's map (~10k+ filers), deduplicated and sorted."""
+        if self._ticker_cik is None:
+            raw = json.loads(self._get(TICKER_MAP_URL))
+            self._ticker_cik = {
+                row["ticker"].upper(): int(row["cik_str"]) for row in raw.values()
+            }
+        return sorted(self._ticker_cik)
 
     def company_facts(self, cik: int) -> dict:
         return json.loads(self._get(COMPANY_FACTS_URL.format(cik=cik)))

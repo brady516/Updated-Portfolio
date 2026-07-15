@@ -372,6 +372,34 @@ concept map; the normalization in `edgar.py` is the seam where it plugs in.
 > reports it clearly. Run where SEC is reachable, or have an admin allowlist
 > `data.sec.gov` and `www.sec.gov`.
 
+### Scanning the whole universe
+
+`run_universe_scan.py` runs every US filer (~10k+ tickers from SEC's map) through
+the engine and ranks the biggest breakdowns:
+
+```bash
+python3 run_universe_scan.py --limit 100      # quick trial first
+python3 run_universe_scan.py --cache .edgar   # full run (~30-60 min), cache raw facts
+python3 run_universe_scan.py --rank-only      # re-rank an existing run
+```
+
+It is **paced** (under SEC's 10 req/s), **resumable** (skips tickers already in the
+output file, so a re-run continues), and **Ctrl-C safe** (writes each hit as it
+goes). Only actionable states are recorded; the run ends with a ranked table:
+
+```
+Top 25 breakdowns (of 214 deteriorating / 1,340 actionable):
+ticker  state                    score  exec  latest   channels
+ACME    confirmed_deterioration   0.82  True  2026-Q1  ttm_fcf_decline, gross_margin_contraction
+...
+```
+
+**One honest caveat at scale:** the live adapter reads the *industrial* concept set,
+so every name is scored on FCF/margins. A bank or REIT scanned this way is read on
+the wrong microstructure — treat non-industrial confirmations as candidates to
+verify, not signals, until the sector XBRL concept maps (bank reserves, REIT FFO,
+…) are wired into `edgar.py`. That concept map is the next build.
+
 ## Not investment advice
 
 This is research tooling. It produces *evidence states*, not recommendations, and it
