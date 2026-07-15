@@ -128,6 +128,10 @@ def main() -> int:
     ap.add_argument("--out", default="universe_signals.jsonl")
     ap.add_argument("--cache", help="dir to cache raw EDGAR responses (faster re-runs)")
     ap.add_argument("--rank-only", action="store_true", help="just rank an existing --out")
+    ap.add_argument("--no-sector", action="store_true",
+                    help="read every name as industrial (skips the per-ticker SIC "
+                         "lookup — ~half the requests, but banks/REITs read on the "
+                         "wrong microstructure)")
     args = ap.parse_args()
 
     out_path = Path(args.out)
@@ -150,7 +154,8 @@ def main() -> int:
 
     print(f"Scanning {len(tickers)} tickers -> {out_path} "
           f"(resuming past {len(_already_done(out_path))})", file=sys.stderr)
-    source = EdgarFilingSource(email=EMAIL, client=client)
+    source = EdgarFilingSource(email=EMAIL, client=client,
+                               detect_sector=not args.no_sector)
     try:
         scan(tickers, out_path, source)
     except KeyboardInterrupt:

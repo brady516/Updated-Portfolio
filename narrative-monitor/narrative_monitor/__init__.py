@@ -28,7 +28,7 @@ from .backtest import (
     PriceSeries,
     run_backtest,
 )
-from .edgar import EdgarClient, EdgarFilingSource
+from .edgar import EdgarClient, EdgarFilingSource, sector_from_sic
 from .channels import (
     CHANNEL_SETS,
     BdcChannels,
@@ -99,4 +99,5 @@ __all__ = [
     "parrot_propagation",
     "publish_signal",
     "run_backtest",
+    "sector_from_sic",
 ]

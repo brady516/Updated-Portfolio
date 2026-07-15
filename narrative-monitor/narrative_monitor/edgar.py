@@ -36,6 +36,26 @@ from .models import FundamentalSnapshot
 
 TICKER_MAP_URL = "https://www.sec.gov/files/company_tickers.json"
 COMPANY_FACTS_URL = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json"
+SUBMISSIONS_URL = "https://data.sec.gov/submissions/CIK{cik:010d}.json"
+
+# SIC code ranges -> our ChannelSet sector. First match wins; else "industrial".
+_SIC_SECTOR: list[tuple[int, int, str]] = [
+    (6020, 6079, "financial"),   # depository / banks
+    (6300, 6399, "insurance"),   # insurance carriers
+    (6798, 6798, "reit"),        # real estate investment trusts
+    (6726, 6726, "bdc"),         # investment offices (many BDCs)
+    (6141, 6199, "lender"),      # personal credit / finance services
+    (1311, 1311, "energy"),      # crude petroleum & natural gas
+    (1381, 1389, "energy"),      # oil & gas field services
+    (7370, 7374, "saas"),        # computer / prepackaged software services
+]
+
+
+def sector_from_sic(sic: int | None) -> str:
+    for lo, hi, name in _SIC_SECTOR:
+        if sic is not None and lo <= sic <= hi:
+            return name
+    return "industrial"
 
 _FRAME_Q = re.compile(r"^CY(\d{4})Q([1-4])$")     # discrete calendar quarter (duration)
 _FRAME_QI = re.compile(r"^CY(\d{4})Q([1-4])I$")   # calendar quarter-end (instant)
@@ -56,6 +76,8 @@ _INSTANT_CONCEPTS: dict[str, list[str]] = {
     "receivables": ["AccountsReceivableNetCurrent"],
     "deferred_revenue": ["ContractWithCustomerLiabilityCurrent",
                          "DeferredRevenueCurrent"],
+    # SaaS: total remaining performance obligation (contracted backlog)
+    "crpo": ["RevenueRemainingPerformanceObligation"],
 }
 
 
@@ -142,6 +164,15 @@ class EdgarClient:
     def company_facts(self, cik: int) -> dict:
         return json.loads(self._get(COMPANY_FACTS_URL.format(cik=cik)))
 
+    def company_sic(self, cik: int) -> int | None:
+        """The filer's SIC industry code (from the submissions API)."""
+        try:
+            sub = json.loads(self._get(SUBMISSIONS_URL.format(cik=cik)))
+        except (urllib.error.HTTPError, urllib.error.URLError, ValueError):
+            return None
+        sic = sub.get("sic")
+        return int(sic) if sic not in (None, "") else None
+
 
 @dataclass
 class _AsFiled:
@@ -217,25 +248,75 @@ def _instant_series(points: list[dict]) -> dict[str, _AsFiled]:
     return out
 
 
+def _saas_line_items(periods: list[str], dur: dict, inst: dict) -> dict[str, dict]:
+    """Derive the SaaS microstructure the engine needs from XBRL facts.
+
+    The leading indicators are derivable from standard tags:
+      billings = revenue + (deferred_revenue_end - prior deferred_revenue_end)
+      cRPO     = RevenueRemainingPerformanceObligation
+      sbc %    = ShareBasedCompensation / revenue
+    Net revenue retention and S&M efficiency are NOT structured XBRL, so those
+    channels stay dark (missing input = untestable, never a false positive).
+    """
+    def v(series, field, period):
+        af = series.get(field, {}).get(period)
+        return af.val if af else None
+
+    out: dict[str, dict] = {}
+    for i, period in enumerate(periods):
+        rev = v(dur, "revenue", period)
+        deferred = v(inst, "deferred_revenue", period)
+        prev_deferred = v(inst, "deferred_revenue", periods[i - 1]) if i else None
+        items: dict[str, float] = {}
+        if rev is not None and deferred is not None and prev_deferred is not None:
+            items["billings"] = rev + (deferred - prev_deferred)
+        if deferred is not None:
+            items["deferred_revenue"] = deferred
+        crpo = v(inst, "crpo", period)
+        if crpo is not None:
+            items["crpo"] = crpo
+        sbc = v(dur, "stock_compensation", period)
+        if sbc is not None and rev:
+            items["sbc_pct_revenue"] = sbc / rev
+        out[period] = items
+    return out
+
+
+# sectors whose microstructure the live XBRL adapter can populate today
+_LIVE_SECTOR_DERIVERS = {"saas": _saas_line_items}
+
+
 class EdgarFilingSource(FilingSource):
     """Live FilingSource over SEC EDGAR company-facts.
 
-    Emits the industrial concept set (revenue, FCF, gross margin, receivables) —
-    the universal ones every filer reports. Sector-specific tags (bank reserves,
-    REIT FFO, …) are a follow-on concept map; the normalization here is the seam.
+    Routes each filer to its ChannelSet by SIC code and populates the sector's
+    line items where XBRL supports it. Today that is `industrial` (FCF/margins,
+    every filer) and `saas` (billings/RPO/deferred/SBC, derived from standard
+    tags). Other sectors are routed correctly but read `inconclusive` until their
+    concept maps are wired — estimate-heavy metrics (REIT FFO, insurer combined
+    ratio, BDC PIK) are non-GAAP supplemental disclosures, not structured XBRL,
+    so they need a filing-text or vendor layer, not just more tags.
     """
 
     def __init__(self, email: str, client: EdgarClient | None = None,
-                 sector: str = "industrial") -> None:
+                 sector: str | None = None, detect_sector: bool = True) -> None:
         self.client = client or EdgarClient(email)
-        self.sector = sector
+        self.sector = sector            # explicit override; else detect by SIC
+        self.detect_sector = detect_sector
 
     def fetch(self, ticker: str) -> list[FundamentalSnapshot]:
         cik = self.client.ticker_to_cik(ticker)
+        if self.sector is not None:
+            sector = self.sector
+        elif self.detect_sector:
+            sector = sector_from_sic(self.client.company_sic(cik))
+        else:
+            sector = "industrial"
         facts = self.client.company_facts(cik)
-        return self.normalize(facts, ticker)
+        return self.normalize(facts, ticker, sector)
 
-    def normalize(self, facts: dict, ticker: str) -> list[FundamentalSnapshot]:
+    def normalize(self, facts: dict, ticker: str,
+                  sector: str = "industrial") -> list[FundamentalSnapshot]:
         dur = {
             field: _duration_series(points)
             for field, concepts in _DURATION_CONCEPTS.items()
@@ -258,6 +339,9 @@ class EdgarFilingSource(FilingSource):
             if dur.get("operating_cash_flow", {}).get(p)
             and dur.get("capex", {}).get(p)
         )
+        deriver = _LIVE_SECTOR_DERIVERS.get(sector)
+        line_items_by_period = deriver(periods, dur, inst) if deriver else {}
+
         snapshots: list[FundamentalSnapshot] = []
         for period in periods:
             revenue = val(dur, "revenue", period)
@@ -280,6 +364,7 @@ class EdgarFilingSource(FilingSource):
                 deferred_revenue=val(inst, "deferred_revenue", period),
                 stock_compensation=val(dur, "stock_compensation", period),
                 reported_at=reported_at,
-                sector=self.sector,
+                sector=sector,
+                line_items=line_items_by_period.get(period, {}),
             ))
         return snapshots

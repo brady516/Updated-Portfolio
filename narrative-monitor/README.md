@@ -362,10 +362,22 @@ lies to you:
   and TTM logic see clean quarters. `tests/test_edgar.py` verifies all of this
   offline against a recorded fixture of the real EDGAR schema.
 
-The live adapter emits the **industrial** concept set (revenue, FCF, gross margin,
-receivables) — the tags every filer reports. Sector-specific XBRL (bank
-`AllowanceForLoanAndLeaseLosses`, REIT FFO, insurer reserves) is a follow-on
-concept map; the normalization in `edgar.py` is the seam where it plugs in.
+The adapter **routes each filer to its ChannelSet by SIC code** and populates the
+sector's line items where XBRL supports it. What structured XBRL can and can't feed:
+
+| Sector | Live from XBRL? | How |
+|---|---|---|
+| industrial | ✅ full | revenue, FCF (OCF−capex), gross margin, receivables — every filer |
+| saas | ✅ derived | **billings = revenue + Δdeferred**, cRPO (`RevenueRemainingPerformanceObligation`), deferred revenue, SBC% — from standard tags |
+| financial | ⚠️ next | banks tag reserves / charge-offs / NII — a concept map away |
+| insurance | ⚠️ derivable | combined ratio from incurred-loss + premium components |
+| reit / energy / bdc / lender | ❌ not in XBRL | FFO, PV-10, PIK income, loan vintages are **non-GAAP supplemental** disclosures — they need a filing-text or vendor layer, not more tags |
+
+So a name is scored on its own microstructure where the data is structured, and
+routed-but-`inconclusive` where it isn't (no false positives). IBM, for instance,
+is SIC 7372 (software) → it now reads on **billings / RPO / deferred revenue**, not
+industrial FCF. The honest frontier is the estimate-heavy sectors: their tells live
+in text, and wiring them is a parsing/vendor project, not a concept map.
 
 > Note: this adapter needs outbound HTTPS to `sec.gov`. Some sandboxes (including
 > the one this was built in) block that egress at the proxy — `run_live_demo.py`
@@ -394,11 +406,11 @@ ACME    confirmed_deterioration   0.82  True  2026-Q1  ttm_fcf_decline, gross_ma
 ...
 ```
 
-**One honest caveat at scale:** the live adapter reads the *industrial* concept set,
-so every name is scored on FCF/margins. A bank or REIT scanned this way is read on
-the wrong microstructure — treat non-industrial confirmations as candidates to
-verify, not signals, until the sector XBRL concept maps (bank reserves, REIT FFO,
-…) are wired into `edgar.py`. That concept map is the next build.
+The scan is **sector-aware** by default (SIC lookup per ticker, ~2 requests each);
+`--no-sector` reads everything as industrial for a faster, coarser pass. Names in
+sectors whose microstructure isn't in XBRL yet (REIT/energy/BDC/lender) route
+correctly but read `inconclusive` — see the coverage table above — so a scan won't
+hand you a false bank signal, it just stays quiet where it can't see.
 
 ## Not investment advice
 
