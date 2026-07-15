@@ -15,7 +15,8 @@ weights by narrative entropy exactly as before.
 Sectors implemented: industrial (FCF/margins), financial (bank credit reserves),
 reit (AFFO wedge), broker (rate carry on customer float), insurance (reserve
 adequacy / combined ratio), lender (growth-as-adverse-selection / vintage
-delinquency). Adding another is one subclass plus a registry entry.
+delinquency), saas (billings/RPO leading GAAP revenue). Adding another is one
+subclass plus a registry entry.
 
 Stdlib only.
 """
@@ -552,13 +553,15 @@ class BrokerChannels(ChannelSet):
             "Net interest income compressed YoY two quarters running." if m > 0
             else "NII did not compress YoY two consecutive quarters."))
 
-        # 3. Rate-carry reliance: NII as a share of pretax is high (the P&L IS
-        #    interest, not franchise) — 45% floor, 75% severe
+        # 3. Rate-carry reliance RISING: NII becoming a bigger share of pretax
+        #    (the carry turning dominant). A stably-high reliance is known and
+        #    priced — the divergence is the change, not the level.
         r = self._nii_reliance(ctx.current)
-        m = ramp(r, 0.45, 0.75) if r is not None and r > 0.45 else 0.0
-        out.append(Channel("nii_reliance_high", m,
-            f"Net interest income is {r:.0%} of pretax — a rate carry." if m > 0
-            else "Net interest income is not an outsized share of pretax."))
+        rc = ctx.level_change_yoy(self._nii_reliance)
+        m = ramp(rc, 0.05, 0.40) if rc is not None and rc > 0 else 0.0
+        out.append(Channel("nii_reliance_rising", m,
+            f"NII rose to {r:.0%} of pretax YoY — the rate carry is taking over." if m > 0
+            else "NII reliance on pretax did not rise."))
 
         # 4. Customer float erodes YoY (cash sorting out of idle balances)
         fy = ctx.yoy(self._FLOAT)
@@ -812,6 +815,111 @@ class LenderChannels(ChannelSet):
         return out
 
 
+# ------------------------------------------------------------------ SaaS
+class SaasChannels(ChannelSet):
+    """SaaS / subscription microstructure: the leading indicators invert first.
+
+    GAAP revenue is LAGGING — it is the backlog being recognized ratably — so it
+    can keep rising while the leading cash-bookings indicators (billings, RPO,
+    deferred revenue, net revenue retention) roll over. Revenue up + billings
+    down is the breakdown, a quarter or three before revenue shows it.
+    line_items: billings, crpo, net_revenue_retention, deferred_revenue,
+      sm_pct_revenue, sbc_pct_revenue, fy_billings_guidance. GAAP revenue and
+      free cash flow are the typed fields.
+    """
+
+    sector = "saas"
+
+    _REV = staticmethod(lambda s: s.revenue if s is not None else None)
+    _FCF = staticmethod(lambda s: s.free_cash_flow if s is not None else None)
+    _BILL = staticmethod(ChannelContext.item("billings"))
+    _CRPO = staticmethod(ChannelContext.item("crpo"))
+    _NRR = staticmethod(ChannelContext.item("net_revenue_retention"))
+    _DEFERRED = staticmethod(ChannelContext.item("deferred_revenue"))
+    _SM = staticmethod(ChannelContext.item("sm_pct_revenue"))
+    _SBC = staticmethod(ChannelContext.item("sbc_pct_revenue"))
+    _GUID = staticmethod(ChannelContext.item("fy_billings_guidance"))
+
+    def primary_ttm(self, ctx: ChannelContext) -> float | None:
+        return ctx.ttm(self._FCF)
+
+    def deterioration(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+        rev_yoy = ctx.yoy(self._REV)
+
+        # 1. THE inversion: revenue still growing while billings roll over —
+        #    recognizing the backlog faster than replacing it
+        bill_yoy = ctx.yoy(self._BILL)
+        m = 0.0
+        if rev_yoy is not None and rev_yoy > 0 and bill_yoy is not None and bill_yoy < rev_yoy:
+            m = ramp(rev_yoy - bill_yoy, 0.03, 0.20)
+        out.append(Channel("revenue_up_billings_rolling_over", m,
+            f"Revenue grew {rev_yoy:+.0%} while billings grew {bill_yoy:+.0%}." if m > 0
+            else "Billings kept pace with revenue."))
+
+        # 2. cRPO (contracted backlog) growing slower than reported revenue
+        crpo_yoy = ctx.yoy(self._CRPO)
+        m = (ramp(rev_yoy - crpo_yoy, 0.03, 0.20)
+             if rev_yoy is not None and crpo_yoy is not None and crpo_yoy < rev_yoy else 0.0)
+        out.append(Channel("crpo_growth_below_revenue", m,
+            "Contracted backlog (cRPO) grew slower than reported revenue." if m > 0
+            else "cRPO kept pace with revenue."))
+
+        # 3. Net revenue retention declining (and crossing below 100%)
+        nrr_change = ctx.level_change_yoy(self._NRR)
+        nrr_now = self._NRR(ctx.current)
+        m = ramp(-nrr_change, 0.01, 0.10) if nrr_change is not None and nrr_change < 0 else 0.0
+        if nrr_now is not None and nrr_now < 1.0:
+            m = noisy_or([m, ramp(1.0 - nrr_now, 0.0, 0.10)])  # contraction booster
+        out.append(Channel("net_revenue_retention_declining", m,
+            f"Net revenue retention fell to {nrr_now:.0%}." if m > 0
+            else "Net revenue retention held up."))
+
+        # 4. Deferred revenue (prepaid-cash liability) declining outright YoY
+        def_yoy = ctx.yoy(self._DEFERRED)
+        m = ramp(-def_yoy, 0.0, 0.20) if def_yoy is not None and def_yoy < 0 else 0.0
+        out.append(Channel("deferred_revenue_decline", m,
+            f"Deferred revenue fell {def_yoy:+.0%} YoY (backlog drawing down)." if m > 0
+            else "Deferred revenue did not decline YoY."))
+
+        # 5. Sales efficiency deteriorating: S&M share rising as growth slows
+        sm_up = ctx.level_change_yoy(self._SM)
+        m = (ramp(sm_up, 0.01, 0.08)
+             if sm_up is not None and sm_up > 0 and ctx.decelerating(self._REV) else 0.0)
+        out.append(Channel("sales_efficiency_deteriorating", m,
+            "S&M as a share of revenue rose while growth slowed." if m > 0
+            else "Sales efficiency did not deteriorate."))
+
+        # 6. Billings / ARR guidance reduced
+        m = _guidance_cut(ctx, self._GUID)
+        out.append(Channel("billings_guidance_cut", m,
+            "Billings guidance was reduced." if m > 0
+            else "Billings guidance was not reduced."))
+
+        # 7. The tell: stock-based comp rising as a share of revenue —
+        #    dilution funding "adjusted" profitability
+        sbc_up = ctx.level_change_yoy(self._SBC)
+        m = ramp(sbc_up, 0.01, 0.05) if sbc_up is not None and sbc_up > 0 else 0.0
+        out.append(Channel("sbc_masking_cash", m,
+            "Stock-based comp rose as a share of revenue (dilution)." if m > 0
+            else "Stock-based comp share did not rise."))
+        return out
+
+    def improvement(self, ctx: ChannelContext) -> list[Channel]:
+        out: list[Channel] = []
+        cur_p = ctx.current.parsed_period
+        now, prev = ctx.ttm(self._FCF), ctx.ttm(self._FCF, cur_p.prior_year())
+        out.append(Channel("ttm_fcf_rise", _rise(now, prev, 0.25),
+                            "TTM free cash flow rose YoY."))
+        # billings outgrowing revenue = backlog building
+        rev_yoy, bill_yoy = ctx.yoy(self._REV), ctx.yoy(self._BILL)
+        m = (ramp(bill_yoy - rev_yoy, 0.03, 0.20)
+             if rev_yoy is not None and bill_yoy is not None and bill_yoy > rev_yoy else 0.0)
+        out.append(Channel("billings_outgrowing_revenue", m,
+                            "Billings outgrew revenue (backlog building)."))
+        return out
+
+
 # ------------------------------------------------------------------ shared ramps
 def _decline(now: float | None, prev: float | None, severe: float) -> float:
     if now is None or prev is None or prev == 0:
@@ -896,6 +1004,7 @@ CHANNEL_SETS: dict[str, ChannelSet] = {
     "broker": BrokerChannels(),
     "insurance": InsuranceChannels(),
     "lender": LenderChannels(),
+    "saas": SaasChannels(),
 }
 
 

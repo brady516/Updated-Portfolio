@@ -15,6 +15,7 @@ from narrative_monitor import (
     FundamentalSnapshot,
     SignalEngine,
     SignalState,
+    samples,
 )
 from narrative_monitor.channels import channel_set_for
 
@@ -218,7 +219,7 @@ class BrokerChannelTests(unittest.TestCase):
     def test_rate_carry_turning_confirms(self) -> None:
         sig = SignalEngine().evaluate(_broken_broker(), claims=[])
         self.assertEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
-        for key in ("nii_reliance_high", "nii_two_period_compression",
+        for key in ("nii_reliance_rising", "nii_two_period_compression",
                     "customer_float_erosion", "ttm_net_income_decline"):
             self.assertIn(key, sig.confirmed_criteria)
         self.assertTrue(sig.execution_eligible)
@@ -264,6 +265,39 @@ class LenderChannelTests(unittest.TestCase):
                          sig.confirmed_criteria)
         self.assertNotEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
         self.assertFalse(sig.execution_eligible)
+
+
+class SaasChannelTests(unittest.TestCase):
+    def test_revenue_up_billings_down_confirms(self) -> None:
+        sig = SignalEngine().evaluate(samples.saas("S"), claims=[])
+        self.assertEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        for key in ("revenue_up_billings_rolling_over",
+                    "net_revenue_retention_declining", "deferred_revenue_decline"):
+            self.assertIn(key, sig.confirmed_criteria)
+        self.assertTrue(sig.execution_eligible)
+
+    def test_billings_outgrowing_revenue_does_not_fire(self) -> None:
+        # revenue rising AND billings/RPO/NRR rising faster = healthy, not a
+        # breakdown even though GAAP revenue growth is decelerating.
+        sig = SignalEngine().evaluate(samples.saas_healthy("S"), claims=[])
+        self.assertNotIn("revenue_up_billings_rolling_over", sig.confirmed_criteria)
+        self.assertNotEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        self.assertFalse(sig.execution_eligible)
+
+
+class UniverseTests(unittest.TestCase):
+    def test_every_sector_breakdown_confirms_healthy_does_not(self) -> None:
+        from narrative_monitor import extract_claims, narrative_intensity
+        engine = SignalEngine()
+        for sector, (breakdown, healthy) in samples.SECTORS.items():
+            claims = extract_claims(samples.benign_events("X"))
+            b = engine.evaluate(breakdown("X"), claims, narrative_intensity(claims))
+            h = engine.evaluate(healthy("Y"), claims=[])
+            self.assertEqual(b.state, SignalState.CONFIRMED_DETERIORATION,
+                             f"{sector} breakdown should confirm")
+            self.assertTrue(b.execution_eligible, f"{sector} should be executable")
+            self.assertFalse(h.execution_eligible,
+                             f"{sector} healthy must not be executable")
 
 
 if __name__ == "__main__":

@@ -37,6 +37,7 @@ from .channels import (
     InsuranceChannels,
     LenderChannels,
     ReitChannels,
+    SaasChannels,
     channel_set_for,
 )
 from .narrative_ingestor import (
@@ -67,6 +68,7 @@ __all__ = [
     "InsuranceChannels",
     "LenderChannels",
     "ReitChannels",
+    "SaasChannels",
     "channel_set_for",
     "FundamentalSnapshot",
     "JsonlNarrativeSource",
