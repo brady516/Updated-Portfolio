@@ -28,7 +28,18 @@ from .backtest import (
     PriceSeries,
     run_backtest,
 )
-from .edgar import EdgarClient, EdgarFilingSource, sector_from_sic
+from .edgar import (
+    EdgarClient,
+    EdgarFilingSource,
+    enrich_from_filings,
+    sector_from_sic,
+)
+from .filing_text import (
+    Extraction,
+    apply_text_line_items,
+    extract_line_items,
+    to_text,
+)
 from .channels import (
     CHANNEL_SETS,
     BdcChannels,
@@ -69,7 +80,12 @@ __all__ = [
     "CsvPriceSource",
     "EdgarClient",
     "EdgarFilingSource",
+    "Extraction",
     "FilingSource",
+    "apply_text_line_items",
+    "enrich_from_filings",
+    "extract_line_items",
+    "to_text",
     "FinancialChannels",
     "IndustrialChannels",
     "InsuranceChannels",

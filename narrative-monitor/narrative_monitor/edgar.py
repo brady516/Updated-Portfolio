@@ -32,6 +32,8 @@ import urllib.request
 from dataclasses import dataclass
 
 from .filing_ingestor import FilingSource
+from .filing_text import apply_text_line_items
+from .filing_text import to_text as _to_text
 from .models import FundamentalSnapshot
 
 TICKER_MAP_URL = "https://www.sec.gov/files/company_tickers.json"
@@ -164,14 +166,39 @@ class EdgarClient:
     def company_facts(self, cik: int) -> dict:
         return json.loads(self._get(COMPANY_FACTS_URL.format(cik=cik)))
 
+    def company_submissions(self, cik: int) -> dict:
+        return json.loads(self._get(SUBMISSIONS_URL.format(cik=cik)))
+
     def company_sic(self, cik: int) -> int | None:
         """The filer's SIC industry code (from the submissions API)."""
         try:
-            sub = json.loads(self._get(SUBMISSIONS_URL.format(cik=cik)))
+            sub = self.company_submissions(cik)
         except (urllib.error.HTTPError, urllib.error.URLError, ValueError):
             return None
         sic = sub.get("sic")
         return int(sic) if sic not in (None, "") else None
+
+    def filing_documents(self, cik: int, forms: tuple[str, ...],
+                         limit: int = 8) -> list[tuple[str, str]]:
+        """Recent (filing_date, document_url) for the given form types, newest
+        first — the primary document of each 10-Q/10-K/8-K."""
+        recent = self.company_submissions(cik)["filings"]["recent"]
+        out: list[tuple[str, str]] = []
+        for form, acc, doc, when in zip(
+            recent["form"], recent["accessionNumber"],
+            recent["primaryDocument"], recent["filingDate"],
+        ):
+            if form in forms and doc:
+                acc_nodash = acc.replace("-", "")
+                url = (f"https://www.sec.gov/Archives/edgar/data/{cik}/"
+                       f"{acc_nodash}/{doc}")
+                out.append((when, url))
+            if len(out) >= limit:
+                break
+        return out
+
+    def document_text(self, url: str) -> str:
+        return _to_text(self._get(url).decode("utf-8", "replace"))
 
 
 @dataclass
@@ -284,6 +311,28 @@ def _saas_line_items(periods: list[str], dur: dict, inst: dict) -> dict[str, dic
 
 # sectors whose microstructure the live XBRL adapter can populate today
 _LIVE_SECTOR_DERIVERS = {"saas": _saas_line_items}
+
+
+def enrich_from_filings(
+    snapshots: list[FundamentalSnapshot], client: "EdgarClient", cik: int,
+    forms: tuple[str, ...] = ("10-Q", "10-K", "8-K"),
+) -> list[FundamentalSnapshot]:
+    """Fill non-XBRL sector line items (REIT FFO, energy PV-10, BDC PIK) from the
+    text of each quarter's own filing.
+
+    Each snapshot is matched to the filing filed on its `reported_at` date, that
+    document's text is extracted (see filing_text), and the values merged in —
+    comparable-period-safe because a quarter is only ever enriched from its own
+    filing. Network-bound and not yet validated against live SEC; the extractor
+    behind it is unit-tested. Opt-in: callers invoke it, `fetch` does not.
+    """
+    by_date = dict(client.filing_documents(cik, forms, limit=40))
+    texts: dict[str, str] = {}
+    for snap in snapshots:
+        url = by_date.get(snap.reported_at)
+        if url:
+            texts[snap.period] = client.document_text(url)
+    return apply_text_line_items(snapshots, texts)
 
 
 class EdgarFilingSource(FilingSource):

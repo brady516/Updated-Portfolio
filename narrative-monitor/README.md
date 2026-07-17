@@ -161,7 +161,8 @@ others.
 | Service | Job |
 |---|---|
 | `filing_ingestor.py` | Filings → normalized `FundamentalSnapshot`. Ships a CSV loader; subclass `FilingSource` per provider. |
-| `edgar.py` | Live `FilingSource` over SEC EDGAR company-facts (XBRL) — ticker → CIK → as-filed, point-in-time snapshots. |
+| `edgar.py` | Live `FilingSource` over SEC EDGAR company-facts (XBRL) — ticker → CIK → as-filed, point-in-time snapshots; SIC → sector routing. |
+| `filing_text.py` | Deterministic, auditable extractor for the non-XBRL sector tells (REIT FFO, energy PV-10, BDC PIK) — returns the source text for every value. |
 | `narrative_ingestor.py` | Raw feeds → the parrot layer of `NarrativeEvent`s (management / sell-side / media), plus propagation analytics. Ships a JSONL loader. |
 | `narrative_monitor.py` | News / transcripts → structured `NarrativeClaim`s + source-weighted narrative entropy. Identifies the claim and its stance, never the direction. |
 | `signal_engine.py` | The breakdown model — continuous channels, divergence, entropy weighting, state + gate. |
@@ -365,19 +366,36 @@ lies to you:
 The adapter **routes each filer to its ChannelSet by SIC code** and populates the
 sector's line items where XBRL supports it. What structured XBRL can and can't feed:
 
-| Sector | Live from XBRL? | How |
+| Sector | Source | How |
 |---|---|---|
-| industrial | ✅ full | revenue, FCF (OCF−capex), gross margin, receivables — every filer |
-| saas | ✅ derived | **billings = revenue + Δdeferred**, cRPO (`RevenueRemainingPerformanceObligation`), deferred revenue, SBC% — from standard tags |
-| financial | ⚠️ next | banks tag reserves / charge-offs / NII — a concept map away |
-| insurance | ⚠️ derivable | combined ratio from incurred-loss + premium components |
-| reit / energy / bdc / lender | ❌ not in XBRL | FFO, PV-10, PIK income, loan vintages are **non-GAAP supplemental** disclosures — they need a filing-text or vendor layer, not more tags |
+| industrial | XBRL | revenue, FCF (OCF−capex), gross margin, receivables — every filer |
+| saas | XBRL (derived) | **billings = revenue + Δdeferred**, cRPO (`RevenueRemainingPerformanceObligation`), deferred revenue, SBC% |
+| reit | **filing text** | FFO / AFFO (total + per share), same-store NOI, occupancy, dividend/share |
+| energy | **filing text** | PV-10, reserve replacement ratio, netback per boe |
+| bdc | **filing text** | NAV/share, PIK income, non-accrual rate, NII/share |
+| financial | XBRL, next | banks tag reserves / charge-offs / NII — a concept map away |
+| insurance | XBRL (derivable), next | combined ratio from incurred-loss + premium components |
 
-So a name is scored on its own microstructure where the data is structured, and
-routed-but-`inconclusive` where it isn't (no false positives). IBM, for instance,
-is SIC 7372 (software) → it now reads on **billings / RPO / deferred revenue**, not
-industrial FCF. The honest frontier is the estimate-heavy sectors: their tells live
-in text, and wiring them is a parsing/vendor project, not a concept map.
+XBRL-native sectors are scored the moment you `fetch`. The estimate-heavy sectors
+(REIT/energy/BDC) are unlocked by `filing_text.py` — a **deterministic, auditable
+extractor** that pulls the non-GAAP tells out of filing text and returns *the source
+sentence for every number*, so each value is checkable. It is rule-based on purpose
+(a regex can't hallucinate a figure that isn't on the page); an LLM extractor swaps
+in behind the same `Extraction` contract for coverage.
+
+```python
+from narrative_monitor import extract_line_items
+extract_line_items("reit", "Funds from operations were $412.5 million, or $1.85 "
+                           "per diluted share. AFFO totaled $360.0 million ...")
+# -> {'ffo': 412500000.0, 'ffo_per_share': 1.85, 'affo': 360000000.0, ...}
+```
+
+`enrich_from_filings(snapshots, client, cik)` wires it to the live path: each
+quarter is enriched from *its own* filing (matched by filing date, so
+comparable-period integrity holds). The extractor is unit-tested against
+representative snippets; the live fetch/assembly is provided but still needs
+validation against real SEC documents. IBM, for reference, is SIC 7372 (software) →
+it reads on **billings / RPO / deferred revenue**, not industrial FCF.
 
 > Note: this adapter needs outbound HTTPS to `sec.gov`. Some sandboxes (including
 > the one this was built in) block that egress at the proxy — `run_live_demo.py`
