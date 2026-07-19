@@ -309,8 +309,70 @@ def _saas_line_items(periods: list[str], dur: dict, inst: dict) -> dict[str, dic
     return out
 
 
+# --- financial (bank) XBRL concept map -----------------------------------
+# Bank tags vary across filers, so each field lists fallbacks. NOT yet validated
+# against live SEC; the mapping/derivation is unit-tested against a fixture.
+_FINANCIAL_DURATION = {
+    "net_income": ["NetIncomeLoss"],
+    "net_interest_income": ["InterestIncomeExpenseNet",
+                            "InterestAndDividendIncomeOperating"],
+    "provision_for_credit_losses": ["ProvisionForLoanLeaseAndOtherLosses",
+                                    "ProvisionForLoanAndLeaseLosses",
+                                    "ProvisionForCreditLossExpenseReversal"],
+    "net_charge_offs": ["AllowanceForLoanAndLeaseLossesWriteoffsNet",
+                        "FinancingReceivableAllowanceForCreditLossesWriteoffAfterRecovery"],
+}
+_FINANCIAL_INSTANT = {
+    "allowance_for_loan_losses": ["FinancingReceivableAllowanceForCreditLosses",
+                                  "AllowanceForLoanAndLeaseLossesRealEstate",
+                                  "FinancingReceivableAllowanceForCreditLoss"],
+    "gross_loans": ["LoansAndLeasesReceivableNetReportedAmount",
+                    "LoansAndLeasesReceivableNetOfDeferredIncome",
+                    "NotesReceivableNet"],
+    "nonperforming_assets": ["FinancingReceivableRecordedInvestmentNonaccrualStatus"],
+    "aoci": ["AccumulatedOtherComprehensiveIncomeLossNetOfTax"],
+    "tangible_common_equity": ["StockholdersEquity"],
+}
+
+# extra concepts parsed (and merged into dur/inst) when a sector needs them
+_SECTOR_EXTRA_CONCEPTS = {
+    "financial": (_FINANCIAL_DURATION, _FINANCIAL_INSTANT),
+}
+# the field(s) that must be present for a period to yield a snapshot, per sector
+_SECTOR_ANCHORS = {
+    "industrial": ("revenue", "operating_cash_flow", "capex"),
+    "saas": ("revenue", "operating_cash_flow", "capex"),
+    "financial": ("net_income",),
+}
+_DEFAULT_ANCHORS = ("revenue", "operating_cash_flow", "capex")
+
+
+def _financial_line_items(periods: list[str], dur: dict, inst: dict) -> dict[str, dict]:
+    """Copy bank concepts into line_items; AOCI net-of-tax (negative = loss) ->
+    the aoci_unrealized_loss magnitude the FinancialChannels reads."""
+    def v(field, period):
+        s = dur.get(field) or inst.get(field)
+        af = s.get(period) if s else None
+        return af.val if af else None
+
+    fields = ["net_income", "net_interest_income", "provision_for_credit_losses",
+              "net_charge_offs", "allowance_for_loan_losses", "gross_loans",
+              "nonperforming_assets", "tangible_common_equity"]
+    out: dict[str, dict] = {}
+    for period in periods:
+        items = {f: val for f in fields if (val := v(f, period)) is not None}
+        aoci = v("aoci", period)
+        if aoci is not None and aoci < 0:
+            items["aoci_unrealized_loss"] = -aoci   # loss as a positive magnitude
+        out[period] = items
+    return out
+
+
 # sectors whose microstructure the live XBRL adapter can populate today
-_LIVE_SECTOR_DERIVERS = {"saas": _saas_line_items}
+_LIVE_SECTOR_DERIVERS = {
+    "saas": _saas_line_items,
+    "financial": _financial_line_items,
+}
 
 
 def enrich_from_filings(
@@ -376,31 +438,42 @@ class EdgarFilingSource(FilingSource):
             for field, concepts in _INSTANT_CONCEPTS.items()
             if (points := _first_present(facts, concepts)) is not None
         }
+        # merge any sector-specific concepts (e.g. bank reserves / charge-offs)
+        extra = _SECTOR_EXTRA_CONCEPTS.get(sector)
+        if extra:
+            d_extra, i_extra = extra
+            for field, concepts in d_extra.items():
+                if (pts := _first_present(facts, concepts)) is not None:
+                    dur[field] = _duration_series(pts)
+            for field, concepts in i_extra.items():
+                if (pts := _first_present(facts, concepts)) is not None:
+                    inst[field] = _instant_series(pts)
 
-        def val(series: dict[str, dict[str, _AsFiled]], field: str,
-                period: str) -> float | None:
-            af = series.get(field, {}).get(period)
-            return af.val if af else None
+        def af(field: str, period: str) -> _AsFiled | None:
+            series = dur.get(field) or inst.get(field)
+            return series.get(period) if series else None
 
-        # a snapshot needs the core flow trio present
-        periods = sorted(
-            p for p in dur.get("revenue", {})
-            if dur.get("operating_cash_flow", {}).get(p)
-            and dur.get("capex", {}).get(p)
-        )
+        def val(field: str, period: str) -> float | None:
+            got = af(field, period)
+            return got.val if got else None
+
+        # a snapshot needs the sector's anchor field(s) present (banks report no
+        # revenue/capex, so the gate can't be industrial-only)
+        anchors = _SECTOR_ANCHORS.get(sector, _DEFAULT_ANCHORS)
+        first = dur.get(anchors[0]) or inst.get(anchors[0]) or {}
+        periods = sorted(p for p in first if all(af(a, p) for a in anchors))
+
         deriver = _LIVE_SECTOR_DERIVERS.get(sector)
         line_items_by_period = deriver(periods, dur, inst) if deriver else {}
 
         snapshots: list[FundamentalSnapshot] = []
         for period in periods:
-            revenue = val(dur, "revenue", period)
-            ocf = val(dur, "operating_cash_flow", period)
-            capex = val(dur, "capex", period)
-            if revenue in (None, 0) or ocf is None or capex is None:
-                continue
-            cost = val(dur, "cost_of_revenue", period)
-            gross_margin = (revenue - cost) / revenue if cost is not None else None
-            reported_at = dur["revenue"][period].filed
+            revenue = val("revenue", period) or 0.0      # 0 for banks/BDCs
+            ocf = val("operating_cash_flow", period) or 0.0
+            capex = val("capex", period) or 0.0
+            cost = val("cost_of_revenue", period)
+            gross_margin = ((revenue - cost) / revenue
+                            if cost is not None and revenue else None)
             snapshots.append(FundamentalSnapshot(
                 ticker=ticker.upper(),
                 period=period,
@@ -409,10 +482,10 @@ class EdgarFilingSource(FilingSource):
                 capex=capex,
                 free_cash_flow=ocf - capex,           # FCF = OCF - capex
                 gross_margin=gross_margin,
-                receivables=val(inst, "receivables", period),
-                deferred_revenue=val(inst, "deferred_revenue", period),
-                stock_compensation=val(dur, "stock_compensation", period),
-                reported_at=reported_at,
+                receivables=val("receivables", period),
+                deferred_revenue=val("deferred_revenue", period),
+                stock_compensation=val("stock_compensation", period),
+                reported_at=af(anchors[0], period).filed,
                 sector=sector,
                 line_items=line_items_by_period.get(period, {}),
             ))

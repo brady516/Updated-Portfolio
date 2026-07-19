@@ -14,7 +14,7 @@ import json
 import unittest
 from pathlib import Path
 
-from narrative_monitor import SignalEngine
+from narrative_monitor import SignalEngine, SignalState, samples
 from narrative_monitor.edgar import (
     EdgarClient, EdgarFilingSource, sector_from_sic,
 )
@@ -63,6 +63,61 @@ def _saas_facts():
             ("CY2023Q3", 18, filed), ("CY2023", 70, filed),
             ("CY2024Q1", 21, filed)]),
     }}}
+
+
+def _points(values, instant):
+    """Emit XBRL datapoints (discrete quarter frames) for a value series."""
+    out = []
+    for (period, rep), v in zip(samples.QUARTERS, values):
+        if v is None:
+            continue
+        year, q = period.split("-Q")
+        out.append({"val": v, "filed": rep,
+                    "frame": f"CY{year}Q{q}" + ("I" if instant else "")})
+    return {"units": {"USD": out}}
+
+
+def _bank_facts():
+    """XBRL-shaped company-facts for the samples bank breakdown, so the live
+    financial concept map is exercised against realistic tags."""
+    s = samples.bank("BANK")
+    L = lambda k: [x.line_items.get(k) for x in s]  # noqa: E731
+    return {"facts": {"us-gaap": {
+        "NetIncomeLoss": _points(L("net_income"), False),
+        "InterestIncomeExpenseNet": _points(L("net_interest_income"), False),
+        "ProvisionForLoanLeaseAndOtherLosses": _points(L("provision_for_credit_losses"), False),
+        "AllowanceForLoanAndLeaseLossesWriteoffsNet": _points(L("net_charge_offs"), False),
+        "FinancingReceivableAllowanceForCreditLosses": _points(L("allowance_for_loan_losses"), True),
+        "LoansAndLeasesReceivableNetReportedAmount": _points(L("gross_loans"), True),
+        "FinancingReceivableRecordedInvestmentNonaccrualStatus": _points(L("nonperforming_assets"), True),
+        "StockholdersEquity": _points(L("tangible_common_equity"), True),
+        "AccumulatedOtherComprehensiveIncomeLossNetOfTax":
+            _points([-(v or 0) for v in L("aoci_unrealized_loss")], True),
+    }}}
+
+
+class FinancialLiveTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.snaps = EdgarFilingSource(email="t@x.com").normalize(
+            _bank_facts(), "bank", "financial")
+        self.by = {s.period: s for s in self.snaps}
+
+    def test_bank_line_items_extracted_despite_no_revenue(self) -> None:
+        # banks report no Revenue/Capex; anchoring on net_income still yields snaps
+        self.assertEqual(len(self.snaps), 9)
+        q = self.by["2026-Q1"]
+        self.assertEqual(q.sector, "financial")
+        self.assertAlmostEqual(q.line_items["allowance_for_loan_losses"], 1.2)
+        self.assertAlmostEqual(q.line_items["net_charge_offs"], 0.60)
+        self.assertAlmostEqual(q.line_items["aoci_unrealized_loss"], 7.0)  # from -AOCI
+
+    def test_live_bank_reconstructs_the_breakdown(self) -> None:
+        sig = SignalEngine().evaluate(self.snaps, claims=[])
+        self.assertEqual(sig.state, SignalState.CONFIRMED_DETERIORATION)
+        for key in ("reserve_release_below_chargeoffs", "allowance_coverage_decline",
+                    "npa_outrun_loans"):
+            self.assertIn(key, sig.confirmed_criteria)
+        self.assertTrue(sig.execution_eligible)
 
 
 class SicRoutingTests(unittest.TestCase):

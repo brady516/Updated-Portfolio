@@ -370,10 +370,10 @@ sector's line items where XBRL supports it. What structured XBRL can and can't f
 |---|---|---|
 | industrial | XBRL | revenue, FCF (OCF−capex), gross margin, receivables — every filer |
 | saas | XBRL (derived) | **billings = revenue + Δdeferred**, cRPO (`RevenueRemainingPerformanceObligation`), deferred revenue, SBC% |
+| financial | XBRL | reserves, net charge-offs, provisions, NII, non-accruals, AOCI vs equity — banks tag these; anchored on net income (banks report no revenue/capex) |
 | reit | **filing text** | FFO / AFFO (total + per share), same-store NOI, occupancy, dividend/share |
 | energy | **filing text** | PV-10, reserve replacement ratio, netback per boe |
 | bdc | **filing text** | NAV/share, PIK income, non-accrual rate, NII/share |
-| financial | XBRL, next | banks tag reserves / charge-offs / NII — a concept map away |
 | insurance | XBRL (derivable), next | combined ratio from incurred-loss + premium components |
 
 XBRL-native sectors are scored the moment you `fetch`. The estimate-heavy sectors
