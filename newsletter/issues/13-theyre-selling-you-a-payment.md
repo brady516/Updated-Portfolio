@@ -67,8 +67,7 @@ Here's the honest math, because this newsletter checks its own stories too. On t
 same term, cutting the rate from 6.8% to 2.5% takes a $398 payment down to roughly
 **$345–$366**, depending on the loan length. The rate alone doesn't explain the full
 **$144 a month** (about $1,700 a year). I wasn't shown what they moved on their side to get
-the payment the rest of the way down, and I won't guess in print. What I can tell you
-is the rate cut alone doesn't get you there. That's the trick: four numbers in motion so you can't
+the payment the rest of the way down, and I won't guess in print. That's the trick: four numbers in motion so you can't
 tell which one is costing you. *(Illustrative: 48–84-month terms; rate-only effect.)*
 
 ## Wall Street Word Salad of the Week — Dealership Edition *(paid)*
