@@ -11,7 +11,7 @@ date: TBD
 
 A family member of mine sat with her advisor for 90 minutes. She said four things, in plain English: she needs income, she wants no fees, she wants low taxes, and she is afraid of stocks. She spends about $10,000 a year.
 
-She walked out with a recommendation to put 10% of her portfolio into an actively managed income ETF that charges a fee every year and holds about half its money in stocks and stock-like securities. The explanation came in price-to-earnings ratios.
+She walked out with a recommendation to put 10% of her portfolio into an actively managed income ETF that charges a fee every year and holds about half its money in stocks and stock-like securities. The explanation came in price-to-earnings ratios, which is a bit like answering "I'm afraid of heights" with a lecture on altitude.
 
 Nothing illegal happened. That's the point of this issue. The system worked exactly as designed. It just wasn't designed around what she said.
 
@@ -19,7 +19,7 @@ Nothing illegal happened. That's the point of this issue. The system worked exac
 
 > **The Noise:** "You want income? Here's an income fund. It's got 'income' right there in the name."
 
-It sounds responsive. Read the label, though, not the name. As of September 30, 2026, the ETF held about 48% in bonds, 26% in stocks, and another 25% in convertibles and equity-linked notes. Convertibles and equity-linked notes behave like stocks when stocks fall. So roughly half the fund moves with the stock market. ([fund factsheet](https://www.franklintempleton.com/forms-literature/download/36262-FF), as of 9/30/2026)
+It sounds responsive. So does a car salesman who hears "I need something reliable" and walks you to the convertible. Read the label, not the name. As of September 30, 2026, the ETF held about 48% in bonds, 26% in stocks, and another 25% in convertibles and equity-linked notes. Convertibles and equity-linked notes behave like stocks when stocks fall. So roughly half the fund moves with the stock market. ([fund factsheet](https://www.franklintempleton.com/forms-literature/download/36262-FF), as of 9/30/2026)
 
 Now line it up against what she actually said:
 
@@ -30,7 +30,7 @@ Now line it up against what she actually said:
 | Low taxes | Largely ordinary income — about a push with corporate bonds; worse than Treasuries, which skip state tax |
 | Afraid of stocks | About half the fund is stocks or stock-like |
 
-One hit, one push, two misses. And she already owned an answer that hits the other three: a ladder of individual bonds that pays her income, carries no ongoing fee, and holds zero stocks. I built it for her years ago, when I was still in the business, and I took "no fees" literally.
+One hit, one push, two misses. In baseball, that's a decent night. In a 90-minute meeting about one person's money, it's a strange batting average. And she already owned an answer that hits the other three: a ladder of individual bonds that pays her income, carries no ongoing fee, and holds zero stocks. I built it for her years ago, when I was still in the business, and I took "no fees" literally. Apparently that's a niche interpretation.
 
 > **The Signal:** a recommendation should be checkable against the client's own sentences. If she can't repeat back why she owns it, it was built for the advisor's process, not for her. The glazed eyes during the P/E lecture were the tell.
 
@@ -38,13 +38,13 @@ One honest caveat, played straight: there *is* a real argument for some stock ex
 
 ## The Number *(free)*
 
-**$190.** That's the fee per year, once you size the recommendation correctly.
+**$190.** That's the annual fee, once you size the recommendation correctly. Which I didn't, at first.
 
 The advisor capped the ETF at 10% of her portfolio, about $50,000. At 0.38%, that's roughly $190 a year, or about 1.9% of her $10,000 in annual spending. *(Illustrative: $50,000 × 0.38%, flat balance, the fund's expense ratio only. It's a brokerage account, so there's no ongoing advisory fee on top; it excludes any one-time commission on the trade.)*
 
 And that's only the cost you can see. Many brokerages also collect revenue-sharing payments from the fund companies on their shelf. Those payments typically come out of the fund company's own revenue, so they don't add to her 0.38%. They do give the firm a reason to prefer some funds over others. That's a conflict, and firms are required to disclose it. Look for it in the firm's revenue-sharing disclosure, not on the fund's factsheet.
 
-This is where I correct my own outrage. My first pass ran the fee on the whole $500,000 and got 19% of her budget. Wrong denominator. A $190 fee isn't the scandal. The real question is why a client who said "no stocks" gets any stock exposure at all, and whether she understood she was agreeing to it.
+This is where I turn the knife on myself. My first pass ran the fee on the whole $500,000 and got 19% of her budget. Outrage is a great motivator and a terrible calculator. Wrong denominator. A $190 fee isn't the scandal. The real question is why a client who said "no stocks" gets any stock exposure at all, and whether she understood she was agreeing to it.
 
 What would change the meaning: if the 10% cap creeps up at later reviews, the fee and the stock exposure grow with it. In a brokerage account the ongoing cost stays at the fund's 0.38%; the one-time costs are the commission to buy the ETF and any markdown on bonds sold to fund it.
 
@@ -68,7 +68,7 @@ What would change the meaning: if the 10% cap creeps up at later reviews, the fe
 
 Give the other side its strongest form. She's afraid of running out of money. The quiet killer of a bond-only retiree isn't a crash. It's inflation. September CPI came in at 3.7% year over year ([Inman, reporting BLS data](https://www.inman.com/2026/10/14/september-inflation-runs-hotter-than-expected-rising-3-7/), released 10/14/2026). A fixed coupon buys less every year. Stocks have historically been the asset that grows past inflation over long periods. So some equity is a defensible professional answer to "I'm afraid of running out."
 
-That argument is correct as a rule of thumb. Now run it on her numbers.
+That argument is correct as a rule of thumb. Rules of thumb are what you reach for when you haven't looked at the client. So let's look at the client.
 
 ### The mechanism: her withdrawal rate does the heavy lifting
 
@@ -91,7 +91,7 @@ Treasuries add one more edge in a state with an income tax: their interest is ex
 
 The ETF's 30-day SEC yield was 5.73% as of September 30, 2026, already net of its 0.38% expense ratio ([fund factsheet](https://www.franklintempleton.com/forms-literature/download/36262-FF)). That's 0.49 to 0.93 points above the Treasury range above. On the proposed $50,000 sleeve, that's roughly $245–$465 a year of extra income. *(Illustrative.)*
 
-To get it, about $25,000, roughly 5% of her portfolio, moves from zero stock exposure into stocks, convertibles, and equity-linked notes. She also takes on credit risk in the bond sleeve. The extra yield isn't free money. It's payment for risk she told the advisor, for 90 minutes, that she doesn't want.
+To get it, about $25,000, roughly 5% of her portfolio, moves from zero stock exposure into stocks, convertibles, and equity-linked notes. She also takes on credit risk in the bond sleeve. Yield is never a gift. It's a receipt for risk. This one is for risk she told the advisor, for 90 minutes, that she doesn't want.
 
 One more thing a careful reader should notice: the ETF wrapper is new, but the strategy isn't. The ETF launched in June 2023, run by the same team that manages the firm's decades-old income mutual fund ([launch release](https://www.businesswire.com/news/home/20230608005322/en/Franklin-Templeton-Launches-Franklin-Income-Focus-ETF-INCM)). The ETF's own factsheet has no losing year yet, because the 2020 crash and the 2022 rate shock happened before it existed. So the honest stress test is the mutual fund's record in 2008, 2020, and 2022: same playbook, a different wrapper, and a cheaper fee. Past performance is historical and doesn't guarantee future results. Here, the useful history sits in the older fund, not on the new factsheet.
 
@@ -139,11 +139,11 @@ If a recommendation like this landed in front of someone I cared about, these ar
 4. **The alternative.** Why not keep the bonds and reinvest maturities? What specifically does the new fund do that the ladder doesn't?
 5. **Track record.** How the fund would likely have behaved in 2022 or 2020, given it didn't exist yet.
 
-And the one most people forget: "leave it exactly as it is" is always a valid answer.
+And the one nobody gets paid to mention: "leave it exactly as it is" is always a valid answer.
 
 ### Same meeting, macro edition
 
-She asked about the economy. She got two claims. Here's what the data says about each, as of this week.
+She asked about the economy. She got two claims and a recession forecast powered by a memory chip. Here's what the data says about each, as of this week.
 
 **Claim 1: people aren't working because they've exited the workforce, and anyone who wants a job can easily get one.**
 
@@ -158,7 +158,7 @@ The fair counterpoint: 4.2% unemployment is still low by historical standards. M
 
 - **The backlog is real.** SanDisk's multiyear contracts are expected to cover over half its bits sold in fiscal 2027 and about two-thirds in fiscal 2028, with supply on allocation past 2027 ([AOL/Motley Fool](https://www.aol.com/articles/micron-says-memory-supply-much-035802000.html), 10/2/2026).
 - **I asked about Micron, and he didn't have it.** Here's the answer, and it actually helps his case. Micron says supply will be tighter in 2027 and 2028 than in 2026, with more than 75% of its 2027 output already committed ([CIO](https://www.cio.com/article/4229625/memory-squeeze-set-to-tighten-through-2028-micron-says.html), 10/1/2026).
-- **The leap is the problem.** A sold-out memory order book tells you about AI data-center spending. It doesn't tell you about the consumer, the job market, or a retiree's income. One sector's backlog is not a recession forecast. And "booked" isn't "earned": those contracts float between a price floor and ceiling.
+- **The leap is the problem.** A sold-out memory order book tells you about AI data-center spending. It doesn't tell you about the consumer, the job market, or a retiree's income. One sector's order book is not a recession forecast. It's an order book. And "booked" isn't "earned": those contracts float between a price floor and ceiling.
 
 What I'd watch instead: monthly payrolls and their revisions, and whether the memory makers' contracted share holds or starts slipping. Either can move faster than a two-year call.
 
