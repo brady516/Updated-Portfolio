@@ -14,14 +14,19 @@ like a worksheet. It's a magic trick. The whole design is to keep four numbers
 moving so you never stop on the only two that matter: the **price** and the **APR**.
 
 So I took out my **HP 10bII** — a calculator I knew cold from my MBA in finance —
-and did the rude thing: I solved for the rate they'd actually buried in the payment.
-It came out to **6.8%**. I slid it back and said — politely — "My credit doesn't
+and did the rude thing: I solved for the rate they'd actually buried in the payment,
+in real time, in front of the sales manager. It came out to **6.8%**. I slid it back
+and said — politely — "My credit doesn't
 support nearly 7%. I want you to make your return. My counter, and it's final, is
 **2.5%**." By the time the deal was done, the payment had gone from **$398** to
 **$254** a month.
 
-The rep said he'd sold cars for twenty years and had never watched someone take
-the four-square apart that cleanly. I'll take it.
+The sales manager said he'd been in the business twenty years and had never watched
+someone take the four-square apart like that. Sales managers will tell you whatever
+you want to hear, so I'll only half take it. But it helps to know what a sales
+manager actually is: the dealership's compliance department. His job is to make sure
+the rep doesn't sell the farm. Same job, different building, as the compliance desk
+at a brokerage. Which is exactly why working a little magic on one is so satisfying.
 
 Here's the part that keeps me honest, though: I didn't invent that move. Years
 earlier, back when I was a food-and-beverage exec, a financial "advisor" at
@@ -61,8 +66,9 @@ fine. The payment is the wrapper. The rate and the price are the gift.
 Here's the honest math, because this newsletter checks its own stories too. On the
 same term, cutting the rate from 6.8% to 2.5% takes a $398 payment down to roughly
 **$345–$366**, depending on the loan length. The rate alone doesn't explain the full
-**$144 a month** (about $1,700 a year). The rest came out of the other squares once
-they stopped moving together. That's the trick: four numbers in motion so you can't
+**$144 a month** (about $1,700 a year). I wasn't shown what they moved on their side to get
+the payment the rest of the way down, and I won't guess in print. What I can tell you
+is the rate cut alone doesn't get you there. That's the trick: four numbers in motion so you can't
 tell which one is costing you. *(Illustrative: 48–84-month terms; rate-only effect.)*
 
 ## Wall Street Word Salad of the Week — Dealership Edition *(paid)*
