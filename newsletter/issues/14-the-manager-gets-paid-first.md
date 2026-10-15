@@ -7,12 +7,12 @@ date: TBD
 
 # The Manager Gets Paid First
 
-Fresh out of my Fidelity non-compete and prospecting for Morgan Stanley, I gave a
-guy the most useful sentence in fund investing, and it nearly got me run out of town.
+Fresh out of a non-compete at a big fund company and prospecting for Morgan Stanley,
+I gave a guy the most useful sentence in fund investing, and it nearly got me run out of town.
 
-I told him: whatever you decide — stay at Fidelity, come to MS, doesn't matter —
-**lead with the expense ratio.** Take a flagship growth fund, say FBGRX, running
-around 0.74% a year back then. That fee isn't charged if the fund wins. It's charged
+I told him: whatever you decide — stay where you are, come to MS, doesn't
+matter — **lead with the expense ratio.** Take a typical flagship growth fund,
+running around 0.74% a year back then. That fee isn't charged if the fund wins. It's charged
 *period.* Up year, down year, flat year — the manager's slice comes out first, before
 you find out whether they earned it.
 
@@ -27,6 +27,10 @@ harmless, since the fund "still did 30%." Wrong lesson. The fee didn't vanish; i
 came out of the gross before you ever saw the net, and it comes out *again* next
 year, and the year the fund is down, and the year it's flat. The return is a
 maybe. **The fee is the only guaranteed line item in the whole relationship.**
+
+Gross expense ratio, net expense ratio, "after waivers" — call it whatever the
+fact sheet likes. It still comes off the top, before you get paid. Renaming the toll
+doesn't move the booth.
 
 > **The Signal:** start with the cost, because it's the one number you know for
 > certain before the market opens. Everything else is a forecast wearing a suit.
@@ -55,7 +59,7 @@ quietly admitting some of those cycles, you'll pay full price to lose.
 
 ## The Read — the 22-fund house of cards *(paid)*
 
-Here's the part that made a Fidelity rep call me dangerous.
+Here's the part that got me called dangerous.
 
 It's common to see an account loaded with 22–25 funds. It *looks* like
 diversification. Mechanically, it's two problems stacked:
@@ -64,7 +68,7 @@ diversification. Mechanically, it's two problems stacked:
    them and your blended portfolio basically *is* the index — except you're paying
    ~0.75% for it instead of the ~0.03–0.07% an index fund charges for the same
    exposure — a guaranteed ~0.68%/yr you hand over before anyone's earned anything.
-   You've bought the market and tipped ~10x the going rate to do it.
+   You've bought the market and tipped 10x the going rate or more to do it.
 2. **The fee is structural, not earned.** Whatever the blended expense ratio is, it
    comes out first, every year, in all weather. You can't out-pick a market you've
    basically become — minus a toll.
@@ -75,11 +79,16 @@ at 0.75% is still ~0.75%, not 16.5%. The scandal isn't that the rate multiplies.
 scandal is that ~0.75% compounds into a fifth of your wealth, and that you paid
 *active* prices for *index* exposure. The true number is worse than the wrong one.)*
 
-The prospect repeated all this to his Fidelity FC. The FC's response: *"Stay away
-from that MS guy. He's dangerous."* I know, because the prospect told me — and I
-told the prospect the FC was half right. He *should* try to dismantle it; his frame
+The prospect repeated all this to his rep at the fund company. The rep's response,
+as the prospect relayed it to me: *"Stay away from that MS guy. He's dangerous."*
+I can't verify the exact words. I can verify the math. And I told the prospect the
+rep was half right. He *should* try to dismantle it; his frame
 is **protective, not true**, and the truth is painful to a house of cards. I'd know.
-I was a trader there for three years.
+I spent three years on a fund company's trading desk.
+
+It's also a big part of why individual stocks and bonds became the core of my
+practice later on. One fee, not a fee stacked on top of a fee. I still used funds
+where they fit. I just stopped letting them be the default.
 
 He laughed and asked what I charge. I said: *"Honestly — if you're worried about the
 cost of performance, we're probably not a good fit."*
