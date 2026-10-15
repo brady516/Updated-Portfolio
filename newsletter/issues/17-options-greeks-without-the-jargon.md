@@ -70,12 +70,18 @@ know what you own — and the person who sold it to you is counting on that.
 *(Educational, not individualized investment advice. Options involve substantial
 risk and aren't suitable for everyone.)*
 
+*Additional disclosures: Options trading involves substantial risk, including the rapid loss of capital, and is not suitable for every investor. Conflict disclosure: this issue references the author's own options screener sold via the site's store.*
+
 ---
 
-*North de Noise is for educational and informational purposes only and is not
-individualized investment, legal, or tax advice, nor a recommendation to buy or
-sell any security. Options trading involves substantial risk, including the rapid
-loss of capital, and is not suitable for every investor. Brady Gallagher is not
-currently a registered representative or investment adviser. Past performance does
-not indicate or guarantee future results. Conflict disclosure: this issue references
-the author's own options screener sold via the site's store.*
+**Disclosures**
+
+*North de Noise is published for educational and informational purposes only. It is not individualized investment, tax, or legal advice, and nothing in it is a recommendation or solicitation to buy or sell any security.*
+
+*The author, Brady Gallagher, MBA, is a former financial advisor (FINRA CRD 6510444, verifiable on BrokerCheck). He is not currently registered with any broker-dealer or investment adviser and does not act as an advisor to any reader. Reading or subscribing creates no client relationship.*
+
+*Past performance is historical and does not guarantee future results. All investing involves risk, including the loss of principal. Opinions are the author's own as of the publication date and may change without notice. Data comes from sources believed reliable, but its accuracy is not guaranteed.*
+
+*The author may hold positions in securities discussed and will disclose any such position inline where relevant. Consider your own circumstances, and consult a qualified professional before making any financial decision.*
+
+**The only thing we'll guarantee: someone, somewhere, will say "this time is different."**

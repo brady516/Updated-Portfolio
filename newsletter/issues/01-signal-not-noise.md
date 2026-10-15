@@ -16,7 +16,7 @@ Whether you're actually better off a year from now is not, it turns out, the
 business model.
 
 I'm going to do the opposite, and be a little rude about the difference. I'm a
-licensed analyst — you can verify me on
+former financial advisor turned independent researcher — you can verify me on
 [FINRA BrokerCheck (CRD 6510444)](https://brokercheck.finra.org/individual/summary/6510444),
 which is more than the median guru can say — and I hold myself to the standard a
 registered firm would, even writing independently. The jokes are free. The
@@ -85,9 +85,14 @@ Verify me, then decide.
 
 ---
 
-*North de Noise is for educational and informational purposes only and is not
-individualized investment, legal, or tax advice, nor a recommendation to buy or
-sell any security. Brady Gallagher is not currently a registered representative or
-investment adviser. Past performance does not indicate or guarantee future
-results. Investing carries risk, including loss of principal. Any conflicts of
-interest are disclosed within the relevant content.*
+**Disclosures**
+
+*North de Noise is published for educational and informational purposes only. It is not individualized investment, tax, or legal advice, and nothing in it is a recommendation or solicitation to buy or sell any security.*
+
+*The author, Brady Gallagher, MBA, is a former financial advisor (FINRA CRD 6510444, verifiable on BrokerCheck). He is not currently registered with any broker-dealer or investment adviser and does not act as an advisor to any reader. Reading or subscribing creates no client relationship.*
+
+*Past performance is historical and does not guarantee future results. All investing involves risk, including the loss of principal. Opinions are the author's own as of the publication date and may change without notice. Data comes from sources believed reliable, but its accuracy is not guaranteed.*
+
+*The author may hold positions in securities discussed and will disclose any such position inline where relevant. Consider your own circumstances, and consult a qualified professional before making any financial decision.*
+
+**The only thing we'll guarantee: someone, somewhere, will say "this time is different."**

@@ -83,11 +83,18 @@ superpower is simply *getting to wait.*
 *(Educational, not individualized investment advice. Margin and leverage involve
 substantial risk, including losses exceeding your deposit.)*
 
+*Additional disclosures: Margin and leveraged products involve substantial risk, including losses that can exceed your initial investment.*
+
 ---
 
-*North de Noise is for educational and informational purposes only and is not
-individualized investment, legal, or tax advice, nor a recommendation to buy or
-sell any security or to use any strategy. Margin and leveraged products involve
-substantial risk, including losses that can exceed your initial investment. Brady
-Gallagher is not currently a registered representative or investment adviser. Past
-performance does not indicate or guarantee future results.*
+**Disclosures**
+
+*North de Noise is published for educational and informational purposes only. It is not individualized investment, tax, or legal advice, and nothing in it is a recommendation or solicitation to buy or sell any security.*
+
+*The author, Brady Gallagher, MBA, is a former financial advisor (FINRA CRD 6510444, verifiable on BrokerCheck). He is not currently registered with any broker-dealer or investment adviser and does not act as an advisor to any reader. Reading or subscribing creates no client relationship.*
+
+*Past performance is historical and does not guarantee future results. All investing involves risk, including the loss of principal. Opinions are the author's own as of the publication date and may change without notice. Data comes from sources believed reliable, but its accuracy is not guaranteed.*
+
+*The author may hold positions in securities discussed and will disclose any such position inline where relevant. Consider your own circumstances, and consult a qualified professional before making any financial decision.*
+
+**The only thing we'll guarantee: someone, somewhere, will say "this time is different."**

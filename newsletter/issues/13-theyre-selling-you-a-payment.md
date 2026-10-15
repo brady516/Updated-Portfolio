@@ -13,20 +13,21 @@ trade-in, price, down payment, and monthly payment, all in play at once. It look
 like a worksheet. It's a magic trick. The whole design is to keep four numbers
 moving so you never stop on the only two that matter: the **price** and the **APR**.
 
-So I took out my **HP 10bII** — a calculator I knew cold from an MBA in investments —
+So I took out my **HP 10bII** — a calculator I knew cold from my MBA in finance —
 and did the rude thing: I solved for the rate they'd actually buried in the payment.
 It came out to **6.8%**. I slid it back and said — politely — "My credit doesn't
 support nearly 7%. I want you to make your return. My counter, and it's final, is
-**2.5%**." That moved the payment from **$398** to **$254** a month.
+**2.5%**." By the time the deal was done, the payment had gone from **$398** to
+**$254** a month.
 
 The rep said he'd sold cars for twenty years and had never watched someone take
 the four-square apart that cleanly. I'll take it.
 
 Here's the part that keeps me honest, though: I didn't invent that move. Years
 earlier, back when I was a food-and-beverage exec, a financial "advisor" at
-Northwestern Mutual walked me through the four-square like he was handing me the
-nuclear codes. I thought I'd been let in on something. (Now I know what that
-relationship mostly was — commission and product — but that's a different issue.)
+a big insurance company walked me through the four-square like he was handing me the
+nuclear codes. I thought I'd been let in on something. (In hindsight, that
+relationship was mostly about product, but that's a different issue.)
 
 **I thought the four-square was an edge. It was the minimum to play.**
 
@@ -57,9 +58,12 @@ fine. The payment is the wrapper. The rate and the price are the gift.
 
 ## The Number — 6.8% → 2.5% *(free)*
 
-Same car, same term, two rates. That spread was **$144 a month** — call it ~$1,700
-a year — sitting in the four-square where I wasn't supposed to look. The car didn't
-get cheaper. The *story about the car* did.
+Here's the honest math, because this newsletter checks its own stories too. On the
+same term, cutting the rate from 6.8% to 2.5% takes a $398 payment down to roughly
+**$345–$366**, depending on the loan length. The rate alone doesn't explain the full
+**$144 a month** (about $1,700 a year). The rest came out of the other squares once
+they stopped moving together. That's the trick: four numbers in motion so you can't
+tell which one is costing you. *(Illustrative: 48–84-month terms; rate-only effect.)*
 
 ## Wall Street Word Salad of the Week — Dealership Edition *(paid)*
 
@@ -92,10 +96,18 @@ agreed to play four-square.
 
 *(A negotiating and behavioral framework, not individualized financial advice.)*
 
+*Additional disclosures: Figures are from the author's own experience and are illustrative.*
+
 ---
 
-*North de Noise is for educational and informational purposes only and is not
-individualized investment, legal, or tax advice, nor a recommendation to buy or
-sell any security. Brady Gallagher is not currently a registered representative or
-investment adviser. Past performance does not indicate or guarantee future results.
-Figures are from the author's own experience and are illustrative.*
+**Disclosures**
+
+*North de Noise is published for educational and informational purposes only. It is not individualized investment, tax, or legal advice, and nothing in it is a recommendation or solicitation to buy or sell any security.*
+
+*The author, Brady Gallagher, MBA, is a former financial advisor (FINRA CRD 6510444, verifiable on BrokerCheck). He is not currently registered with any broker-dealer or investment adviser and does not act as an advisor to any reader. Reading or subscribing creates no client relationship.*
+
+*Past performance is historical and does not guarantee future results. All investing involves risk, including the loss of principal. Opinions are the author's own as of the publication date and may change without notice. Data comes from sources believed reliable, but its accuracy is not guaranteed.*
+
+*The author may hold positions in securities discussed and will disclose any such position inline where relevant. Consider your own circumstances, and consult a qualified professional before making any financial decision.*
+
+**The only thing we'll guarantee: someone, somewhere, will say "this time is different."**

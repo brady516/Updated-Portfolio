@@ -80,11 +80,18 @@ reason isn't you.
 *(Educational, not individualized investment, insurance, or tax advice. Consult a
 fee-only fiduciary.)*
 
+*Conflict disclosure: the author holds a life and health insurance license.*
+
 ---
 
-*North de Noise is for educational and informational purposes only and is not
-individualized investment, legal, tax, or insurance advice, nor a recommendation to
-buy or sell any product. Brady Gallagher is not currently a registered representative
-or investment adviser; licenses referenced are held historically. Past performance
-does not indicate or guarantee future results. Conflict disclosure: the author has
-held a life and health insurance license.*
+**Disclosures**
+
+*North de Noise is published for educational and informational purposes only. It is not individualized investment, tax, or legal advice, and nothing in it is a recommendation or solicitation to buy or sell any security.*
+
+*The author, Brady Gallagher, MBA, is a former financial advisor (FINRA CRD 6510444, verifiable on BrokerCheck). He is not currently registered with any broker-dealer or investment adviser and does not act as an advisor to any reader. Reading or subscribing creates no client relationship.*
+
+*Past performance is historical and does not guarantee future results. All investing involves risk, including the loss of principal. Opinions are the author's own as of the publication date and may change without notice. Data comes from sources believed reliable, but its accuracy is not guaranteed.*
+
+*The author may hold positions in securities discussed and will disclose any such position inline where relevant. Consider your own circumstances, and consult a qualified professional before making any financial decision.*
+
+**The only thing we'll guarantee: someone, somewhere, will say "this time is different."**
