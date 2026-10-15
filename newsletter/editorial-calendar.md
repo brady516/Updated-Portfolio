@@ -71,6 +71,79 @@ Flagships now land on #4, #8, #12, #19, #24, #28, #34, #36, #43, #46 (≈ monthl
 - Robo-advisors vs. DIY vs. human advisor — the honest comparison
 - "Get-rich-quick" autopsy series: a recurring teardown of a specific scheme type
 
+## #48–#53 (drafted)
+
+#48 She Said No Stocks; #49 Your Backlog Is My Capex; #50 Testing the Scourge of
+Sameness; #51 The Option Hiding in Your Lease; #52 Fail Conventionally; #53 The
+$25,000 Velvet Rope.
+
+**Cadence:** weekly from the drafted backlog, plus **one new heavy-research issue per
+month**. The bank below feeds the monthly slot.
+
+## Heavy-research topic bank
+
+Each idea needs three things before it gets drafted: the hook, the data to pull, and
+what would prove it wrong. **Verify current status first** on anything tied to news,
+litigation, or a rule change. Keep it general rather than specific: no named firms
+in a negative light, no identifiable people.
+
+### From daily life
+
+- **The Waiting Room Rate Sheet.** The practice charges you a fee if you're 15 minutes
+  late or don't show. When the doctor runs two hours behind, you get nothing back.
+  - *Hook:* hand the front desk your own rate sheet: $186/hr after 45 minutes,
+    plus a 40% time premium after two hours. They'd look at you like you had three
+    heads. The logic isn't flawed. Only the leverage is.
+  - *Pull:* average wait-time surveys; no-show fee policies and any payer rules on
+    charging them; overbooking as a deliberate scheduling model.
+  - *The clean comparison:* airlines overbook too, but federal rules make them pay
+    when you get bumped. Doctors overbook and pay nothing. Same yield-management
+    logic, only one side compensates.
+  - *Falsifier:* if waits mostly come from true emergencies rather than
+    overbooking, or if practices meaningfully credit patients for long delays, the
+    asymmetry is smaller than it looks.
+- **The Pooled Tip.** Tips that arrive as one lump per delivery block make it impossible
+  to see who tipped. What does that opacity do to pay and tipping behavior? It pairs
+  with the zoning-map test, and the data could be your own.
+- **The Loyalty Tax.** Existing-customer rate hikes on storage, insurance renewals,
+  savings accounts, and subscriptions, while new customers get the low price.
+  - *Pull:* public filings that discuss raising rates on existing customers; state
+    restrictions on insurance "price optimization."
+  - *Falsifier:* if renewal increases track cost inflation rather than outrunning it.
+- **The Real Cost per Mile.** The IRS mileage rate versus the actual cost of gig
+  driving (depreciation, tires, insurance). Who comes out ahead on the gap?
+- **Who Profits from Your Job Search?** Paid job boards, premium subscriptions, and
+  screening software all make money on applicants, while the ghost-job data shows
+  how many postings were never real.
+
+### General absurdities
+
+- **Your Rewards Card, Paid for by Cash Buyers.** Swipe fees get built into prices,
+  so cash payers subsidize points for premium-card holders (Fed research exists on
+  this transfer).
+- **Cash Sweep Programs.** Brokerages pay near zero on idle client cash and earn
+  market rates on it. There's been litigation; check its current status.
+- **Private Markets in Your 401(k).** The push to put private equity and private
+  credit in retirement plans means higher fees, less liquidity, and harder
+  valuations. Who asked for it? Check where the rules stand now.
+- **The Free Bet.** The customer-acquisition math behind sportsbook promos and the
+  hold rate on parlays: #53's house edge, on your phone.
+- **Free Tax Filing.** Who lobbied which way on government-run filing, and where the
+  program stands now.
+- **Who's Holding Your Pension?** Pension-risk transfers to annuity insurers, some
+  owned by private equity. Who carries the risk if they're wrong?
+- **The Fee That Pays for Its Own Marketing.** Where the 12b-1 fee came from and why
+  it's still around.
+- **The Track Record That Disappeared.** Fund mergers and closures erase losing
+  records (survivorship bias) and make category averages look better than they were.
+- **Fee-Only vs. Fee-Based.** Two names a hyphen apart, two different conflict
+  structures.
+
+### The habit that feeds this list
+
+Keep an **absurdity log**: one line, the same day, with the date, what happened,
+and the number involved. Three lines like that are an issue.
+
 ## Recurring paid segment
 
 Every **paid** issue (split + flagship) includes the **Wall Street Word Salad of
