@@ -7,14 +7,15 @@ date: TBD
 
 # They're not selling you a car — they're selling you a payment
 
-True story. Years ago, better credit than I have today, I sat down to buy a car
+True story. Years ago, better credit than I have today, I sat down to lease a car
 and the rep slid the **four-square** across the desk — that little grid with
 trade-in, price, down payment, and monthly payment, all in play at once. It looks
 like a worksheet. It's a magic trick. The whole design is to keep four numbers
 moving so you never stop on the only two that matter: the **price** and the **APR**.
 
 So I took out my **HP 10bII** — a calculator I knew cold from my MBA in finance —
-and did the rude thing: I solved for the rate they'd actually buried in the payment,
+and did the rude thing: I solved for the money factor they'd buried in the payment and
+converted it to a rate,
 in real time, in front of the sales manager. It came out to **6.8%**. I slid it back
 and said — politely — "My credit doesn't
 support nearly 7%. I want you to make your return. My counter, and it's final, is
@@ -58,17 +59,21 @@ have infinite room to hide a high rate or a long term behind a number that "feel
 fine. The payment is the wrapper. The rate and the price are the gift.
 
 > **The Signal:** negotiate the **price** and the **APR** separately, in daylight.
+> On a lease, the same two numbers go by **cap cost** and **money factor**.
 > Treat the monthly payment as an *output* you compute yourself — never the input
 > you hand them.
 
 ## The Number — 6.8% → 2.5% *(free)*
 
-Here's the honest math, because this newsletter checks its own stories too. On the
-same term, cutting the rate from 6.8% to 2.5% takes a $398 payment down to roughly
-**$345–$366**, depending on the loan length. The rate alone doesn't explain the full
+Here's the honest math, because this newsletter checks its own stories too. This was
+a lease, and on a lease the "rate" is the **money factor** (the rate divided by 2,400).
+It only touches the rent-charge part of the payment. The depreciation part doesn't
+move. On a typical lease for a car in that price range, cutting the equivalent rate
+from 6.8% to 2.5% trims roughly **$70–$90 a month**. Real money, but not the full
 **$144 a month** (about $1,700 a year). I wasn't shown what they moved on their side to get
 the payment the rest of the way down, and I won't guess in print. That's the trick: four numbers in motion so you can't
-tell which one is costing you. *(Illustrative: 48–84-month terms; rate-only effect.)*
+tell which one is costing you. *(Illustrative: rent charge = money factor × (cap cost + residual), assuming
+cap cost plus residual of $40,000–$50,000; rate-only effect.)*
 
 ## Wall Street Word Salad of the Week — Dealership Edition *(paid)*
 
@@ -95,7 +100,7 @@ my wife. The point stands.)
 
 The lesson isn't "be smarter than a car salesman." It's: **decide which number
 actually matters before anyone — including you — picks one for you.** Walk in
-solving for total cost and APR, bring the calculator, and let the monthly payment
+solving for total cost and the rate (or money factor), bring the calculator, and let the monthly payment
 be the thing that falls out of the math. The four-square only works on people who
 agreed to play four-square.
 
