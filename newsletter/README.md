@@ -45,8 +45,8 @@ Writing weekly is only sustainable with a fixed structure. Every issue:
 
 ## Pricing
 
-- **$49 / month** or **$550 / year** (annual saves ~$38).
-- **Founding member:** limited, capped seats at **$399 / year** for launch — seeds
+- **$250 / month** or **$790 / year** (annual saves ~$2,210). **Post Founding Price - $1,250**
+- **Founding member:** limited, capped seats at **790 / year** for launch — seeds
   early revenue and rewards believers.
 - This is *premium research-service* pricing — the comparison set is an advisor's
   fee or a data-terminal seat, **not** $5 newsletters. The paid tier must read
