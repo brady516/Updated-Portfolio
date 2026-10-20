@@ -17,7 +17,7 @@ valuation-lab/
 
 - It demonstrates expertise by *doing*, and people keep using it.
 - It self-selects your buyer: people comfortable installing a Claude skill are
-  exactly the tool-forward audience most likely to pay $49/mo.
+  exactly the tool-forward audience most likely to pay for the research ($790/yr).
 - It funnels: the free Lab is a taste; the **store** DCF/Monte-Carlo/dividend
   models are the paid upgrade, and **North de Noise** is the recurring research.
 

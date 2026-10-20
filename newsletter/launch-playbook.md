@@ -17,8 +17,10 @@ before you've shown the goods.
       BrokerCheck / CRD 6510444), the standard you hold yourself to, what readers
       get. Reuse the manifesto in `issues/01-signal-not-noise.md`.
 - [ ] Set up **payments** in Substack (connect Stripe) but keep everything free
-      for now. Pre-configure the tiers: **$49/mo**, **$550/yr**, and a
-      **founding-member $399/yr** offer (you'll switch this on in Phase 2).
+      for now. Pre-configure the tiers: **$790/yr** (the real product) and
+      **$250/mo** (Substack requires a monthly price; it's set high on purpose to
+      push readers to annual). Founding-offer terms are being reset; leave it off
+      until they're confirmed.
 - [ ] **Lead magnet — built ✓:** the **Valuation Lab**, a free Claude skill that
       runs a DCF + DDM on any stock (`../lead-magnet/`). Zip the skill folder,
       host it, and deliver the download link in the free-list welcome email. See
@@ -63,8 +65,12 @@ before you've shown the goods.
 
 **Goal: convert the warm list, protect the deep work.**
 
-- [ ] Announce the **founding-member offer** ($399/yr, capped seats, time-limited).
-      Scarcity + reward-the-early-believers is what drives launch conversions.
+- [ ] Announce the **founding-member offer** (terms being reset; confirm before
+      announcing). Real scarcity + reward-the-early-believers is what drives launch
+      conversions.
+- [ ] Wherever both prices appear, own the monthly price out loud: *"Substack
+      makes me list a monthly price. It's $250, because this research compounds and
+      I'd rather you didn't. Annual is $790."*
 - [ ] From now on, **paywall the deep section** of each issue: free above the fold
       (intro + *Signal vs. Noise* + *The Number*), paid below (*The Read* +
       models + Q&A).
@@ -84,7 +90,7 @@ before you've shown the goods.
 
 - [ ] **Weekly issue**, same format, every week.
 - [ ] **Monthly flagship** — a longer paid research report (deeper than a normal
-      issue). This is the anchor that justifies $49/mo.
+      issue). This is the anchor that justifies $790/yr.
 - [ ] **Quarterly:** review churn, open rate, and free→paid conversion; survey
       paid subscribers on what they want more of.
 - [ ] Cross-sell the [store](../store.html) models and the
@@ -175,7 +181,7 @@ finance brand must draw a harder line than a generic SaaS founder.
 
 Finn's hardest-won lesson: broke consumers killed his college tool at a $1.99
 paywall; businesses paid $500–$5,000/mo for the same *type* of work. North de
-Noise currently points mostly at retail investors ($49/mo). The higher-margin,
+Noise currently points mostly at individual investors ($790/yr). The higher-margin,
 more-defensible revenue is **B2B**: RIAs and financial advisors who'd pay for
 white-label models, planners who want the Monte-Carlo engine, research desks and
 fintechs that want the analysis. The **Business-Plan/GTM kit ($2,500)** and the
@@ -185,8 +191,10 @@ dollar. Worth a dedicated waitlist track and some direct outreach.
 
 ## Benchmarks to sanity-check yourself
 
-- Free→paid conversion of **2–5%** is healthy for a premium newsletter.
-- At $550/yr, **even 100 paid subscribers ≈ $55k/yr.** The math works at small
+- Free→paid conversion of **2–5%** is the common rule of thumb, but plan lower at
+  this price: a comparable ~$500 founding launch converted about **0.44%** of its
+  list. Treat the first 10 paid subscribers as the real measurement.
+- At $790/yr, **even 100 paid subscribers ≈ $79k/yr.** The math works at small
   scale *because* the price is premium — which is exactly why the content has to
   earn it.
 

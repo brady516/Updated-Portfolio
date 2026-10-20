@@ -45,9 +45,13 @@ Writing weekly is only sustainable with a fixed structure. Every issue:
 
 ## Pricing
 
-- **$49 / month** or **$550 / year** (annual saves ~$38).
-- **Founding member:** limited, capped seats at **$399 / year** for launch — seeds
-  early revenue and rewards believers.
+- **$790 / year** — the real product.
+- **$250 / month** — Substack requires a monthly price; it's set high on purpose to
+  push readers to annual. Own it out loud wherever both prices appear: *"Substack
+  makes me list a monthly price. It's $250, because this research compounds and I'd
+  rather you didn't. Annual is $790."*
+- **Founding member:** terms being reset (the old $399/yr offer is retired). Confirm
+  before any founding copy goes out.
 - This is *premium research-service* pricing — the comparison set is an advisor's
   fee or a data-terminal seat, **not** $5 newsletters. The paid tier must read
   like a research desk, and the page copy says so explicitly.

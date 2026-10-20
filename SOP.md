@@ -10,7 +10,7 @@ How to run the whole machine end to end. Internal doc; clarity over cleverness.
 | Piece | Home | Notes |
 |---|---|---|
 | Public site | **Cloudflare Pages → northdenoise.com** | Static; deploys the `site/` folder from a **private** GitHub repo on push. Only `site/` is published. |
-| Newsletter | **Substack → read.northdenoise.com** | Free + paid ($49/mo · $550/yr · founding $399/yr). |
+| Newsletter | **Substack → read.northdenoise.com** | Free + paid ($790/yr · $250/mo; founding terms being reset). |
 | Payments | **Stripe** | Payment Links for store + course. Never self-host payments. |
 | Store delivery | Stripe receipt / `thank-you.html` redirect | Or a delivery service (SendOwl/Lemon Squeezy) for expiring links. |
 | Lead magnet | **Valuation Lab** Claude skill (`lead-magnet/valuation-lab/`) | Delivered via the free-list welcome email. |
@@ -26,7 +26,7 @@ Full hosting/DNS detail: `HOSTING.md`.
 
 - [ ] **DNS:** apex `northdenoise.com` → GitHub Pages A records; `read` CNAME → Substack. (`HOSTING.md`)
 - [ ] **GitHub Pages:** Settings → Pages → deploy from default branch, root. Enforce HTTPS.
-- [ ] **Substack:** create publication, set custom domain `read.northdenoise.com`, create the three tiers + founding offer, paste the welcome automation from `newsletter/welcome-email.md`.
+- [ ] **Substack:** create publication, set custom domain `read.northdenoise.com`, create the annual ($790) and monthly ($250) tiers (no founding offer until terms are confirmed), paste the welcome automation from `newsletter/welcome-email.md`.
 - [ ] **Stripe:** create a Payment Link per store product + the course; set each link's post-purchase redirect to `thank-you.html` (or attach the file).
 - [ ] **Calendly:** create the intro-call event.
 - [ ] **Lead magnet:** zip `lead-magnet/valuation-lab/`, host it, put the link in the welcome email (`__DOWNLOAD_URL__`).

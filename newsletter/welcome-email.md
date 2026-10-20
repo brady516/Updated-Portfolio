@@ -71,11 +71,14 @@ the monthly **flagship research report**, subscriber Q&A, the full archive — a
 favorite: the **Wall Street Word Salad of the Week**, where I take one real piece of
 corporate jargon and translate it into plain English (with what it's hiding).
 
-It's **$49/mo or $550/yr** — priced like the research service it is, not a $5
-newsletter with a rocket in the subject line. Right now there's a limited
-**founding-member** rate at **$399/yr** while seats last.
+It's **$790/yr**, priced like the research service it is, not a $5 newsletter with
+a rocket in the subject line. For comparison: a 1% advisory fee on a $100,000
+account is $1,000 a year.
 
-**[Become a founding member →](https://read.northdenoise.com/subscribe)**
+Substack makes me list a monthly price. It's $250, because this research compounds
+and I'd rather you didn't. Annual is $790.
+
+**[Go annual →](https://read.northdenoise.com/subscribe)**
 
 No pressure. Read the free issues first, verify the work, then decide. That's the
 right order.

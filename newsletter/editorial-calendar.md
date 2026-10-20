@@ -31,7 +31,7 @@ Manager Gets Paid First," the expense-ratio/closet-indexing exposé), and **#15*
 the Cohort's philosophical spine). Origin-story pieces that prove the thesis with
 real scars. Drop in dates, run [Salad Scout](../salad-scout/) for fresh Word Salad
 quotes, and publish. Issues 1–4 are formatted free for the launch ramp; the split
-paywall + founding offer begin at week 5 (see `launch-playbook.md`).
+paywall begins at week 5 (founding-offer terms being reset) (see `launch-playbook.md`).
 
 Plus six more drafted (**#16–#21**): #16 Liquidity, #17 Options Greeks without the
 jargon, #18 Tax drag, #19 Stock-picking vs. indexing (flagship), #20 Crypto: protocol
@@ -159,4 +159,4 @@ mine each theme.
 
 - **Monthly flagship** lands on issues 4, 8, 12 (then every 4th).
 - Issues 1–4 publish **free** during the launch ramp; the **split** model and the
-  founding-member paywall begin at week 5 (see `launch-playbook.md`).
+  paywall begin at week 5 (founding-offer terms being reset) (see `launch-playbook.md`).

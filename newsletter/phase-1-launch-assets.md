@@ -19,8 +19,9 @@ everything below them (the copy) is already written in this file.
 - [ ] **About page** — paste section 5 below. Link FINRA BrokerCheck (CRD
       6510444) as the proof.
 - [ ] **Connect Stripe** in Substack settings but keep everything **free** for
-      now. Pre-set the tiers (**$49/mo · $550/yr · founding $399/yr**) so Phase 2
-      is one switch, not a setup.
+      now. Pre-set the tiers (**$790/yr annual · $250/mo monthly**) so Phase 2
+      is one switch, not a setup. Founding-offer terms are being reset; don't
+      configure one until they're confirmed.
 - [ ] **Host the lead magnet** — zip `../lead-magnet/valuation-lab/`, drop it
       somewhere with a stable link (Substack file, Google Drive, your NAS share),
       put that link in the welcome email (section 4).
@@ -184,8 +185,8 @@ setup here: **[__LEAD_MAGNET_URL__]**
 **What to expect:** one issue a week. Every one has a *Signal vs. Noise* teardown
 (we take a common piece of bad finance advice apart and rebuild it with the math
 the original left out), a number that actually matters, and a practitioner's read.
-Free for now — the deep research goes behind a paywall later, and you'll get the
-founding-member offer first.
+Free for now. The deep research goes behind a paywall later, and you'll hear about
+it here first.
 
 One favor: hit reply and tell me your single biggest finance frustration. I read
 every one, and it decides which issues I write next.
