@@ -75,7 +75,7 @@ That's the structural point. Even with price optimization banned, a market where
 
 Most premium changes are about risk, not loyalty. The last few years brought real increases in repair costs, parts, and claims severity, and those hit every customer. Tenure discounts are real at many carriers. Switching has real costs too: you can lose accident forgiveness, multi-policy bundles, or a claims relationship that works. And price isn't the only thing you're buying.
 
-I'll put my own decision on the record here. When I left, my former insurer's corrected quote came in **[≈$2,000 a year — confirm]** below what I now pay. I left anyway, on purpose, because I've lived through a claim with both companies and the service difference was worth the money to me. Loyalty to price is usually a loss. Loyalty to service, chosen deliberately and re-checked, is a decision.
+I'll put my own decision on the record here. When I left, my former insurer's corrected quote came in **about $2,000 a year** below what I now pay. I left anyway, on purpose, because I've lived through a claim with both companies and the service difference was worth the money to me. Loyalty to price is usually a loss. Loyalty to service, chosen deliberately and re-checked, is a decision.
 
 ### What would prove me wrong
 
