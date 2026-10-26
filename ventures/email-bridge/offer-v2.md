@@ -46,14 +46,17 @@ nothing to change *from*. So the mechanism that Google is killing was never load
 for this customer — which means the deprecation doesn't shrink this business, it **shifts
 the optimal channel toward new filings.**
 
-### The flow-vs-stock property (why this is durable)
+### Flow vs stock — and why you need both
 
-The freemail list in `leadfinder.py` is a **stock** — finite, and it depletes as you work
-it. New filings are a **flow** — ~445 every month, replenishing forever. A flow-based lead
-source means the business doesn't decay as you sell into it. That is the structural
-difference between a campaign and an income line.
+The freemail list in `leadfinder.py` is a **stock**: finite, and it depletes as you work it.
+New filings are a **flow** — replenishing every month, never exhausted. A flow-based source
+means the business doesn't decay as you sell into it.
 
----
+**But the flow alone is too thin to live on in a single niche** (§9: ~5–6 filings/month for
+one trade in one metro). The stock is the volume backstop — one metro holds *thousands* of
+existing trades businesses already on freemail, available now. Work both: the flow for
+timing and a warm opener, the stock for volume. The flow's advantage is the *moment*, not
+the size.
 
 ## 3. The wedge: lead with the domain, not the email
 
@@ -189,70 +192,101 @@ The real moat now is narrower and more defensible:
 The moat is the **channel and the hand-holding**, not the technical work. The technical
 work is commodity and getting more so. Price and position accordingly.
 
+> **But read §9 before banking on this moat.** It only exists on the local path, and the
+> local path caps volume at roughly 5–10 installs/month. The moat and the volume are a
+> trade-off, not a package.
+
 ---
 
-## 9. TAM: the number is not the finding — the required share is
+## 9. TAM: the required-share argument is wrong — use reachable flow
 
-**Official figures (Census Business Formation Statistics, September 2026, seasonally
-adjusted):**
+**An earlier version of this section argued that one operator needs only 0.027% of the
+national high-propensity flow, and concluded the business therefore cannot fail for lack
+of demand. That argument is invalid and has been removed.** It is the "we only need 1% of
+a huge market" fallacy: **required share is not attainable share.** Market share is not a
+dial. The 147k monthly filings are scattered across 50 states and every industry with no
+common channel, so 0.027% of a diffuse national market is not easier to reach than 10% of
+a concentrated local one. The only denominator that means anything is **how many qualified
+prospects you can put this specific offer in front of in a month.**
+
+### Official figures (Census BFS, September 2026, seasonally adjusted)
 
 | Series | Monthly |
 |---|---|
 | Total business applications | **534,947** |
-| **High-propensity** applications (likely to become employers) | **147,331** |
+| High-propensity (likely to become employers) | **147,331** (~28%) |
+| **Construction (NAICS 23)** | **48,078** (~9% of total) |
 
-Two things worth knowing about this data. First, **Census publishes the haircut for you** —
-"high-propensity" is their own filter for applications that look like real businesses
-rather than shells and dormant filings. It runs ~28% of total, which is almost exactly the
-25–40% estimate this doc previously guessed at. Use the official series, not a guess.
-Second, it is available **weekly, by state and by region** via FRED, so the channel can be
-targeted and measured rather than estimated.
+Useful property: Census publishes the shell/dormant haircut for you via high-propensity,
+with weekly state and regional detail on FRED. So reachable flow can be **measured, not
+estimated.**
 
-### The actual finding
+### Reachable flow, worked downward
 
-Don't underwrite on TAM. Underwrite on **required market share**, which is where this gets
-interesting:
+Construction applications run ~**0.141 per 1,000 people per month** nationally. Scaling by
+population:
 
-Delivery is ~0.5 hrs of provisioning (`rates.md`) plus the new phone-setup call and the
-sales conversation — call it **1–1.5 hrs all-in per install**. One person realistically
-closes and delivers **30–50/month** before anything breaks.
-
-| | Figure |
+| Scope | Construction filings/month |
 |---|---|
-| Installs needed/month (one operator, full) | ~40 |
-| As a share of high-propensity applications | **0.027%** |
-| As a share of total applications | **0.0075%** |
+| National | ~48,000 |
+| Ohio (~11.8M) | **~1,660** |
+| Toledo MSA (~640k) | **~90** |
+| Toledo MSA, **one trade** (~6% of construction) | **~5–6** |
 
-> **You need roughly 3 in 10,000 of the qualified monthly flow.**
+Now put the funnel against it. Cold contact-to-close on a new filing is realistically
+**2–5%** — call it 3%. Forty installs/month therefore needs **~1,300 qualified contacts
+per month.**
 
-### What that implies (this is the risk conclusion)
+| Channel | Monthly flow | Covers 40 installs? |
+|---|---|---|
+| One trade, one metro | ~5–6 | **No — off by 200x** |
+| All construction, one metro | ~90 | No — off by ~15x |
+| All sectors, one metro | ~1,020 | Marginally |
+| **All construction, statewide** | **~1,660** | **Yes** |
 
-**This business cannot die of insufficient demand or of competition.** At 0.03% required
-share, every self-serve SaaS competitor in §8 could succeed wildly and it would not
-measurably affect your ability to find 40 customers. Market-size variance is irrelevant
-here. Three consequences follow, and they should drive the next decisions:
+### The real finding, which inverts an earlier conclusion
 
-1. **You are supply-constrained, not demand-constrained.** The binding limit is your hours,
-   specifically the phone call in delivery step 5. That inverts the engineering priority:
-   the highest-leverage build is **making that call shorter or unnecessary** — a tight
-   cheat sheet, a guided setup page, `provision.py` doing more — *not* a provisioning
-   platform. Capacity is the constraint; automate the constraint.
-2. **Narrow hard. It costs you nothing.** When you need 0.03%, picking one trade in one
-   metro sacrifices no reachable market and raises conversion, referral density and word
-   of mouth. Breadth has negative expected value at this share.
-3. **Price up, not down.** Scarce capacity against effectively unlimited demand says raise
-   price until capacity clears. This is the quantitative case for the pricing in
-   `offer-post-gmail.md` — and the case for never competing with Fiverr on price. Racing
-   a commodity provider for a market you need 0.03% of is strictly irrational.
+**"Narrow hard — it costs you nothing" was exactly backwards.** One trade in one metro
+yields ~5 prospects/month. Narrowing is the most expensive decision available, not a free
+one. To support one full-time operator you need roughly **one sector statewide, or one
+metro across all sectors.**
 
-**So the risk is entirely in execution:** channel repeatability (can you reliably source
-~40 qualified conversations/month) and delivery throughput. Those are the only two numbers
-worth measuring. TAM's only job was to prove the business can't starve — it did that, and
-is now a distraction.
+And that creates the actual strategic fork, because **the moat in §8 and the volume needed
+here are in direct conflict:**
 
-*Figures are from Census BFS releases via third-party summaries, not pulled from the
-Census tables directly. Census revised the high-propensity definition with the Jan 2026
-release, so don't compare against pre-2026 numbers without checking the current series.*
+| | **Local & narrow** | **Wide (statewide, one vertical)** |
+|---|---|---|
+| Installs/month | ~5–10 | ~40 |
+| Revenue at v2 pricing | ~$2.5–5k/mo | ~$20k/mo |
+| Moat | intact — local, referral-dense, the call | **gone** — no local credibility |
+| Competes with self-serve SaaS | barely | **directly, on their turf** |
+| Marketing | word of mouth, partners | real paid acquisition with real CAC |
+
+These are two different businesses. The local one is a solid side income with a defensible
+moat. The wide one is a real company that has to win on marketing against funded self-serve
+competitors. **Pick deliberately** — this is the decision, not the TAM.
+
+### The gap this exposes in the pricing doc
+
+`offer-post-gmail.md` models contribution with **CAC set to zero.** That is fine for
+referral and word-of-mouth volume; it is not fine for the wide path. At $499 with a $150
+blended CAC the contribution math is a materially different business, and CAC becomes the
+variable that decides viability. **Measure cost per qualified conversation before
+committing to the wide path.**
+
+### What to measure instead of TAM
+
+1. **Reachable qualified flow/month** in the exact geography and vertical chosen.
+2. **Contact-to-close rate**, by channel — the 3% above is a placeholder.
+3. **Cost per qualified conversation.**
+4. **Hours per install**, which sets the ceiling.
+
+Those four decide this business. The national figure only ever answered "could this be big,"
+which was never the binding question.
+
+*Sector and per-capita figures are calculated from Census BFS releases via third-party
+summaries, not pulled from Census tables; the construction share is my arithmetic, not a
+figure Census publishes. Census revised the high-propensity definition in Jan 2026.*
 
 ## 10. What this changes elsewhere in the folder
 
