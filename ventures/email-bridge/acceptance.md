@@ -300,19 +300,48 @@ expected cost is ~14 minutes.
 - **$5/mo does not fund quarterly verification.** Twelve minutes per cycle, all-in,
   including every customer who needs corrective work. Either drop to **semi-annual** at
   that price, or don't sell it.
-- **$10/mo funds it only if the base check is scripted** — DNS, DKIM, domain expiry and
-  form destination are machine-checkable; write that once. The hands-on part is the device
-  test, and it is the expensive part.
+- **$10/mo funds it only if the base check is scripted** — `verify.py` does that half:
+  registrar expiry, MX, SPF (including recursive lookup-limit counting), DKIM and DMARC,
+  each returning PASS / FAIL / **UNKNOWN** with timestamp, observed value, expected value,
+  raw evidence and its own stated limitation. **UNKNOWN is a first-class result**: an
+  unreachable registry or an unconfigured DKIM selector never silently becomes a pass.
+  Form destination is a separate adapter and has no PASS branch at all — a displayed
+  address cannot establish where submissions arrive. The hands-on part is the device test,
+  and it is the expensive part.
 - **Corrections need a bound.** "We fix what the register got wrong, free" is a cure right
   on *your* error. Re-fixing drift he caused — re-added his Gmail, new phone — is a
   different thing. Allow one free, then bill it.
 - **A Mini-tier host at $90/yr breaks both columns.** The plan only exists on the cheap
   per-account hosts.
 - **The real home for re-verification is the term price, not a monthly line.**
-  `offer-post-gmail.md` §5 already shows $599/24mo dominating every monthly variant. Eight
-  quarterly cycles at ~14 minutes is ~1.9 hours ≈ $57 against ~$543 contribution. No
-  per-charge fee drag, no involuntary churn, no failed-payment chasing. **Bundle it into
-  the term and stop selling a $5 line item.**
+  `offer-post-gmail.md` §5 shows $599/24mo dominating every monthly variant, and eight
+  quarterly cycles at ~14 expected minutes is ~1.9 hours ≈ $57 of labour. No per-charge fee
+  drag, no involuntary churn, no failed-payment chasing. **Bundle it into the term and stop
+  selling a $5 line item.** But note that the $543 figure in that table is **gross margin
+  after fees and mailbox COGS, not profit** — install labour, domain renewals, support and
+  these verification cycles all come out of it. The full stack is worked in
+  `offer-post-gmail.md` §5 and lands nearer **$350–370**.
+
+### What `verify.py` does not do
+
+**It collects observations. It does not certify that mail works.** Each limitation is
+printed with its row, and they are not boilerplate:
+
+| Check | What a PASS actually means | What it does not mean |
+|---|---|---|
+| `domain_expiry` | The registry published a future expiry date | Nothing, if the registry is unreachable or redacted — that is UNKNOWN, resolve it in the registrar account |
+| `mx` | The published hosts match the profile | **Not that a message was delivered.** Only a real received message proves that |
+| `spf` | One valid record, within the RFC 7208 ten-lookup limit, containing the expected includes | Not that every sender is authorized, and nothing about forwarded mail, where alignment breaks by design |
+| `dkim` | The configured selectors publish a non-empty key | Not that outgoing mail is signed or that signatures verify — that needs `Authentication-Results` on a real message |
+| `dmarc` | A valid record matching the configured policy | **`p=none` is monitoring, not enforcement.** The report says `enforcing: false` even on a PASS |
+| `form_destination` | *There is no PASS.* | A visible freemail address is a FAIL; everything else is UNKNOWN until a controlled submission with a unique token is confirmed in the destination mailbox |
+
+Exit codes make UNKNOWN loud: `0` all pass, `1` any fail, **`2` unknown with no fail**. A
+cycle that exits 2 is not a clean cycle.
+
+`--cross-check` re-runs the DNS checks against a second independent resolver and downgrades
+any disagreement to UNKNOWN, because a split answer usually means propagation is still in
+flight and the observation isn't yet stable enough to record.
 
 ---
 
@@ -373,9 +402,17 @@ cost. It is also, not coincidentally, the moat.
       Gmail account can be removed from the app on Android at all. It eliminates the
       failure mode structurally; it may eliminate something he needs. Only then ask
       whether it should be the default rather than a fallback.
-- [ ] **Script the machine-checkable half of the quarterly check** (domain expiry, MX, SPF,
-      DKIM, DMARC, form destination). Part 5's economics only work if the base cycle is
-      minutes. `provision.py check` is the obvious place.
+- [x] **Machine-checkable half scripted** — `verify.py`, with `test_verify.py` (31 fixture
+      tests, no network) pinning the decisions that matter: transport failure is UNKNOWN,
+      an unconfigured DKIM selector is UNKNOWN, `p=none` is not enforcement, long TXT
+      records concatenate, and the form adapter has no PASS branch.
+- [ ] **Time a real cycle with `verify.py` in the loop** and record it in Part 7. Part 5's
+      economics are a forecast until there are measured minutes next to them. This is the
+      measurement that replaces the estimate.
+- [ ] **`verify.py` has not been run against live DNS.** The build container's egress
+      policy blocks `cloudflare-dns.com` and `rdap.org`, so every live check there returns
+      UNKNOWN — correct behaviour, but not a test. Run it from an unrestricted machine
+      against a domain you already own before trusting a report.
 - [ ] **Start the Part 7 log at install one.** First-pass acceptance rate is the decision
       input for everything downstream — turnaround, price, who can be trained to do this.
 - [ ] Turn Part 3 into a fillable one-pager with the business's name on it — the version

@@ -423,7 +423,15 @@ figure Census publishes. Census revised the high-propensity definition in Jan 20
 - `phone-close.md` — fold in §7.
 - `faq.md` — needs the "do I need another app," "what if I close the business," and
   "why not Workspace" answers.
-- `provision.py` — needs the mailbox-host path; keep it host-agnostic.
+- `provision.py` — needs the mailbox-host path; keep it host-agnostic. Note it reads the
+  **control plane** (what Cloudflare believes it configured); `verify.py` reads the **data
+  plane** (what a sending mail server actually sees). Keep them separate — only the data
+  plane is evidence.
+- **`verify.py` / `test_verify.py` — new.** Deterministic evidence collection for the
+  quarterly re-verify: registrar expiry, MX, SPF with recursive lookup counting, DKIM,
+  DMARC, each PASS / FAIL / **UNKNOWN** with observed, expected, evidence and limitation.
+  Form destination is a separate adapter with no PASS branch. `verify-profile.example.json`
+  is the per-customer expected-value file.
 - `rates.md` — replace the Tier 1 row; **delete the $199/seat crew rate** (it prices per
   seat against a per-account cost).
 

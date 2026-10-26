@@ -137,7 +137,7 @@ since. That bounds the tail instead of leaving it open and uncompensated.
 
 24-month contribution per solo customer. COGS $38 (Migadu Micro × 2yr), Stripe 2.9% + $0.30.
 
-| Structure | Collected | Stripe | COGS | **Contribution** | Churn exposure |
+| Structure | Collected | Stripe | COGS | **After fees + COGS** | Churn exposure |
 |---|---|---|---|---|---|
 | $300 + $5/mo | $420 | $19.68 | $38 | **$362** | 24 months of it |
 | $300 + $8/mo | $492 | $21.77 | $38 | **$432** | 24 months of it |
@@ -157,6 +157,43 @@ shows:
   24, the $300+$10/mo option drops to ~$385 contribution. Involuntary churn alone (expired
   cards) is significant at $9/mo, and chasing a failed $9 payment costs more than the
   payment.
+
+### That column is gross margin, not profit
+
+**The $543 is revenue less payment fees and mailbox COGS. Nothing else has been taken out
+of it yet.** Read as profit it is wrong by nearly $200. The full stack, per solo customer
+over the 24-month term, labour at $30/hr loaded:
+
+| Line | Amount | Note |
+|---|---|---|
+| Collected | **$599.00** | one charge, up front |
+| Stripe (2.9% + $0.30) | −$17.67 | 2.9% effective — the whole point of one charge |
+| Mailbox host, Migadu Micro × 2yr | −$38.00 | isolated per-customer account (§4) |
+| Domain, 2 renewals | −$24.00 | **decide who pays this** — if the customer does, add it back |
+| **Gross margin before labour** | **$519.33** | this is the number the table above reports |
+| Install labour, ~2.65 hr | −$79.50 | provisioning 0.3, records 0.3, surface sweep 1.0, setup call 0.75, admin 0.3 |
+| 8 verification cycles, ~1.9 hr | −$56.00 | ~14 expected min/cycle with `verify.py` scripted (`acceptance.md` §5) |
+| Ad-hoc support, ~0.5 hr | −$15.00 | |
+| **Operating contribution** | **≈$368.83** | **5.0 hours of touch time → ≈$74/hr effective** |
+| Failed-install allowance @ 10% | −~$18/customer | 10 attempts, 9 collect, all 10 cost install labour and a provisioned mailbox → **≈$351** |
+| CAC | **−$0 modelled** | **still unmodelled, and still wrong.** At $50 CAC ≈ $300; at $150 ≈ $200 |
+
+**Three things this reframes:**
+
+- **$74/hr effective, not $428/hr.** `rates.md` quotes ~$428/hr on a $2,997 tier against
+  ~7 hours. This offer is a different animal: low ticket, fixed hours, thin per-unit
+  margin, and it only works on volume or on crews where one call covers several mailboxes.
+- **Labour is the dominant cost, not COGS.** Arguing about a $19 vs $38 mailbox while an
+  install takes 2.65 hours is optimising the wrong line by a factor of four. The hours are
+  where the money is, and the surface sweep plus the setup call are most of them.
+- **The failure allowance is load-bearing and unmeasured.** 10% is a guess. `acceptance.md`
+  Part 7 measures it. If first-pass acceptance is poor enough to push installs to Tier 3
+  or Tier 4, install labour rises *and* the refund rate rises *and* Workspace adds
+  $7/seat/mo — all three move against you at once. **That correlation is the real risk in
+  this model, not any single line above.**
+
+Every labour figure here is an estimate. They stay estimates until Part 7 has real minutes
+in it — which is the argument for running three installs before printing a price card.
 
 ### Recommended rate card
 

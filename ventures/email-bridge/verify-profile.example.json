@@ -1,0 +1,15 @@
+{
+  "_comment": "Expected values for one customer. Copy per customer. Any key you omit yields UNKNOWN for that check, never PASS — that is deliberate.",
+
+  "mx": ["route1.mx.cloudflare.net", "route2.mx.cloudflare.net", "route3.mx.cloudflare.net"],
+
+  "spf_includes": ["_spf.mx.cloudflare.net", "spf.migadu.com"],
+
+  "_dkim_note": "Selectors come from the mailbox host's DKIM setup page. Without them DKIM cannot be checked at all, and the report will say so rather than pass.",
+  "dkim_selectors": ["key1", "key2"],
+
+  "_dmarc_note": "Record what you actually configured. p=none is monitoring, not enforcement; if you set none, expect none, and know the check is confirming a monitor and not protection.",
+  "dmarc_policy": "none",
+
+  "form_url": "https://mikesdrywall.com/contact"
+}
