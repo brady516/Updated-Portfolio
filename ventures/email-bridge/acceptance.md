@@ -57,17 +57,53 @@ is on** — it is a support and re-verification fact.
 | Tier | Configuration | Cost of the change | Trade-off |
 |---|---|---|---|
 | **1** | Gmail app, pro mailbox added over IMAP, pro set as default | none — zero behaviour change | Best case. Only valid if **every** flow in Part 0 passes. |
-| **2** | Gmail app, **pro mailbox only**; personal Gmail removed from the app and forwarded in | small — he opens a browser for personal mail | Ambiguity eliminated structurally: one account cannot default wrong. Often the right answer. |
+| **2** | Gmail app, **pro mailbox only**; personal Gmail removed from the app and forwarded in | small — he opens a browser for personal mail | Ambiguity eliminated structurally: one account cannot default wrong. **Introduces its own failure modes — qualify against Part 0b before offering it, let alone defaulting to it.** |
 | **3** | Apple Mail or Outlook, per-account default sender | one app change | Default sender is explicitly configurable. Real behaviour change; expect friction. |
 | **4** | Google Workspace, native Gmail account | **$7/seat/mo, paid by the customer** | No IMAP ambiguity at all. **This is the escape hatch, and it destroys the per-account cost advantage** (`offer-post-gmail.md` §2). Price the job accordingly, or decline it. |
 
-**Tier 2 deserves more credit than it looks like.** The cheapest way to guarantee a default
-is to remove the alternative. Most of these customers check personal mail on a browser
-anyway.
+**Tier 2 deserves more credit than it looks like** — and more scrutiny. The cheapest way to
+guarantee a default is to remove the alternative. But **eliminating the wrong choice is
+only a solution if you haven't eliminated something he needs.** It trades one failure mode
+for a different one, and the new one is harder to see because it shows up in his personal
+life, not his business. Part 0b qualifies it.
 
 **Tier 4 is the hedge, and it is not free.** If Part 0 forces most customers to Tier 4, the
 structural margin story in `offer-post-gmail.md` is wrong and the price card has to be
 rebuilt. **Find that out before you sell, not after forty installs.**
+
+---
+
+## Part 0b — Tier 2 qualification (run before Tier 2 is offered, never mind defaulted)
+
+Tier 2 removes the competing sender identity from the app. It also removes his personal
+inbox from the app. **Those are not the same trade, and the second one is on him, not on
+you.** Run the full Part 2 matrix *plus* these. A Tier 2 install that passes Part 2 and
+fails here has not passed.
+
+| # | Flow | Result | Notes |
+|---|---|---|---|
+| 1 | He **replies to a forwarded personal message** — to a friend, his kid's school | From shows…? | **The mirror failure.** Personal mail now leaves as the business. |
+| 2 | **Google account mail** — security alerts, 2FA codes, recovery, Play receipts — still reaches him | | These are addressed to the Gmail account he no longer opens. A delayed or spam-foldered forward means a missed security code. |
+| 3 | **Google Business Profile notifications** still reach him | | Often tied to the Google account, not the business mailbox. |
+| 4 | Forwarded mail **arrives complete and in the inbox** — not spam, not clipped | | Forwarding breaks SPF alignment; some senders spam-folder or bounce on the second hop. |
+| 5 | **Can the Gmail account even be removed from the app** on his Android without disturbing the device-level Google account | | Untested assumption. On Android the app account and the system account may not separate cleanly. |
+| 6 | Where does he **read and send personal mail** now — and will he actually go there | | If the answer is "I'll just add it back," Tier 2 is already undone. |
+| 7 | Gmail-native behaviour he relies on and loses: labels, categories, filters, search history | | |
+
+**Tier 2 acceptance additionally requires a recorded consent line:**
+
+> *"Personal mail moves out of this app and into the browser. Replies to personal messages
+> will go out from your business address unless you send them from the browser. Google
+> security codes still go to your Gmail — here's where to find them."*
+
+- [ ] Trade-off stated in these terms, out loud
+- [ ] Customer accepted it: ☐ yes ☐ no → if no, go to Tier 3
+- [ ] Recorded, with date
+
+**The reason this matters commercially, not just ethically:** a customer who re-adds his
+Gmail to the app in week two silently reverts to the exact failure the offer exists to
+prevent, and you will not find out until the quarterly re-verify. **Tier 2's control is
+only as durable as his agreement with it.**
 
 ---
 
@@ -197,6 +233,25 @@ fast, and it keeps the relationship. The default-sender failure is the only
 **money-back** trigger, because it is the one thing that means the product didn't work at
 all.
 
+### The promise and the service cadence must agree
+
+**"Nobody sees @gmail.com from you again" implies continuous compliance. Quarterly checks
+are not continuous compliance.** If the promise and the cadence disagree, the gap is a
+future argument you will lose.
+
+Split it by what can actually be watched:
+
+| What | Can it be monitored continuously? | What you may claim |
+|---|---|---|
+| Domain expiry, MX, SPF, DKIM, DMARC | **Yes** — machine-pollable, cheap | Continuous. Alert on break. |
+| Website form destination, Business Profile value | **Partly** — scriptable fetch, needs care | Periodic, on the stated cadence |
+| **Default sender on his phone** | **No.** Requires his device | **Point-in-time: verified at install, re-verified on the cadence** |
+
+So the defensible wording is: **verified at install, re-verified every quarter, monitored
+continuously on the records; between checks the configuration is yours to leave alone.**
+Say it that way and the promise survives contact with reality. Claim continuous on the
+one thing you cannot see and it doesn't.
+
 ---
 
 ## Part 5 — Re-verification (and why it is the recurring revenue)
@@ -218,8 +273,46 @@ call about.**
 - [ ] Confirm DKIM still signing and the domain hasn't lapsed.
 - [ ] Re-issue the register with dates.
 
-That is a concrete, inspectable thing arriving on a schedule. It is worth $5–10/mo in a way
-that standby support is not.
+That is a concrete, inspectable thing arriving on a schedule, in a way standby support is
+not. **But it has to clear its own cost, and at these prices the room is thin.**
+
+### What a verification cycle can cost
+
+Per customer per year, against `offer-post-gmail.md` COGS. Stripe is 2.9% + $0.30, which
+on small monthly charges is punitive.
+
+| | $5/mo | $10/mo |
+|---|---|---|
+| Gross | $60.00 | $120.00 |
+| Stripe (12 charges) | −$5.34 (**8.9%**) | −$7.08 (5.9%) |
+| Mailbox host (Migadu Micro) | −$19.00 | −$19.00 |
+| Domain renewal | −$12.00 | −$12.00 |
+| **Left for labour, 4 cycles** | **$23.66** | **$81.92** |
+| **Per cycle** | **$5.92** | **$20.48** |
+| At $30/hr loaded | **≈12 min** | **≈41 min** |
+
+Expected labour per cycle is `base check + (correction rate × correction cost)`. A scripted
+base check is maybe 8 minutes. At a 25% correction rate and 25 minutes per correction,
+expected cost is ~14 minutes.
+
+**Conclusions:**
+
+- **$5/mo does not fund quarterly verification.** Twelve minutes per cycle, all-in,
+  including every customer who needs corrective work. Either drop to **semi-annual** at
+  that price, or don't sell it.
+- **$10/mo funds it only if the base check is scripted** — DNS, DKIM, domain expiry and
+  form destination are machine-checkable; write that once. The hands-on part is the device
+  test, and it is the expensive part.
+- **Corrections need a bound.** "We fix what the register got wrong, free" is a cure right
+  on *your* error. Re-fixing drift he caused — re-added his Gmail, new phone — is a
+  different thing. Allow one free, then bill it.
+- **A Mini-tier host at $90/yr breaks both columns.** The plan only exists on the cheap
+  per-account hosts.
+- **The real home for re-verification is the term price, not a monthly line.**
+  `offer-post-gmail.md` §5 already shows $599/24mo dominating every monthly variant. Eight
+  quarterly cycles at ~14 minutes is ~1.9 hours ≈ $57 against ~$543 contribution. No
+  per-charge fee drag, no involuntary churn, no failed-payment chasing. **Bundle it into
+  the term and stop selling a $5 line item.**
 
 ---
 
@@ -242,13 +335,48 @@ hasn't passed, there is nothing to bill for yet.
 
 ---
 
+## Part 7 — Measure first-pass acceptance before scaling
+
+One log, kept from the first real install. **This is the number that decides whether this
+is a repeatable service or a clever install that needs a specialist every time.**
+
+| Install | Date | Platform | Tier reached | First-pass? | Flows that failed | Minutes on device | Minutes total | Corrections at re-verify |
+|---|---|---|---|---|---|---|---|---|
+| | | | | | | | | |
+
+**First-pass acceptance rate** = installs passing Part 2 at **Tier 1**, first attempt,
+with no client change. Track it from install one, not install forty.
+
+What the number decides:
+
+- **High Tier 1 rate** → 48-hour turnaround holds, the call stays short, the price card in
+  `offer-post-gmail.md` stands.
+- **Mostly Tier 2/3** → every install carries a behaviour-change conversation and a consent
+  step (Part 0b). Longer calls, more friction on the close, more support later. Delivery
+  time and conversion both move, not just the technical design.
+- **Mostly Tier 4** → per-seat Workspace. **The per-account cost advantage is gone and the
+  pricing has to be rebuilt from scratch.** Better to learn this at install three.
+
+Also track **minutes on device** separately from minutes total. It is the part that cannot
+be scripted, cannot be delegated cheaply, and sets the floor on what an install can ever
+cost. It is also, not coincidentally, the moat.
+
+---
+
 ## Open
 
 - [ ] **Fill in Part 0 from real devices.** Still the blocking item. Everything above is
       a template until that table has real results in it, and the fallback tier it forces
       determines whether the pricing in `offer-post-gmail.md` survives.
-- [ ] Decide whether Tier 2 (pro mailbox only in the app) should be the *default*
-      recommendation rather than a fallback. It eliminates the failure mode structurally
-      instead of relying on a setting.
+- [ ] **Qualify Tier 2 against Part 0b before offering it** — in particular whether Google
+      account and security mail reaches him reliably through the forward, and whether the
+      Gmail account can be removed from the app on Android at all. It eliminates the
+      failure mode structurally; it may eliminate something he needs. Only then ask
+      whether it should be the default rather than a fallback.
+- [ ] **Script the machine-checkable half of the quarterly check** (domain expiry, MX, SPF,
+      DKIM, DMARC, form destination). Part 5's economics only work if the base cycle is
+      minutes. `provision.py check` is the obvious place.
+- [ ] **Start the Part 7 log at install one.** First-pass acceptance rate is the decision
+      input for everything downstream — turnaround, price, who can be trained to do this.
 - [ ] Turn Part 3 into a fillable one-pager with the business's name on it — the version
       the customer keeps.

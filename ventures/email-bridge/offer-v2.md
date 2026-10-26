@@ -414,9 +414,10 @@ figure Census publishes. Census revised the high-propensity definition in Jan 20
   businesses (a depleting stock). New filings are the flow. The established list is still
   worth working, just with a different pitch and no "same inbox" promise.
 - **`acceptance.md` — the delivery standard.** Written. The device test matrix (Part 0),
-  the on-device acceptance test (Part 2), the surface register (Part 3), the bounded
-  guarantee wording (Part 4) and the quarterly re-verify (Part 5). `runbook.md`, `SOP.md`
-  and `phone-close.md` should defer to it rather than restate it.
+  Tier 2 qualification (Part 0b), the on-device acceptance test (Part 2), the surface
+  register (Part 3), the bounded guarantee and the promise/cadence split (Part 4), the
+  re-verify and its economics (Part 5), and the first-pass acceptance log (Part 7).
+  `runbook.md`, `SOP.md` and `phone-close.md` should defer to it rather than restate it.
 - `runbook.md` / `SOP.md` — step 3 becomes mailbox provisioning; add the phone-setup call;
   point the close at `acceptance.md` Part 2.
 - `phone-close.md` — fold in §7.

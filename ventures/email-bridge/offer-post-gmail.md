@@ -40,7 +40,18 @@ support. The configuration *drifts* — app updates reset send-from defaults, OS
 migrate accounts, he re-adds his personal Gmail, a Business Profile edit gets reverted, a
 new phone restores from a backup. A single install is a point measurement of a moving
 system. The quarterly re-verify in `acceptance.md` Part 5 is a concrete, inspectable thing
-arriving on a schedule, and that is what the $5–10/mo is actually for.
+arriving on a schedule, and that is what a recurring fee is actually for.
+
+**Two constraints on that, worked in `acceptance.md` Part 5.** First, **$5/mo does not fund
+quarterly verification** — after 8.9% in Stripe fees on small monthly charges, mailbox COGS
+and domain renewal, it leaves about twelve minutes of labour per cycle including every
+customer who needs corrective work. $10/mo funds it only if the machine-checkable half is
+scripted. Second, **the promise and the cadence have to agree**: quarterly checks are not
+continuous compliance, and the records can be monitored continuously while the default
+sender on his phone cannot. The cleanest answer is to **bundle re-verification into the
+term price** below rather than sell a monthly line — eight cycles over 24 months is roughly
+$57 of labour against ~$543 of contribution, with no per-charge drag and no involuntary
+churn.
 
 **The deadline is also real urgency.** `offer.md` sets an integrity bar of "no fake
 scarcity." This scarcity is not manufactured — it is a published date. That is the best
