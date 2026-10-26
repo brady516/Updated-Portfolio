@@ -28,7 +28,7 @@ Places API in `leadfinder.py` — real, trading, proven revenue.
 **New target:** a business that filed **0–90 days ago.** Nationally that is **~535,000
 business applications/month**, of which **~147,000 are Census "high-propensity"** — the
 ones whose characteristics predict they will actually become employer businesses
-(Sept 2026). Pick a geography and a trade out of that flow; see §9.
+(Sept 2026). Pick a geography and a trade out of that flow; see §10.
 
 This is not a small retarget. It is the thing that makes the whole pivot work:
 
@@ -52,7 +52,7 @@ The freemail list in `leadfinder.py` is a **stock**: finite, and it depletes as 
 New filings are a **flow** — replenishing every month, never exhausted. A flow-based source
 means the business doesn't decay as you sell into it.
 
-**But the flow alone is too thin to live on in a single niche** (§9: ~5–6 filings/month for
+**But the flow alone is too thin to live on in a single niche** (§10: ~5–6 filings/month for
 one trade in one metro). The stock is the volume backstop — one metro holds *thousands* of
 existing trades businesses already on freemail, available now. Work both: the flow for
 timing and a warm opener, the stock for volume. The flow's advantage is the *moment*, not
@@ -86,9 +86,9 @@ fold the old `+$50 domain` add-on into the base offer and remove the decision.
 - **Promise:** `you@yourbusiness.com` — your domain, your mailbox, set up on your phone
   and your computer, sending and receiving cleanly, not landing in spam.
 - **Turnaround:** live within **48 hours**, plus one short call to set up your phone.
-- **Guarantee:** *"If it isn't sending and receiving cleanly, you don't pay."* Unchanged —
-  it's the single best line in the old offer. Scope it to the term (see
-  `offer-post-gmail.md`).
+- **Guarantee:** **"Nobody sees @gmail.com from you again."** The outcome, not the
+  mechanism — see §5. Backed by: if it isn't sending and receiving cleanly from your
+  address, you don't pay. Scope to the term (see `offer-post-gmail.md`).
 - **Price:** per `offer-post-gmail.md`. Lead with crew pricing; the structural cost
   advantage only pays on crews.
 
@@ -98,7 +98,12 @@ fold the old `+$50 domain` add-on into the base offer and remove the decision.
 - **A real mailbox** at that domain — owned by the business, not borrowed from a Google
   feature.
 - **Up to N mailboxes** for the crew (see pricing tiers) — not per-seat.
-- **Set up on their phone and their computer**, in the mail app they already use.
+- **Set up on their phone and their computer**, in the mail app they already use — with
+  **the pro address as the default sender** and notifications on. (§5. This is the step
+  that decides whether any of it matters.)
+- **The old Gmail forwarded in**, so there's one place to look and nothing is missed.
+- **The surface sweep** — Google Business Profile, website, invoicing software, social,
+  quote templates, voicemail: everywhere the old address is still published (§5).
 - **Deliverability records — SPF, DKIM, DMARC** — so bids don't land in spam.
 - **A clean signature** (name, title, phone, logo if they have one).
 - **A one-page cheat sheet**, and we don't hang up until mail sends both ways.
@@ -115,7 +120,96 @@ fold the old `+$50 domain` add-on into the base offer and remove the decision.
 
 ---
 
-## 5. Why a real mailbox is a better product (not a consolation prize)
+## 5. Provisioning is not the product — adoption is
+
+**This is the part the mechanism change actually breaks, and it is not a technical
+problem.** A correctly provisioned mailbox does not solve the @gmail.com problem. Here is
+the failure, concretely:
+
+> He has had `mikesdrywall1987@gmail.com` for fifteen years. The notifications are on. The
+> muscle memory is total. You hand him `mike@mikesdrywall.com` in a second place.
+>
+> Monday, a lead emails the pro address. He sees it late, or not at all. He replies to an
+> older thread from Gmail — goes out as @gmail.com. He hands out the new card, then types
+> his gmail into a supplier form out of habit. Week three: *"I never check that one."*
+>
+> You provisioned it perfectly. The guarantee technically held. **Nothing was solved.**
+
+**Why Send-As worked was never the DNS — it was that the pro identity lived inside the
+inbox he already lived in.** Zero behaviour change. That was the whole product, and it was
+invisible because it was free. Remove it and you must now deliver that adoption
+*deliberately*. **That is the job, and it is what the fee is for.**
+
+So the product is **identity migration**, and it has two halves. Provisioning is a
+prerequisite for half one.
+
+### Half 1 — One inbox, and the pro address is the *default sender*
+
+- **The mailbox goes in the app he already uses.** Google's own help pages document adding
+  a non-Gmail account to the Gmail app — *Other (IMAP)* on iOS, *Personal (IMAP)* on
+  Android. That is a standard IMAP/SMTP connection, **not** Send-As, so it is not what
+  Google is retiring. He keeps his app; the business mail arrives in it.
+- **The old Gmail forwards into the new mailbox.** One place to look. Nothing missed.
+- **The pro address is configured as the DEFAULT sender.** This is a one-line setting and
+  it is the entire product. *Available* is not *default*. If replying still goes out as
+  @gmail.com by default, you have sold nothing.
+- **Notifications verified ON** for the new account, on his actual device, on the call.
+- **Don't delete the Gmail — demote it.** Deleting creates fear and loses history.
+
+### Half 2 — The surface sweep
+
+Email is one surface. "@gmail.com is not professional" persists everywhere the old address
+is still *published* — and that is where it costs him bids:
+
+- **Google Business Profile** — the big one. It is where customers actually find him.
+- Website contact page, and where the contact form delivers.
+- **Invoicing / estimating software** — the address printed on every invoice and quote.
+- Facebook and any social profile.
+- Quote and estimate templates.
+- Email signature.
+- Voicemail script ("...or email me at...").
+- Cards, truck, yard signs — flag for the next print run.
+- Supplier and trade accounts.
+
+**Fix the email and leave the Business Profile on gmail and the problem is untouched where
+it matters most.** The sweep is cheap, nobody else does it, and it is the difference
+between a mailbox and an outcome.
+
+### This upgrades the guarantee
+
+| | |
+|---|---|
+| Old (technical) | *"If it isn't sending and receiving cleanly, you don't pay."* |
+| **New (outcome)** | **"Nobody sees @gmail.com from you again."** |
+
+That is what he is actually buying, and you can stand behind it because you control both
+halves. Scope it honestly: you guarantee the setup, the default sender verified on his
+device, and the sweep of every surface you can find. You cannot guarantee he won't type his
+old address into a form in 2028.
+
+### Consequences for delivery and price
+
+- **The ticket does not close on provisioning.** It closes when he has sent *and* received
+  from the pro address **on his own phone, in front of you**, and the sweep checklist is
+  done. See §8.
+- **This is the moat, made concrete.** A self-serve tool cannot configure a default sender
+  on a stranger's iPhone or update his Business Profile. §9's moat is really this section.
+- **This justifies the price far better than architecture does.** "Your business should own
+  its email" is a good line, but *"nobody sees @gmail.com from you again"* is the outcome.
+  Sell the outcome.
+
+### The one thing to test before selling anything
+
+**Can the Gmail app be made to reliably default to the IMAP account as sender?** Compose-from
+behaviour in the Gmail app with a secondary IMAP account is now **the single most
+load-bearing unknown in this offer** — the entire adoption half rests on it. If it cannot
+be made to default reliably, standardise on a client where the default sender *is*
+configurable per account (Apple Mail, Outlook) and accept the smaller behaviour change.
+
+**Test this on a real iPhone and a real Android before taking money.** This is the diligence
+that matters — not reproducing a provisioning tool that already works.
+
+## 6. Why a real mailbox is a better product (not a consolation prize)
 
 This matters: the new mechanism is an **upgrade**, and for a brand-new business it's the
 *correct* architecture. Sell it that way.
@@ -140,10 +234,11 @@ unlike anything built on the January 2027 deadline.
 
 ---
 
-## 6. Objections (feed these into `phone-close.md`)
+## 7. Objections (feed these into `phone-close.md`)
 
 | They say | You say |
 |---|---|
+| **"I'll probably just keep using my gmail."** | **That's the honest answer, and it's why most of these setups fail. So we don't just hand you an address — your business mail lands in the same app you use now, your new address is set as the default so replies go out right without you thinking about it, and we fix every place your old one is still listed. You don't change a habit; the habit changes under you.** |
 | "Gmail works fine." | It does — for you. It's on every bid you send. The customer comparing you to a competitor whose email matches their company name doesn't tell you that's why. |
 | "I'll do it myself." | You can. It's a domain, MX records, a mailbox, then SPF, DKIM and DMARC so you don't land in spam. Most people get the first half done and don't find out the second half is missing until a bid goes unanswered. |
 | "Do I need another app?" | No. It goes in the mail app already on your phone. Same place, your name on it. |
@@ -154,7 +249,7 @@ unlike anything built on the January 2027 deadline.
 
 ---
 
-## 7. Delivery checklist (revised — replaces step 3 in `offer.md`)
+## 8. Delivery checklist (revised — replaces step 3 in `offer.md`)
 
 1. Collect: business name, domain (check availability / register), the crew's mailbox
    names, name/title/phone/logo for signature, what phone and computer they use.
@@ -162,11 +257,16 @@ unlike anything built on the January 2027 deadline.
 3. **Provision the real mailbox(es)** at the host. *(Replaces the old "Send mail as +
    app password" step.)*
 4. MX for receiving + **SPF, DKIM, DMARC**.
-5. **Configure their phone and computer** — the step that didn't exist before and is now
-   the one that earns the fee.
-6. Build and install the signature.
-7. **Test on the call:** send out, receive in, confirm not-spam. Then the cheat sheet.
-8. Close the ticket.
+5. **Configure their phone and computer** — mailbox added to the app they already use,
+   **pro address set as default sender**, notifications on. The step that didn't exist
+   before and the one that earns the fee (§5).
+6. **Forward the old Gmail in.** Demote it; don't delete it.
+7. Build and install the signature.
+8. **Run the surface sweep** (§5): Business Profile, website, invoicing, social, quote
+   templates, voicemail. Record what was changed — this is the verification report.
+9. **Test on the call, on their device:** send out *from the pro address by default*,
+   receive in, confirm not-spam. Then the cheat sheet.
+10. Close the ticket — **not before steps 5, 8 and 9 are all done.**
 
 **Note the shape change:** the old process was async — you did DNS, they clicked a link.
 This one needs a short call. That is a cost *and* the moat: it's the part a self-serve
@@ -174,7 +274,7 @@ SaaS competitor cannot do.
 
 ---
 
-## 8. The moat, honestly reassessed
+## 9. The moat, honestly reassessed
 
 `offer.md` claimed the moat is "too unsexy for competent operators to touch." **That is
 weakening and you should know it.** The Gmail change is actively spawning self-serve
@@ -192,13 +292,13 @@ The real moat now is narrower and more defensible:
 The moat is the **channel and the hand-holding**, not the technical work. The technical
 work is commodity and getting more so. Price and position accordingly.
 
-> **But read §9 before banking on this moat.** It only exists on the local path, and the
+> **But read §10 before banking on this moat.** It only exists on the local path, and the
 > local path caps volume at roughly 5–10 installs/month. The moat and the volume are a
 > trade-off, not a package.
 
 ---
 
-## 9. TAM: the required-share argument is wrong — use reachable flow
+## 10. TAM: the required-share argument is wrong — use reachable flow
 
 **An earlier version of this section argued that one operator needs only 0.027% of the
 national high-propensity flow, and concluded the business therefore cannot fail for lack
@@ -251,7 +351,7 @@ yields ~5 prospects/month. Narrowing is the most expensive decision available, n
 one. To support one full-time operator you need roughly **one sector statewide, or one
 metro across all sectors.**
 
-And that creates the actual strategic fork, because **the moat in §8 and the volume needed
+And that creates the actual strategic fork, because **the moat in §9 and the volume needed
 here are in direct conflict:**
 
 | | **Local & narrow** | **Wide (statewide, one vertical)** |
@@ -288,7 +388,7 @@ which was never the binding question.
 summaries, not pulled from Census tables; the construction share is my arithmetic, not a
 figure Census publishes. Census revised the high-propensity definition in Jan 2026.*
 
-## 10. What this changes elsewhere in the folder
+## 11. What this changes elsewhere in the folder
 
 - `offer.md` — superseded. Keep for history; don't sell from it.
 - **`leadgen.md` — the cold email is now factually wrong.** It promises *"works in the
@@ -298,14 +398,14 @@ figure Census publishes. Census revised the high-propensity definition in Jan 20
   businesses (a depleting stock). New filings are the flow. The established list is still
   worth working, just with a different pitch and no "same inbox" promise.
 - `runbook.md` / `SOP.md` — step 3 becomes mailbox provisioning; add the phone-setup call.
-- `phone-close.md` — fold in §6.
+- `phone-close.md` — fold in §7.
 - `faq.md` — needs the "do I need another app," "what if I close the business," and
   "why not Workspace" answers.
 - `provision.py` — needs the mailbox-host path; keep it host-agnostic.
 - `rates.md` — replace the Tier 1 row; **delete the $199/seat crew rate** (it prices per
   seat against a per-account cost).
 
-## 11. Open items
+## 12. Open items
 
 - [ ] **Pick the geography and pull the real list.** FRED carries high-propensity
       applications weekly by state and region; state Secretary of State offices carry the
@@ -314,7 +414,12 @@ figure Census publishes. Census revised the high-propensity definition in Jan 20
 - [ ] **Direct mail is worth testing here.** New filings publish a physical address, and a
       well-designed letter to a brand-new company is on-brand for "look legit" in a way
       cold email isn't. It also sidesteps CAN-SPAM entirely.
-- [ ] **Which mail client to standardise on** for step 5 — the delivery process needs one
-      default path, not improvisation per customer.
+- [ ] **BLOCKING — test compose-from behaviour in the Gmail app** with a secondary IMAP
+      account, on a real iPhone and a real Android. Can the pro address be made the
+      reliable default sender? The entire adoption half of the offer (§5) rests on this,
+      and it is the one thing to settle before taking money. If it can't, standardise on
+      Apple Mail or Outlook, where the default sender is configurable per account.
+- [ ] **Build the surface-sweep checklist** as a real delivery artifact (§5, half 2) — it
+      doubles as the customer-facing verification report.
 - [ ] Confirm the Jan 2027 scope from Google directly (see `offer-post-gmail.md` §8). It
       doesn't change this offer, but it sets the deadline for migrating the old book.
