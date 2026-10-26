@@ -86,9 +86,13 @@ fold the old `+$50 domain` add-on into the base offer and remove the decision.
 - **Promise:** `you@yourbusiness.com` — your domain, your mailbox, set up on your phone
   and your computer, sending and receiving cleanly, not landing in spam.
 - **Turnaround:** live within **48 hours**, plus one short call to set up your phone.
-- **Guarantee:** **"Nobody sees @gmail.com from you again."** The outcome, not the
-  mechanism — see §5. Backed by: if it isn't sending and receiving cleanly from your
-  address, you don't pay. Scope to the term (see `offer-post-gmail.md`).
+- **Promise (what you say):** **"Nobody sees @gmail.com from you again."** The outcome,
+  not the mechanism — see §5.
+- **Guarantee (what you defend):** your business address sends **by default on your own
+  phone**, verified in front of you; every surface on the attached register changed and
+  verified. Register errors are **fixed free**; if the default sender can't be made to
+  work, **you don't pay**. Bounded, auditable, enumerated — the exact wording and the
+  register are in `acceptance.md` §4. Scope to the term (see `offer-post-gmail.md`).
 - **Price:** per `offer-post-gmail.md`. Lead with crew pricing; the structural cost
   advantage only pays on crews.
 
@@ -180,12 +184,17 @@ between a mailbox and an outcome.
 | | |
 |---|---|
 | Old (technical) | *"If it isn't sending and receiving cleanly, you don't pay."* |
-| **New (outcome)** | **"Nobody sees @gmail.com from you again."** |
+| **Promise** | **"Nobody sees @gmail.com from you again."** |
+| **Guarantee** | Default sender verified on his device + every surface on the register changed and verified. Register errors fixed free; default-sender failure is money back. |
 
 That is what he is actually buying, and you can stand behind it because you control both
-halves. Scope it honestly: you guarantee the setup, the default sender verified on his
-device, and the sweep of every surface you can find. You cannot guarantee he won't type his
-old address into a form in 2028.
+halves. **But the promise and the guarantee are not the same sentence** — keep them
+distinct or a good offer becomes an unwinnable argument. The guarantee is **bounded by what
+is enumerated**: the configuration you verified and the surfaces on the register. You cannot
+guarantee he won't type his old address into a form in 2028, that a supplier won't
+resurrect it from an old record, or that a customer with the old address in their phone
+won't use it. **Say the boundary out loud on the call.** A bounded guarantee you always
+honour beats an absolute one you argue about. Exact wording: `acceptance.md` §4.
 
 ### Consequences for delivery and price
 
@@ -251,6 +260,10 @@ unlike anything built on the January 2027 deadline.
 
 ## 8. Delivery checklist (revised — replaces step 3 in `offer.md`)
 
+**The operational version of this list, with pass/fail criteria, the device test matrix, the
+fallback ladder and the surface register, is `acceptance.md`. That is the delivery
+standard; this is the summary.**
+
 1. Collect: business name, domain (check availability / register), the crew's mailbox
    names, name/title/phone/logo for signature, what phone and computer they use.
 2. Register or connect the domain.
@@ -266,7 +279,10 @@ unlike anything built on the January 2027 deadline.
    templates, voicemail. Record what was changed — this is the verification report.
 9. **Test on the call, on their device:** send out *from the pro address by default*,
    receive in, confirm not-spam. Then the cheat sheet.
-10. Close the ticket — **not before steps 5, 8 and 9 are all done.**
+10. Close the ticket — **not before steps 5, 8 and 9 are all done**, and not before
+    `acceptance.md` Part 2 passes **with the customer holding the phone**. Don't invoice
+    before that: the default sender is the money-back trigger, so until it passes there is
+    nothing to bill for.
 
 **Note the shape change:** the old process was async — you did DNS, they clicked a link.
 This one needs a short call. That is a cost *and* the moat: it's the part a self-serve
@@ -397,7 +413,12 @@ figure Census publishes. Census revised the high-propensity definition in Jan 20
 - **`leadfinder.py` — needs a `filings` source.** It currently finds established freemail
   businesses (a depleting stock). New filings are the flow. The established list is still
   worth working, just with a different pitch and no "same inbox" promise.
-- `runbook.md` / `SOP.md` — step 3 becomes mailbox provisioning; add the phone-setup call.
+- **`acceptance.md` — the delivery standard.** Written. The device test matrix (Part 0),
+  the on-device acceptance test (Part 2), the surface register (Part 3), the bounded
+  guarantee wording (Part 4) and the quarterly re-verify (Part 5). `runbook.md`, `SOP.md`
+  and `phone-close.md` should defer to it rather than restate it.
+- `runbook.md` / `SOP.md` — step 3 becomes mailbox provisioning; add the phone-setup call;
+  point the close at `acceptance.md` Part 2.
 - `phone-close.md` — fold in §7.
 - `faq.md` — needs the "do I need another app," "what if I close the business," and
   "why not Workspace" answers.
@@ -414,12 +435,16 @@ figure Census publishes. Census revised the high-propensity definition in Jan 20
 - [ ] **Direct mail is worth testing here.** New filings publish a physical address, and a
       well-designed letter to a brand-new company is on-brand for "look legit" in a way
       cold email isn't. It also sidesteps CAN-SPAM entirely.
-- [ ] **BLOCKING — test compose-from behaviour in the Gmail app** with a secondary IMAP
-      account, on a real iPhone and a real Android. Can the pro address be made the
-      reliable default sender? The entire adoption half of the offer (§5) rests on this,
-      and it is the one thing to settle before taking money. If it can't, standardise on
-      Apple Mail or Outlook, where the default sender is configurable per account.
-- [ ] **Build the surface-sweep checklist** as a real delivery artifact (§5, half 2) — it
-      doubles as the customer-facing verification report.
+- [ ] **BLOCKING — fill in `acceptance.md` Part 0 from real devices.** Compose-from
+      behaviour in the Gmail app with a secondary IMAP account, on a real iPhone and a
+      real Android, across all eight flows — including share-sheet compose and
+      reply-from-notification, which are the two most likely to fail. Don't assume one
+      passing flow generalises. The entire adoption half of the offer (§5) rests on this,
+      and the fallback tier it forces decides whether the pricing in
+      `offer-post-gmail.md` survives: Tier 4 is Google Workspace at $7/seat, which
+      destroys the per-account cost advantage. Settle it before taking money.
+- [x] **Surface-sweep checklist built** as a real delivery artifact — `acceptance.md`
+      Part 3, with Business Profile broken out as critical and a verification column.
+      Doubles as the customer-facing verification report.
 - [ ] Confirm the Jan 2027 scope from Google directly (see `offer-post-gmail.md` §8). It
       doesn't change this offer, but it sets the deadline for migrating the old book.

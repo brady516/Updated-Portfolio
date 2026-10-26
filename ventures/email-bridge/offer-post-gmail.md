@@ -35,6 +35,13 @@ free forward. You *can* charge monthly for a real mailbox that you host and moni
 because now there is real recurring COGS and real ongoing service. The Gmail change is
 what makes the MRR layer in `rates.md` legitimate rather than a tacked-on fee.
 
+**But the monthly deliverable is re-verification, not support.** He will never call
+support. The configuration *drifts* — app updates reset send-from defaults, OS upgrades
+migrate accounts, he re-adds his personal Gmail, a Business Profile edit gets reverted, a
+new phone restores from a backup. A single install is a point measurement of a moving
+system. The quarterly re-verify in `acceptance.md` Part 5 is a concrete, inspectable thing
+arriving on a schedule, and that is what the $5–10/mo is actually for.
+
 **The deadline is also real urgency.** `offer.md` sets an integrity bar of "no fake
 scarcity." This scarcity is not manufactured — it is a published date. That is the best
 honest sales environment this offer will ever have.
