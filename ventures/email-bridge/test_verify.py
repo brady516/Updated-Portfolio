@@ -11,6 +11,8 @@ split in half.
 Usage:  python3 -I test_verify.py
 """
 
+import contextlib
+import io
 import unittest
 
 import verify
@@ -254,9 +256,11 @@ class TestExitCodes(unittest.TestCase):
     def _finish(self, statuses):
         rows = [verify.result(f"c{i}", s, None, None, {}, "x")
                 for i, s in enumerate(statuses)]
-        return verify.finish({"domain": D, "checked_at": verify.now(),
-                              "resolver": "stub", "profile": None,
-                              "checks": rows}, None)
+        # finish() renders the report; swallow it so the test run stays readable.
+        with contextlib.redirect_stdout(io.StringIO()):
+            return verify.finish({"domain": D, "checked_at": verify.now(),
+                                  "resolver": "stub", "profile": None,
+                                  "checks": rows}, None)
 
     def test_all_pass_is_zero(self):
         self.assertEqual(self._finish([PASS, PASS]), 0)
