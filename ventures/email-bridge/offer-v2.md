@@ -87,7 +87,9 @@ fold the old `+$50 domain` add-on into the base offer and remove the decision.
   and your computer, sending and receiving cleanly, not landing in spam.
 - **Turnaround:** live within **48 hours**, plus one short call to set up your phone.
 - **Promise (what you say):** **"Nobody sees @gmail.com from you again."** The outcome,
-  not the mechanism — see §5.
+  not the mechanism — see §5. **And the stronger second promise: "your estimates arrive."**
+  That one is functional rather than aesthetic, he has already felt the pain, and it is
+  verifiable — see §12, which is where the pricing power actually is.
 - **Guarantee (what you defend):** your business address sends **by default on your own
   phone**, verified in front of you; every surface on the attached register changed and
   verified. Register errors are **fixed free**; if the default sender can't be made to
@@ -435,7 +437,101 @@ figure Census publishes. Census revised the high-propensity definition in Jan 20
 - `rates.md` — replace the Tier 1 row; **delete the $199/seat crew rate** (it prices per
   seat against a per-account cost).
 
-## 12. Open items
+## 12. The second promise: the mail actually arrives
+
+The first live run of `verify.py` was against our own domain, `golegitlocal.com`:
+
+```
+MX    : route1/2/3.mx.cloudflare.net        (Cloudflare routing — receiving only)
+SPF   : v=spf1 include:_spf.mx.cloudflare.net ~all      (1 lookup)
+DKIM  : nothing published
+DMARC : FAIL — no record at all (NXDOMAIN, confirmed on a second resolver)
+```
+
+Compare that SPF record to the one `provision.py` writes:
+`v=spf1 include:_spf.mx.cloudflare.net include:_spf.google.com ~all`, plus a DMARC
+record at `p=none`. Ours has neither. What is published is Cloudflare's *auto-generated*
+routing record — it authorizes Cloudflare's inbound servers and nothing else, including
+nothing that Send-As relays through.
+
+**Our own flagship domain is configured below the standard we sell.** That is not an
+embarrassment to bury. It is the finding the offer was missing, and it took one command to
+surface.
+
+### Why this is a better promise than "look professional"
+
+*"Your own name on your email"* is **aesthetic**. The buyer cannot verify it, cannot measure
+it, and has lived fifteen years without it. Nice-to-haves get priced like nice-to-haves —
+which is exactly why the old offer capped at $299.
+
+*"Your estimate arrives in their inbox"* is **functional**. And he has already felt this
+pain and has a story about it: the bid he never heard back on, the *"did you get my
+email?"* call, the customer who swore nothing came through. **He blamed the customer. It
+may have been his domain.**
+
+The pain already exists, he has already paid for it in lost bids, and he has never once
+suspected the cause. That is the strongest position a seller can occupy, and it needs no
+scarcity, no deadline, and no January 2027.
+
+### What it changes
+
+| | |
+|---|---|
+| **Promise** | *"Your estimates arrive, with your name on them."* |
+| **Proof** | His own report — his domain, his records, timestamped — read to him on the call |
+| **Scope addition** | Authentication correct **for the architecture he actually sends through**, not whatever default a wizard wrote |
+| **Guarantee leg** | Authenticated and passing on a real received message, evidence in the register (`acceptance.md` Part 3) |
+
+**Bound it honestly, and this part is not optional.** A missing DMARC record does **not**
+prove his mail is landing in spam. It proves nothing is published, nobody is authorized,
+and no one is measuring. Say that version. `offer.md` sets an integrity bar of "no fake
+scarcity," and fear-selling a risk you cannot quantify is the same sin in a lab coat. The
+observed facts are more persuasive than the exaggeration anyway — **because he can check
+them himself.**
+
+### It also fixes the lead problem
+
+§10 worked the reachable flow downward and found it thin: one trade in one metro is ~5–6
+new filings a month, and 40 installs at a 3% close would need ~1,300 contacts. **The
+deliverability finding does not depend on the flow at all. It works on the stock** — every
+established business with a domain and bad records, which `leadfinder.py` already finds.
+
+It also rewrites the cold email that has been factually wrong since the pivot (`leadgen.md`
+still promises *"works in the same inbox you already use"*). The replacement is not a pitch:
+
+> **Subject: mikesdrywall.com has no DMARC record**
+>
+> I check this for local contractors. Your domain publishes no DMARC record, and your SPF
+> record doesn't authorize the service you appear to send through.
+>
+> That doesn't mean your mail is failing. It means nothing is published, nobody is
+> authorized, and no one is measuring. Report below — it took two minutes to run and it's
+> yours either way.
+>
+> If you want it fixed, that's what I do. If not, hand the report to whoever handles it.
+>
+> *[physical address] · [unsubscribe]*
+
+Truthful, specific to them, no scarcity, CAN-SPAM clean, and it leads with a **finding
+instead of an offer**. It also sorts the list for you: anyone who replies has self-selected
+as someone who cares about their own infrastructure.
+
+### And it is the underwriting screen
+
+`verify.py` scores a prospect **before anyone spends a minute on them**. Run it across a
+list; the red rows are the qualified ones. That is customer underwriting applied at the top
+of the funnel instead of after the call, and it costs nothing per prospect because it reads
+public records only.
+
+**Entropy, concretely:** an unauthenticated domain is *unmeasured state*. Not him, not the
+receiving server, not you knows where his mail goes or whether it arrives. The service
+converts unmeasured state into measured state, and the register is the measurement. **That
+is a far more defensible thing to sell than an aesthetic** — and it is the same discipline
+at $500 that the underwriting thesis applies at $5M.
+
+---
+
+## 13. Open items
 
 - [ ] **Pick the geography and pull the real list.** FRED carries high-propensity
       applications weekly by state and region; state Secretary of State offices carry the

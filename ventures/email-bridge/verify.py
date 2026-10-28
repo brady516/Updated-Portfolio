@@ -81,26 +81,49 @@ def now() -> str:
 # ---------------------------------------------------------------- dns transport
 
 class Resolver:
-    """DNS-over-HTTPS. Keeps every raw answer for the evidence trail."""
+    """DNS-over-HTTPS, with fallback across endpoints.
 
-    def __init__(self, name: str = "cloudflare", timeout: int = 15):
-        if name not in RESOLVERS:
+    `auto` tries each endpoint in turn and returns the first that answers.
+    A blocked endpoint is not evidence of anything — plenty of home routers
+    and security suites drop known DoH hosts because DoH bypasses their
+    filtering — so one being unreachable must not turn every record into
+    UNKNOWN while another endpoint can still answer. Which endpoint answered,
+    and what the failed ones said, is recorded on every row.
+    """
+
+    def __init__(self, name: str = "auto", timeout: int = 15):
+        if name == "auto":
+            self.chain = ["cloudflare", "google"]
+        elif name in RESOLVERS:
+            self.chain = [name]
+        else:
             raise ValueError(f"unknown resolver {name!r}")
         self.name = name
-        self.url = RESOLVERS[name]
         self.timeout = timeout
 
     def query(self, name: str, rtype: str) -> dict:
-        """Returns {'status': int|None, 'records': [str], 'error': str|None}."""
+        """Returns {'status', 'records', 'error', 'resolver', 'attempts'}."""
+        attempts = []
+        for which in self.chain:
+            out = self._one(RESOLVERS[which], name, rtype)
+            if out["error"] is None:
+                out["resolver"] = which
+                out["attempts"] = attempts
+                return out
+            attempts.append({"resolver": which, "error": out["error"]})
+        # Every endpoint failed: we learned nothing, which is never a FAIL.
+        return {"status": None, "records": [], "resolver": None,
+                "error": attempts[-1]["error"], "attempts": attempts}
+
+    def _one(self, url: str, name: str, rtype: str) -> dict:
         qs = urllib.parse.urlencode({"name": name, "type": rtype})
         req = urllib.request.Request(
-            f"{self.url}?{qs}", headers={"accept": "application/dns-json"}
+            f"{url}?{qs}", headers={"accept": "application/dns-json"}
         )
         try:
             with urllib.request.urlopen(req, timeout=self.timeout) as r:
                 body = json.load(r)
         except (urllib.error.URLError, OSError, json.JSONDecodeError) as e:
-            # Transport failure is never a FAIL — we learned nothing.
             return {"status": None, "records": [], "error": f"{type(e).__name__}: {e}"}
 
         records = []
@@ -184,8 +207,9 @@ def check_mx(domain: str, expected: list | None, res: Resolver) -> dict:
     lim = ("Correct MX records do not prove successful delivery. Only a real "
            "message landing in the inbox proves that (acceptance.md Part 1).")
     q = res.query(domain, "MX")
-    ev = {"resolver": res.name, "dns_status": q["status"], "raw": q["records"],
-          "error": q["error"]}
+    ev = {"resolver": q.get("resolver"), "resolver_requested": res.name, "dns_status": q["status"],
+          "raw": q["records"], "error": q["error"],
+          "resolver_attempts": q.get("attempts")}
     if q["error"] is not None:
         return result("mx", UNKNOWN, None, expected, ev, lim)
 
@@ -240,8 +264,9 @@ def check_spf(domain: str, expected_includes: list | None, res: Resolver) -> dic
            "and it says nothing about mail forwarded through a third hop, "
            "where SPF alignment breaks by design.")
     q = res.query(domain, "TXT")
-    ev = {"resolver": res.name, "dns_status": q["status"], "raw_txt": q["records"],
-          "error": q["error"]}
+    ev = {"resolver": q.get("resolver"), "resolver_requested": res.name, "dns_status": q["status"],
+          "raw_txt": q["records"], "error": q["error"],
+          "resolver_attempts": q.get("attempts")}
     if q["error"] is not None:
         return result("spf", UNKNOWN, None, expected_includes, ev, lim)
 
@@ -303,7 +328,9 @@ def check_dkim(domain: str, selectors: list | None, res: Resolver) -> dict:
         name = f"{sel}._domainkey.{domain}"
         q = res.query(name, "TXT")
         ev["queries"][name] = {"dns_status": q["status"], "raw": q["records"],
-                               "error": q["error"]}
+                               "error": q["error"],
+                               "resolver": q.get("resolver"),
+                               "resolver_attempts": q.get("attempts")}
         if q["error"] is not None:
             return result("dkim", UNKNOWN, None, selectors, ev, lim)
         keys = [t for t in q["records"]
@@ -324,8 +351,9 @@ def check_dmarc(domain: str, expected_policy: str | None, res: Resolver) -> dict
            "with p=none blocks nothing and should not be read as protection.")
     name = f"_dmarc.{domain}"
     q = res.query(name, "TXT")
-    ev = {"resolver": res.name, "dns_status": q["status"], "raw_txt": q["records"],
-          "error": q["error"]}
+    ev = {"resolver": q.get("resolver"), "resolver_requested": res.name, "dns_status": q["status"],
+          "raw_txt": q["records"], "error": q["error"],
+          "resolver_attempts": q.get("attempts")}
     if q["error"] is not None:
         return result("dmarc", UNKNOWN, None, expected_policy, ev, lim)
 
@@ -400,6 +428,8 @@ def check_form(url: str, timeout: int = 20) -> dict:
 # ---------------------------------------------------------------- reporting
 
 def cross_check(primary: list, domain: str, profile: dict, other: str) -> list:
+    """Corroborate against one named endpoint — not the fallback chain, or the
+    two runs could silently land on the same resolver and prove nothing."""
     """Re-run the DNS checks on a second resolver; disagreement -> UNKNOWN."""
     res = Resolver(other)
     second = {r["check"]: r for r in _dns_checks(domain, profile, res)}
@@ -439,6 +469,24 @@ def render(report: dict) -> None:
         print(f"  {r['status']:<8} {r['check']:<{w}}  {json.dumps(r['observed'])}")
         if r["status"] != PASS:
             print(f"           {' ' * w}  expected: {json.dumps(r['expected'])}")
+    # Distinguish "one endpoint was blocked and another answered" from
+    # "nothing answered" — the second is why rows came back UNKNOWN.
+    skipped, dead = set(), set()
+    for r in report["checks"]:
+        ev = r["evidence"]
+        attempts = [a for a in (ev.get("resolver_attempts") or [])
+                    if isinstance(a, dict) and a.get("resolver")]
+        if not attempts:
+            continue
+        (skipped if ev.get("resolver") else dead).update(
+            a["resolver"] for a in attempts)
+    if skipped:
+        print(f"\n  note: {', '.join(sorted(skipped))} unreachable from this "
+              f"machine; a fallback endpoint answered instead.")
+    if dead:
+        print(f"\n  note: no DNS endpoint answered ({', '.join(sorted(dead))} all "
+              f"failed), which is why rows above are UNKNOWN rather than clean. "
+              f"See resolver_attempts in the JSON.")
     c = report["summary"]
     print(f"\n  {c[PASS]} pass, {c[FAIL]} fail, {c[UNKNOWN]} unknown")
     if c[UNKNOWN]:
@@ -469,7 +517,9 @@ def main() -> int:
     d = sub.add_parser("dns", help="registrar + DNS record checks")
     d.add_argument("--domain", required=True)
     d.add_argument("--profile", help="JSON file of expected values")
-    d.add_argument("--resolver", default="cloudflare", choices=sorted(RESOLVERS))
+    d.add_argument("--resolver", default="auto",
+                   choices=["auto"] + sorted(RESOLVERS),
+                   help="auto (default) tries each endpoint until one answers")
     d.add_argument("--cross-check", action="store_true",
                    help="corroborate with a second resolver; disagreement -> UNKNOWN")
     d.add_argument("--json", dest="json_path", help="write the report here")
@@ -497,7 +547,7 @@ def main() -> int:
     res = Resolver(a.resolver)
     checks = [check_domain_expiry(domain)] + _dns_checks(domain, profile, res)
     if a.cross_check:
-        other = "google" if a.resolver == "cloudflare" else "cloudflare"
+        other = "google" if a.resolver in ("cloudflare", "auto") else "cloudflare"
         checks = checks[:1] + cross_check(checks[1:], domain, profile, other)
 
     return finish({"domain": domain, "checked_at": now(), "resolver": a.resolver,

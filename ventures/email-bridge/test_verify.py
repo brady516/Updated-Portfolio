@@ -67,6 +67,61 @@ class TestTransportFailureIsUnknown(unittest.TestCase):
             self.assertTrue(r["limitation"])
 
 
+class TestResolverFallback(unittest.TestCase):
+    """A blocked endpoint must not turn answerable records into UNKNOWN —
+    but a fallback must never hide which endpoint actually answered."""
+
+    def _chain(self, failing, answers):
+        r = verify.Resolver("auto")
+        calls = []
+
+        def fake_one(url, name, rtype):
+            calls.append(url)
+            if any(f in url for f in failing):
+                return {"status": None, "records": [],
+                        "error": "URLError: tunnel blocked"}
+            return {"status": 0, "records": answers, "error": None}
+
+        r._one = fake_one
+        return r, calls
+
+    def test_auto_tries_cloudflare_first(self):
+        r, calls = self._chain([], ["10 a.example.com"])
+        out = r.query(D, "MX")
+        self.assertEqual(out["resolver"], "cloudflare")
+        self.assertEqual(out["attempts"], [])
+        self.assertEqual(len(calls), 1)
+
+    def test_blocked_primary_falls_back_and_records_the_failure(self):
+        r, calls = self._chain(["cloudflare-dns.com"], ["10 a.example.com"])
+        out = r.query(D, "MX")
+        self.assertIsNone(out["error"])
+        self.assertEqual(out["resolver"], "google")
+        self.assertEqual(out["attempts"][0]["resolver"], "cloudflare")
+        self.assertEqual(len(calls), 2)
+
+    def test_all_endpoints_blocked_is_still_unknown(self):
+        r, _ = self._chain(["cloudflare-dns.com", "dns.google"], [])
+        out = r.query(D, "MX")
+        self.assertIsNotNone(out["error"])
+        self.assertIsNone(out["resolver"])
+        self.assertEqual(len(out["attempts"]), 2)
+        # and the check built on it must not become a FAIL
+        r.query = lambda n, t: out
+        self.assertEqual(verify.check_mx(D, ["a.example.com"], r)["status"], UNKNOWN)
+
+    def test_named_resolver_does_not_fall_back(self):
+        r = verify.Resolver("cloudflare")
+        self.assertEqual(r.chain, ["cloudflare"])
+
+    def test_fallback_is_surfaced_in_the_evidence(self):
+        r, _ = self._chain(["cloudflare-dns.com"], ["10 a.example.com"])
+        row = verify.check_mx(D, ["a.example.com"], r)
+        self.assertEqual(row["status"], PASS)
+        self.assertEqual(row["evidence"]["resolver"], "google")
+        self.assertTrue(row["evidence"]["resolver_attempts"])
+
+
 class TestMx(unittest.TestCase):
     def test_exact_match_passes(self):
         res = Stub({(D, "MX"): ["10 route1.mx.cloudflare.net",
