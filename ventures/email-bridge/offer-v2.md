@@ -478,7 +478,7 @@ scarcity, no deadline, and no January 2027.
 | | |
 |---|---|
 | **Promise** | *"Your estimates arrive, with your name on them."* |
-| **Proof** | His own report — his domain, his records, timestamped — read to him on the call |
+| **Proof** | His own report — his domain, his records, timestamped — **in his language, not in DNS terms** (`plainreport.py`). A terminal dump proves nothing to a drywall contractor; a page that opens *"nothing protects your name from being used by someone else"* does |
 | **Scope addition** | Authentication correct **for the architecture he actually sends through**, not whatever default a wizard wrote |
 | **Guarantee leg** | Authenticated and passing on a real received message, evidence in the register (`acceptance.md` Part 3) |
 
